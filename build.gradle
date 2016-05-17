@@ -1,4 +1,7 @@
 apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'maven'
 
 sourceCompatibility = 1.7
 version = '1.0'
@@ -8,5 +11,35 @@ repositories {
 }
 
 dependencies {
+    // 공통 라이브러리
+    compile "org.projectlombok:lombok:0.12.0"
+    compile 'ch.qos.logback:logback-classic:1.1.1'
+    compile 'com.jolbox:bonecp:0.8.0.RELEASE'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile 'org.hibernate:hibernate-validator:5.1.0.Final'
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+    compile 'org.aspectj:aspectjrt:1.8.0'
+    compile 'org.aspectj:aspectjweaver:1.8.0'
+    compile 'javax.mail:mail:1.4.7'
+
+    // 공통 Spring framework 라이브러리
+    compile 'org.springframework:spring-webmvc:3.2.9.RELEASE'
+    compile 'org.springframework:spring-jdbc:3.2.9.RELEASE'
+    compile 'org.springframework:spring-context-support:3.2.9.RELEASE'
+
+    // DB
+    compile 'mysql:mysql-connector-java:5.1.30'
+    compile 'org.mybatis:mybatis:3.2.4'
+    compile 'org.mybatis:mybatis-spring:1.2.2'
+
+    // test
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'org.springframework:spring-test:3.2.9.RELEASE'
+    testCompile 'org.dbunit:dbunit:2.4.9'
+    testCompile 'org.unitils:unitils-dbunit:3.4'
+    testCompile 'org.unitils:unitils-database:3.4'
 }
+
+// configure java compiler encoding
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
