@@ -20,6 +20,6 @@ public class WebInitializer implements WebApplicationInitializer {
 		// dispatcher 등록
 		ServletRegistration.Dynamic appDispatcher;
 		appDispatcher = context.addServlet("app", new DispatcherServlet(dispatcherContext));
-		appDispatcher.addMapping("/app/*");
+		appDispatcher.addMapping("/");
 	}
 }
