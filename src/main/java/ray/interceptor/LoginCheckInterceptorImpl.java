@@ -23,15 +23,15 @@ public class LoginCheckInterceptorImpl extends HandlerInterceptorAdapter {
 		response.setHeader("Cache-Control", "no-store"); // 일부 파이어폭스 버그 관련
 		response.setContentType("text/html; charset=utf-8");
 
-		String requestURI = request.getRequestURI();
+//		String requestURI = request.getRequestURI();
 //		log.info("### requestURI : " + requestURI);
-
-		/* 세션 체크 */
-		HttpSession session = request.getSession(false);
-		if(session == null || session.getAttribute("memberVo") == null ) {
-			response.sendRedirect("/app/login?status=expired");
-			return false;
-		}
+//
+//		/* 세션 체크 */
+//		HttpSession session = request.getSession(false);
+//		if(session == null || session.getAttribute("memberVo") == null ) {
+//			response.sendRedirect("/app/login?status=expired");
+//			return false;
+//		}
 		return true;
 	}
 }
