@@ -10,8 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 public class MainController {
-	@RequestMapping("/index")
+	@RequestMapping({"/index", "/"})
 	public String index() {
+		return "/index.jsp";
+	}
+
+	@RequestMapping("/about")
+	public String about() {
+		return "/index.jsp";
+	}
+
+	@RequestMapping("/contact")
+	public String contact() {
+		return "/index.jsp";
+	}
+
+	@RequestMapping("/post")
+	public String post() {
 		return "/index.jsp";
 	}
 }

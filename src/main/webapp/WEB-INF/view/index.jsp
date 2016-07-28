@@ -12,10 +12,10 @@
 	<title>Ray Blog</title>
 
 	<!-- Bootstrap Core CSS -->
-	<link href="/styles/plugin/bootstrap.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/styles/plugin/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom CSS -->
-	<link href="/styles/plugin/clean-blog.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/styles/plugin/clean-blog.min.css" rel="stylesheet">
 
 	<!-- Custom Fonts -->
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -47,18 +47,10 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="index.html">Home</a>
-				</li>
-				<li>
-					<a href="about.html">About</a>
-				</li>
-				<li>
-					<a href="post.html">Sample Post</a>
-				</li>
-				<li>
-					<a href="contact.html">Contact</a>
-				</li>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="about.html">About</a></li>
+				<li><a href="post.html">Sample Post</a></li>
+				<li><a href="contact.html">Contact</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
