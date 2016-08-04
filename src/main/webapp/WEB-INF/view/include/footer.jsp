@@ -2,12 +2,7 @@
 <script src="/scripts/plugin/jquery.js"></script>
 <script src="/scripts/plugin/bootstrap.min.js"></script>
 <script src="/scripts/plugin/clean-blog.min.js"></script>
-<script type="text/javascript">
-	$(".header-menu-btn").click(function(e) {
-		e.preventDefault();
-		$("#wrapper").toggleClass("toggled");
-	});
-</script>
+<script src="/scripts/common/common.js"></script>
 <footer>
 	<div class="container">
 		<div class="row">
