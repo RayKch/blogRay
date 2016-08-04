@@ -28,7 +28,7 @@
 			<a href="#">Contact</a>
 		</li>
 		<li>
-			<a href="#" class="header-menu-btn">Close</a>
+			<a href="#" class="side-menu-close-btn">Close</a>
 		</li>
 	</ul>
 </div>
