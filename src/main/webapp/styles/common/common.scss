@@ -45,6 +45,13 @@ html {
 
 .intro-header {
   background-image: url('/image/plugin/home-bg.jpg');
+
+  .site-heading {
+    a {
+      color:#fff;
+      text-decoration: none;
+    }
+  }
 }
 
 #wrapper {
@@ -98,10 +105,10 @@ html {
     width:150px;
     height:150px;
     border:1px solid #eddeed;
-    background-image: url('/image/love/my_love.jpg');
+    background-image: url('/image/profile/profile_img.jpg');
     background-repeat: no-repeat;
     background-size: 180px 145px;
-    background-position: 80% 40%;
+    background-position: 1% 40%;
     background-color: #adadad;
     -moz-border-radius: 50px;
     -webkit-border-radius: 50px;
@@ -130,6 +137,16 @@ html {
   overflow-style: auto;
   overflow: auto;
   box-shadow: -10px -10px 13px rgba(246, 246, 246, 0.4);
+
+  ul {
+    li {
+      list-style: none;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
 }
 
 #BackDrop {

@@ -22,3 +22,7 @@ $('.scrollable-wrapper').scroll(function(){
 	var height = $('.scrollable-wrapper').scrollTop();
 	height > 0 ? $('#TopButton').show() : $('#TopButton').hide();
 });
+
+$(document).ready(function() {
+
+});
