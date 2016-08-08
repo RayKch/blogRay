@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<hr>
 <script src="/scripts/plugin/jquery.js"></script>
 <script src="/scripts/plugin/bootstrap.min.js"></script>
 <script src="/scripts/plugin/clean-blog.min.js"></script>

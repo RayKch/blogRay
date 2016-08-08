@@ -70,7 +70,6 @@
 				</div>
 			</div>
 		</div>
-		<hr>
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
