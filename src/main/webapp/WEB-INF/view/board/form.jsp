@@ -17,12 +17,22 @@
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 					<form method="post">
 						<div class="form-group">
-							<label for="email">제목</label>
-							<input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요">
+							<label for="boardManageSeq">카테고리</label>
+							<select id="boardManageSeq" name="boardManageSeq" class="form-control">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select>
 						</div>
 						<div class="form-group">
-							<label>내용</label>
-							<textarea class="form-control" rows="3"></textarea>
+							<label for="title">제목</label>
+							<input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
+						</div>
+						<div class="form-group">
+							<label for="content">내용</label>
+							<textarea class="form-control" id="content" name="content" rows="5"></textarea>
 						</div>
 						<button type="submit" class="btn btn-info pull-right">제출</button>
 					</form>
