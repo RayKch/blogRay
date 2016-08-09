@@ -7,7 +7,6 @@
 
 <body>
 <div id="wrapper">
-	<%@ include file="/WEB-INF/view/include/navigation.jsp" %>
 	<%@ include file="/WEB-INF/view/include/side_menu.jsp" %>
 	<div class="scrollable-wrapper">
 		<%@ include file="/WEB-INF/view/include/header_hero.jsp" %>
