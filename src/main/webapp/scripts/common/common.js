@@ -1,7 +1,7 @@
 var SideUtil = {
 	show:function() {
 		$('body').removeClass('menu-close').addClass('menu-open');
-		$('.scrollable-wrapper').css({'overflow':'hidden'});
+		$('.scrollable-wrapper').css({'overflow':'hidden'}).removeClass('wrapper-left-clear').addClass('wrapper-left-move');
 	}
 	, hide:function() {
 		if($('body').hasClass('menu-open')){
@@ -11,7 +11,7 @@ var SideUtil = {
 					$('body').removeClass('menu-open menu-close');
 				}, 50);
 			});
-			$('.scrollable-wrapper').css({'overflow':'auto'});
+			$('.scrollable-wrapper').css({'overflow':'auto'}).removeClass('wrapper-left-move').addClass('wrapper-left-clear');
 		}
 	}
 }

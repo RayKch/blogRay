@@ -32,7 +32,7 @@ html {
   float: right;
   margin:8px 15px 8px 0;
   border-radius:4px;
-  z-index:10;
+  z-index:3;
 
   i.fa-bars {
     color:#fff;
@@ -197,6 +197,20 @@ html {
   }
 }
 
+.wrapper-left-move {
+  margin-left: -250px;
+  -webkit-animation: MenuOpenRightAnimation 0.3s ease-in-out;
+  -ms-animation: MenuOpenRightAnimation 0.3s ease-in-out;
+  animation: MenuOpenRightAnimation 0.3s ease-in-out;
+}
+
+.wrapper-left-clear {
+  -webkit-animation: BodyClearAnimation 0.3s ease-in-out;
+  -ms-animation: BodyClearAnimation 0.3s ease-in-out;
+  animation: BodyClearAnimation 0.3s ease-in-out;
+
+}
+
 @-webkit-keyframes MenuOpenRightAnimation {
   0% {
     -webkit-transform: translate3d(250px, 0, 0);
@@ -279,6 +293,28 @@ html {
   0% {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@-webkit-keyframes BodyClearAnimation {
+  0% {
+    -webkit-transform: translate3d(-250px, 0, 0);
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes BodyClearAnimation {
+  0% {
+    -webkit-transform: translate3d(-250px, 0, 0);
+    transform: translate3d(-250px, 0, 0);
   }
 
   100% {
