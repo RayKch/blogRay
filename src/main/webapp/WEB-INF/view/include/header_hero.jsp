@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<header class="intro-header">
+<header class="intro-header" style="background-image: url('/image/main/summer/home-bg.jpg');">
 	<div class="navigation-menu-btn">
 		<i class="fa fa-bars fa-2x pointer" onclick="SideUtil.show();"></i>
 	</div>
