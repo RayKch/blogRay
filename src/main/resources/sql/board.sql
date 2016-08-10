@@ -1,17 +1,7 @@
-/* 블로그 게시판 관리 */
-CREATE TABLE `ch_board_manage` (
- `seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '번호',
- `title` varchar(300) NOT NULL COMMENT '게시판',
- `description` text NOT NULL COMMENT '게시판 설명',
- `reg_date` int(11) NULL COMMENT '등록일',
- `mod_date` int(11) NULL COMMENT '수정일',
- PRIMARY KEY (`seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 게시판 관리';
-
 /* 블로그 게시판(일반게시판은 가입자만 사용) */
 CREATE TABLE `ch_board` (
  `seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '번호',
- `board_manage_seq` int(11) NOT NULL COMMENT '블로그 게시판 관리 번호',
+ `category_seq` int(11) NOT NULL COMMENT '블로그 카테고리 번호',
  `member_seq` int(11) NOT NULL COMMENT '회원 번호',
  `title` varchar(300) NOT NULL COMMENT '제목',
  `content` text NOT NULL COMMENT '내용',
@@ -21,7 +11,7 @@ CREATE TABLE `ch_board` (
  `reg_date` int(11) NULL COMMENT '등록일',
  `mod_date` int(11) NULL COMMENT '수정일',
  PRIMARY KEY (`seq`),
- FOREIGN KEY(`board_manage_seq`) REFERENCES ch_board_manage(seq) ON DELETE CASCADE,
+ FOREIGN KEY(`category_seq`) REFERENCES ch_category(seq) ON DELETE CASCADE,
  FOREIGN KEY(`member_seq`) REFERENCES ch_user(seq) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 게시판';
 
