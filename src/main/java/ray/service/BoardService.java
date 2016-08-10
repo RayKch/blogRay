@@ -12,7 +12,7 @@ import ray.repository.BoardDao;
 @Slf4j
 @Service
 public class BoardService {
-	@Autowired
-	@Setter
-	private BoardDao boardDao;
+//	@Autowired
+//	@Setter
+//	private BoardDao boardDao;
 }

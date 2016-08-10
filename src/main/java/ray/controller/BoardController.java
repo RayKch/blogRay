@@ -13,8 +13,8 @@ import ray.service.BoardService;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	@Autowired
-	private BoardService boardService;
+//	@Autowired
+//	private BoardService boardService;
 
 	@RequestMapping("/form")
 	public String form() {

@@ -18,8 +18,8 @@ import ray.util.JsonHelper;
 @Controller
 @RequestMapping("/category")
 public class CategoryController {
-	@Autowired
-	private CategoryService categoryService;
+//	@Autowired
+//	private CategoryService categoryService;
 
 	@RequestMapping("/form")
 	public String form() {
@@ -30,8 +30,8 @@ public class CategoryController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public String getCategoryList(CategoryParamVo vo) {
 		PagingResultVo resultVo = new PagingResultVo();
-		resultVo.setTotal(categoryService.getListTotalCount(vo));
-		resultVo.setList( categoryService.getList(vo) );
+//		resultVo.setTotal(categoryService.getListTotalCount(vo));
+//		resultVo.setList( categoryService.getList(vo) );
 
 		return JsonHelper.render(resultVo);
 	}

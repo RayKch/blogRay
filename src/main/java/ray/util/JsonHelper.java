@@ -30,16 +30,16 @@ public class JsonHelper {
 		try {
 			return mapper.writeValueAsString(vo);
 		} catch (JsonGenerationException e) {
-			log.error("Json을 만들 수 없었습니다 (JsonGenerationException)");
-			log.error(e.getMessage());
+//			log.error("Json을 만들 수 없었습니다 (JsonGenerationException)");
+//			log.error(e.getMessage());
 			return "{\"error\":\""+ e.getMessage().replaceAll("\"", "\\\"") +"\"}";
 		} catch (JsonMappingException e) {
-			log.error("Json을 매핑하던 도중 오류가 발생했습니다 (JsonMappingException)");
-			log.error(e.getMessage());
+//			log.error("Json을 매핑하던 도중 오류가 발생했습니다 (JsonMappingException)");
+//			log.error(e.getMessage());
 			return "{\"error\":\""+ e.getMessage().replaceAll("\"", "\\\"") +"\"}";
 		} catch (IOException e) {
-			log.error("입출력 도중 오류가 발생했습니다 (IOException)");
-			log.error(e.getMessage());
+//			log.error("입출력 도중 오류가 발생했습니다 (IOException)");
+//			log.error(e.getMessage());
 			return "{\"error\":\""+ e.getMessage().replaceAll("\"", "\\\"") +"\"}";
 		}
 	}

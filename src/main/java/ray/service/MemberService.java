@@ -12,7 +12,7 @@ import ray.repository.MemberDao;
 @Slf4j
 @Service
 public class MemberService {
-	@Autowired
-	@Setter
-	private MemberDao memberDao;
+//	@Autowired
+//	@Setter
+//	private MemberDao memberDao;
 }

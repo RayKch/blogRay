@@ -28,7 +28,7 @@ public class CommandUtil {
 			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			String line;
 			while((line=br.readLine())!=null){
-				log.debug(line);
+//				log.debug(line);
 				if(!"".equals(sb.toString())) {
 					sb.append("\n");
 				}

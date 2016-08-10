@@ -55,7 +55,7 @@ public class IpUtil {
 			mac = nwi.getHardwareAddress();
 		} catch(Exception e) {}
 
-		log.debug("mac-address : " + mac);
+//		log.debug("mac-address : " + mac);
 
 		if(mac == null) {
 			// linux일 경우
@@ -65,7 +65,7 @@ public class IpUtil {
 			while (true) {
 				String line = in.readLine();
 				if (line == null) break;
-				log.debug(line);
+//				log.debug(line);
 
 				Pattern p = Pattern.compile(".*([\\da-fA-F]{2}:[\\da-fA-F]{2}:[\\da-fA-F]{2}:[\\da-fA-F]{2}:[\\da-fA-F]{2}:[\\da-fA-F]{2}).*");
 				Matcher m = p.matcher(line);

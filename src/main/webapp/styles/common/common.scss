@@ -319,7 +319,7 @@ button.btn {
 }
 
 @-webkit-keyframes BodyClearAnimation {
-  1% {
+  0% {
     -webkit-transform: translate3d(-250px, 0, 0);
   }
 
@@ -329,7 +329,7 @@ button.btn {
 }
 
 @keyframes BodyClearAnimation {
-  1% {
+  0% {
     -webkit-transform: translate3d(-250px, 0, 0);
     transform: translate3d(-250px, 0, 0);
   }

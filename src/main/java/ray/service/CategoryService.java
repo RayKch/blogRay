@@ -12,7 +12,7 @@ import ray.repository.CategoryDao;
 @Slf4j
 @Service
 public class CategoryService {
-	@Autowired
-	@Setter
-	private CategoryDao categoryDao;
+//	@Autowired
+//	@Setter
+//	private CategoryDao categoryDao;
 }
