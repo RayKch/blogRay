@@ -18,11 +18,7 @@
 						<div class="form-group">
 							<label for="boardManageSeq">카테고리</label>
 							<select id="boardManageSeq" name="boardManageSeq" class="form-control">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
+								<option value="">- 카테고리를 선택하세요 -</option>
 							</select>
 						</div>
 						<div class="form-group">
