@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Slf4j
 @Controller
+@RequestMapping("/board")
 public class BoardController {
-	@RequestMapping("/board/form")
+	@RequestMapping("/form")
 	public String form() {
 		return "/board/form.jsp";
 	}
