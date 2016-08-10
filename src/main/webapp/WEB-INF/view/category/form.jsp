@@ -23,6 +23,9 @@
 				<div class="area-wrapper">
 					<div class="area-left">
 						<label>카테고리 목록</label>
+						<div class="alert alert-info alert-wrap">
+							카테고리명을 Drag & Drop으로 순서를 변경하고 <button type="button" class="btn btn-success btn-sm">순서 변경</button>
+							버튼을 클릭하여 변경정보가 변경됩니다. <br/> <span style="color:red">순서변경은 PC에서만 가능합니다.</span></div>
 						<div style="border:1px solid #ddd; border-radius: 10px">
 							<table class="category-list-table">
 								<colgroup>
@@ -55,11 +58,8 @@
 										</td>
 									</tr>
 									<tr>
-										<%--<td class="text-warning text-center" colspan="2">--%>
-										<%--카테고리를 추가해주세요--%>
-										<%--</td>--%>
 										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JAVA
+											HTML
 										</td>
 										<td class="text-center">
 											<button type="button" class="btn btn-warning btn-sm">수정</button>
@@ -67,59 +67,8 @@
 										</td>
 									</tr>
 									<tr>
-										<%--<td class="text-warning text-center" colspan="2">--%>
-										<%--카테고리를 추가해주세요--%>
-										<%--</td>--%>
 										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JSP
-										</td>
-										<td class="text-center">
-											<button type="button" class="btn btn-warning btn-sm">수정</button>
-											<button type="button" class="btn btn-danger btn-sm">삭제</button>
-										</td>
-									</tr>
-									<tr>
-										<%--<td class="text-warning text-center" colspan="2">--%>
-										<%--카테고리를 추가해주세요--%>
-										<%--</td>--%>
-										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JAVA
-										</td>
-										<td class="text-center">
-											<button type="button" class="btn btn-warning btn-sm">수정</button>
-											<button type="button" class="btn btn-danger btn-sm">삭제</button>
-										</td>
-									</tr>
-									<tr>
-										<%--<td class="text-warning text-center" colspan="2">--%>
-										<%--카테고리를 추가해주세요--%>
-										<%--</td>--%>
-										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JSP
-										</td>
-										<td class="text-center">
-											<button type="button" class="btn btn-warning btn-sm">수정</button>
-											<button type="button" class="btn btn-danger btn-sm">삭제</button>
-										</td>
-									</tr>
-									<tr>
-										<%--<td class="text-warning text-center" colspan="2">--%>
-										<%--카테고리를 추가해주세요--%>
-										<%--</td>--%>
-										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JAVA
-										</td>
-										<td class="text-center">
-											<button type="button" class="btn btn-warning btn-sm">수정</button>
-											<button type="button" class="btn btn-danger btn-sm">삭제</button>
-										</td>
-									</tr>
-									<tr>
-										<%--<td class="text-warning text-center" colspan="2">--%>
-										<%--카테고리를 추가해주세요--%>
-										<%--</td>--%>
-										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JSP
+											JAVASCRIPT
 										</td>
 										<td class="text-center">
 											<button type="button" class="btn btn-warning btn-sm">수정</button>
