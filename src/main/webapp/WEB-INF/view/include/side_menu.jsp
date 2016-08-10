@@ -6,45 +6,9 @@
 	</div>
 	<div id="circle"></div>
 	<ul>
-		<li>menu1</li>
-		<li>menu2</li>
-		<li><a href="/board/form">Post Write</a></li>
-		<li><a href="/category/form">Category Manage</a></li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
-		<li>test</li>
+		<li><a href="/board/form">포스트 작성</a></li>
+		<li><a href="/category/form">카테고리 관리</a></li>
+
 	</ul>
 </div>
 <div id="BackDrop" onclick="SideUtil.hide();"></div>
