@@ -37,6 +37,14 @@ html {
   overflow: hidden;
 }
 
+button.btn {
+  border-radius: 5px;
+}
+
+.pointer {
+  cursor:pointer;
+}
+
 .navigation-menu-btn {
   position:relative;
   float: right;
@@ -73,10 +81,6 @@ html {
     -webkit-backface-visibility: hidden;
     overflow: auto;
   }
-}
-
-.pointer {
-  cursor:pointer;
 }
 
 .top-button {
