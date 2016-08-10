@@ -12,7 +12,7 @@ CREATE TABLE `ch_board` (
  `mod_date` int(11) NULL COMMENT '수정일',
  PRIMARY KEY (`seq`),
  FOREIGN KEY(`category_seq`) REFERENCES ch_category(seq) ON DELETE CASCADE,
- FOREIGN KEY(`member_seq`) REFERENCES ch_user(seq) ON DELETE CASCADE
+ FOREIGN KEY(`member_seq`) REFERENCES ch_member(seq) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 게시판';
 
 
@@ -30,5 +30,5 @@ CREATE TABLE `ch_board_comment` (
  `mod_date` int(11) NULL COMMENT '수정일',
  PRIMARY KEY (`seq`),
  FOREIGN KEY(`board_seq`) REFERENCES ch_board(seq) ON DELETE CASCADE,
- FOREIGN KEY(`member_seq`) REFERENCES ch_user(seq) ON DELETE CASCADE
+ FOREIGN KEY(`member_seq`) REFERENCES ch_member(seq) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 게시판 댓글';

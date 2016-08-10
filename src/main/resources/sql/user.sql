@@ -1,5 +1,5 @@
 /* 가입 회원(댓글은 모두 가능) */
-CREATE TABLE `ch_user` (
+CREATE TABLE `ch_member` (
    `seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '번호',
    `id` varchar(300) NOT NULL COMMENT '아이디(이메일)',
    `password` varchar(300) NOT NULL COMMENT '비밀번호',
