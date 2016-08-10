@@ -11,7 +11,7 @@ var SideUtil = {
 					$('body').removeClass('menu-open menu-close');
 				}, 50);
 			});
-			$('.scrollable-wrapper').css({'overflow':'auto'}).removeClass('wrapper-left-move').addClass('wrapper-left-clear');
+			$('.scrollable-wrapper').removeClass('wrapper-left-move').addClass('wrapper-left-clear').css({'overflow':'auto'});
 		}
 	}
 }

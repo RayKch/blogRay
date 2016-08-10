@@ -302,7 +302,7 @@ html {
 }
 
 @-webkit-keyframes BodyClearAnimation {
-  0% {
+  1% {
     -webkit-transform: translate3d(-250px, 0, 0);
   }
 
@@ -312,7 +312,7 @@ html {
 }
 
 @keyframes BodyClearAnimation {
-  0% {
+  1% {
     -webkit-transform: translate3d(-250px, 0, 0);
     transform: translate3d(-250px, 0, 0);
   }
