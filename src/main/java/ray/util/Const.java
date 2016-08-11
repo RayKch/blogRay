@@ -14,6 +14,15 @@ public class Const {
 	/** ajax호출 후에 메시지를 전달하는 페이지 */
 	public final static String AJAX_PAGE = "/_proc/ajax_message.jsp";
 
+	/** (등급) 최고 관리자 */
+	public final static int GRADE_SUPER_ADMIN = 1;
+
+	/** (등급) 작업자 */
+	public final static int GRADE_WORKER = 9;
+
+	/** (등급) 미승인 */
+	public final static int GRADE_NO_APPROVAL = 10;
+
 	/** Aria 암호화 키 (반드시 32byte가 되어야만 한다) */
 	public final static byte[] ARIA_KEY = {
 			(byte) -20,

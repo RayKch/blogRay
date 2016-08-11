@@ -11,5 +11,5 @@ import java.util.List;
  */
 @Repository
 public interface CategoryDao {
-	public List<CategoryVo> getList(CategoryParamVo vo);
+	public int insertVo(CategoryParamVo vo);
 }

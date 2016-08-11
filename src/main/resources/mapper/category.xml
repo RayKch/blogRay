@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="category">
-	<select id="getList" parameterType="ray.data.CategoryVo" resultType="ray.data.param.CategoryParamVo">
-	</select>
+	<insert id="insertVo" parameterType="ray.data.param.CategoryParamVo">
+		INSERT INTO ch_category (
+			member_seq
+			, title
+			, description
+			, reg_date
+		) VALUES (
+			#{memberSeq}
+			, #{title}
+			, #{description}
+			, NOW()
+		)
+	</insert>
 </mapper>

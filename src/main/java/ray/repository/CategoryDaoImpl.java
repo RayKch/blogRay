@@ -19,7 +19,12 @@ public class CategoryDaoImpl implements CategoryDao {
 	private SqlSession sqlSession;
 
 	@Override
-	public List<CategoryVo> getList(CategoryParamVo vo) {
-		return sqlSession.selectList("category.getList", vo);
+	public int insertVo(CategoryParamVo vo) {
+		return sqlSession.insert("category.insertVo", vo);
 	}
+
+	//	@Override
+//	public List<CategoryVo> getList(CategoryParamVo vo) {
+//		return sqlSession.selectList("category.getList", vo);
+//	}
 }

@@ -80,17 +80,15 @@
 						</div>
 					</div>
 					<div class="area-right">
-						<form method="post">
-							<div class="form-group">
-								<label for="title">카테고리명</label>
-								<input type="text" class="form-control" id="title" name="title" placeholder="카테고리명을 입력하세요">
-							</div>
-							<div class="form-group">
-								<label for="description">카테고리 설명</label>
-								<input type="text" class="form-control" id="description" name="description" placeholder="카테고리 설명을 입력하세요">
-							</div>
-							<div class="text-center"><button type="submit" class="btn btn-info">등록</button></div>
-						</form>
+						<div class="form-group">
+							<label for="title">카테고리명</label>
+							<input type="text" class="form-control" id="title" name="title" placeholder="카테고리명을 입력하세요" alt="카테고리명">
+						</div>
+						<div class="form-group">
+							<label for="description">카테고리 설명</label>
+							<input type="text" class="form-control" id="description" name="description" placeholder="카테고리 설명을 입력하세요" alt="카테고리설명">
+						</div>
+						<div class="text-center"><button type="button" id="categoryInsertBtn" class="btn btn-info btn-lg">등록</button></div>
 					</div>
 				</div>
 			</div>
@@ -102,6 +100,10 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#tbodyList').tableDnD({onDragClass:"drag"});
+
+		$('#categoryInsertBtn').on('click', function() {
+			CategorySubmitUtil.submitProc();
+		});
 	});
 
 	var CategoryUtil = {
@@ -112,6 +114,54 @@
 
 			$(obj).parents("tbody").find(".tr-current").removeClass("tr-current");
 			$(obj).addClass("tr-current");
+		}
+	}
+
+	var CategorySubmitUtil = {
+		validation:function() {
+			var flag = true;
+			$('.area-right').find("input[alt], textarea[alt], select[alt]").each( function() {
+				if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
+
+					alert($(this).attr("alt") + "란을 채워주세요.");
+					flag = false;
+					$(this).focus();
+				}
+			});
+			return flag;
+		}
+		, mappingVo:function() {
+			var data;
+			data = {
+				'title':$('#title').val()
+				, 'description':$('#description').val()
+			}
+			return data;
+		}
+		, formReset:function() {
+			$('#title').val('');
+			$('#description').val('');
+		}
+		, submitProc:function() {
+			CategorySubmitUtil.validation();
+
+			$.ajax({
+				url:"/category/insert/proc",
+				type:"post",
+				data:CategorySubmitUtil.mappingVo(),
+				dataType:"text",
+				success:function(data) {
+					if(data === 'success') {
+						alert('등록되었습니다.');
+					} else {
+						alert('실패하였습니다.');
+					}
+					CategorySubmitUtil.formReset();
+				},
+				error:function(error) {
+					console.log( error.status + ":" +error.statusText );
+				}
+			});
 		}
 	}
 </script>
