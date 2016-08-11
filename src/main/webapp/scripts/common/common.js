@@ -28,5 +28,7 @@ $('.scrollable-wrapper').scroll(function(){
 });
 
 $(document).ready(function() {
-
+	$('#loginBtn').on('click', function() {
+		$('#loginModal').modal();
+	});
 });

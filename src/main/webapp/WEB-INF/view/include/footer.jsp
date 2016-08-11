@@ -5,6 +5,7 @@
 <script src="/scripts/plugin/bootstrap.min.js"></script>
 <script src="/scripts/plugin/clean-blog.min.js"></script>
 <script src="/scripts/common/common.js"></script>
+<%@ include file="/WEB-INF/view/include/login_modal.jsp" %>
 <footer>
 	<div class="container">
 		<div class="row">
