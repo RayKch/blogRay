@@ -8,8 +8,8 @@ CREATE TABLE `ch_board` (
  `recommend` int(11) NULL COMMENT '추천',
  `un_recommend` int(11) NULL COMMENT '비추천',
  `view_cnt` int(11) NULL COMMENT '조회수',
- `reg_date` int(11) NULL COMMENT '등록일',
- `mod_date` int(11) NULL COMMENT '수정일',
+ `reg_date` DATETIME NULL COMMENT '등록일',
+ `mod_date` DATETIME NULL COMMENT '수정일',
  PRIMARY KEY (`seq`),
  FOREIGN KEY(`category_seq`) REFERENCES ch_category(seq) ON DELETE CASCADE,
  FOREIGN KEY(`member_seq`) REFERENCES ch_member(seq) ON DELETE CASCADE
@@ -26,8 +26,8 @@ CREATE TABLE `ch_board_comment` (
  `content` text NOT NULL COMMENT '내용',
  `recommend` int(11) NULL COMMENT '추천',
  `un_recommend` int(11) NULL COMMENT '비추천',
- `reg_date` int(11) NULL COMMENT '등록일',
- `mod_date` int(11) NULL COMMENT '수정일',
+ `reg_date` DATETIME NULL COMMENT '등록일',
+ `mod_date` DATETIME NULL COMMENT '수정일',
  PRIMARY KEY (`seq`),
  FOREIGN KEY(`board_seq`) REFERENCES ch_board(seq) ON DELETE CASCADE,
  FOREIGN KEY(`member_seq`) REFERENCES ch_member(seq) ON DELETE CASCADE

@@ -4,7 +4,7 @@ CREATE TABLE `ch_member` (
    `id` varchar(300) NOT NULL COMMENT '아이디(이메일)',
    `password` varchar(300) NOT NULL COMMENT '비밀번호',
    `nickname` varchar(300) NOT NULL COMMENT '닉네임',
-   `reg_date` int(11) NULL COMMENT '등록일',
-   `mod_date` int(11) NULL COMMENT '수정일',
+   `reg_date` DATETIME NULL COMMENT '등록일',
+   `mod_date` DATETIME NULL COMMENT '수정일',
    PRIMARY KEY (`seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '가입 회원';
