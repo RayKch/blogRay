@@ -39,7 +39,7 @@ var CategorySubmitUtil = {
 			callback();
 		}
 	}
-	, submitProc:function() {
+	, proc:function() {
 		$.ajax({
 			url:"/category/insert/proc",
 			type:"post",
@@ -64,6 +64,6 @@ $(document).ready(function() {
 	$('#tbodyList').tableDnD({onDragClass:"drag"});
 
 	$('#categoryInsertBtn').on('click', function() {
-		CategorySubmitUtil.submit(CategorySubmitUtil.submitProc);
+		CategorySubmitUtil.submit(CategorySubmitUtil.proc);
 	});
 });
