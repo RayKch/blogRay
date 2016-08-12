@@ -115,4 +115,21 @@ public class StringUtil {
 		}
 		return license.matches("^([0-9a-fA-F]{2}:){5}([0-9a-fA-F]{2}\\^\\d+\\^\\d+)$");
 	}
+
+	/**
+	 * SHA-2 암호화 처리
+	 * @param str
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 */
+	public static String encryptSha2(String str) throws NoSuchAlgorithmException {
+		StringBuffer sb = new StringBuffer();
+		MessageDigest sh = MessageDigest.getInstance("SHA-256");
+		sh.update(str.getBytes());
+		byte byteData[] = sh.digest();
+		for(int i = 0 ; i < byteData.length ; i++){
+			sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
+		}
+		return sb.toString();
+	}
 }
