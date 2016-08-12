@@ -9,7 +9,7 @@
 			<div class="modal-body">
 				<form>
 					<div class="form-group">
-						<label for="id" class="control-label">이메일</label>
+						<label for="id" class="control-label">아이디</label>
 						<input type="text" class="form-control" id="id" name="id" placeholder="이메일을 입력하세요">
 					</div>
 					<div class="form-group">
