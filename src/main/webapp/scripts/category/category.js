@@ -23,8 +23,7 @@ var CategorySubmitUtil = {
 		return flag;
 	}
 	, mappingVo:function() {
-		var data;
-		data = {
+		var data = {
 			'title':$('#title').val()
 			, 'description':$('#description').val()
 		}
