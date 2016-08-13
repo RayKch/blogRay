@@ -9,9 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Slf4j
 public class LoginVo {
+	private String seq;
 	private String id;
 	private String password;
-	private String loginSeq;
 	private String nickname;
 	private String loginToken;
 	private String lastIp;

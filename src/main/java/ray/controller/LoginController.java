@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ray.data.LoginVo;
 import ray.data.param.LoginParamVo;
-import ray.service.CategoryService;
 import ray.service.LoginService;
 import ray.util.Const;
 import ray.util.StringUtil;
@@ -31,7 +30,7 @@ public class LoginController {
 	private LoginService loginService;
 
 	@RequestMapping("/proc")
-	public String proc(LoginParamVo vo, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String proc(LoginParamVo vo, HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
 			vo.setPassword(StringUtil.encryptSha2(vo.getPassword()));
 		} catch(NoSuchAlgorithmException e) {
@@ -46,7 +45,25 @@ public class LoginController {
 		}
 
 		/* 로그인 처리 */
-		doLogin(request, response, rvo);
+		loginProc(request, response, rvo);
+		model.addAttribute("message", "success");
+		return Const.AJAX_PAGE;
+	}
+
+	@RequestMapping("/logout/proc")
+	public String logout(HttpServletResponse response, HttpSession session, Model model) {
+		/* 쿠키 삭제 */
+		Cookie cookie = new Cookie("loginToken", "");
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		/* 세션 파기 */
+		if( session != null ) {
+			session.invalidate();
+			session = null;
+		}
+		/* 페이지 이동 */
+		model.addAttribute("message", "success");
 		return Const.AJAX_PAGE;
 	}
 
@@ -55,17 +72,18 @@ public class LoginController {
 	 * 이 메서드는 사용자 검증을 하지 않는다
 	 * 올바른 사용자인지 아닌지 판별한 후에 vo를 넘기도록 구현해야 한다
 	 */
-	public void doLogin(HttpServletRequest request, HttpServletResponse response, LoginVo vo) {
+	public void loginProc(HttpServletRequest request, HttpServletResponse response, LoginVo vo) {
 		HttpSession session = request.getSession(true);
 		session.setMaxInactiveInterval(60 * 60 * 2);
-		session.setAttribute("loginSeq", vo.getLoginSeq());
+		session.setAttribute("loginSeq", vo.getSeq());
 		session.setAttribute("loginId", vo.getId());
 		session.setAttribute("nickname", vo.getNickname());
 
 		/* 로그인 상태 정보를 변경한다 */
-		vo.setLastIp(request.getRemoteAddr());
-		vo.setLoginToken(UUID.randomUUID().toString());
 		LoginParamVo paramVo = new LoginParamVo();
+		paramVo.setSeq(vo.getSeq());
+		paramVo.setLastIp(request.getRemoteAddr());
+		paramVo.setLoginToken(UUID.randomUUID().toString());
 		loginService.updateVo(paramVo); //DB 입력
 
 		/* 쿠키에 로그인 토큰과 로그인 타입을 담는다 */

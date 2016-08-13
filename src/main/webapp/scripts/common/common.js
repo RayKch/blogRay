@@ -28,7 +28,25 @@ $('.scrollable-wrapper').scroll(function(){
 });
 
 var LoginSubmitUtil = {
-	validation:function() {
+	loginBtnHandler:function() {
+		//view modal
+		$('#loginModalBtn').on('click', function() {
+			$('#loginModal').modal();
+		});
+
+		//logout
+		$('#logoutBtn').on('click', function() {
+			if(confirm('로그아웃 하시겠습니까?')) {
+				LoginSubmitUtil.logoutProc();
+			}
+		});
+
+		//submit
+		$('#loginSubmitBtn').on('click', function() {
+			LoginSubmitUtil.submit(LoginSubmitUtil.loginProc);
+		});
+	}
+	, validation:function() {
 		var flag = true;
 		$('#loginModal').find("input[alt], textarea[alt], select[alt]").each( function() {
 			if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
@@ -56,7 +74,7 @@ var LoginSubmitUtil = {
 			callback();
 		}
 	}
-	, proc:function() {
+	, loginProc:function() {
 		$.ajax({
 			url:"/login/proc",
 			type:"post",
@@ -64,11 +82,29 @@ var LoginSubmitUtil = {
 			dataType:"text",
 			success:function(data) {
 				if(data === 'success') {
-					alert('login success!');
+					location.reload();
 				} else {
-					alert('login fail!');
+					alert('로그인이 실패하였습니다.');
 				}
 				LoginSubmitUtil.formReset();
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
+	}
+	, logoutProc:function() {
+		$.ajax({
+			url:"/login/logout/proc",
+			type:"post",
+			data:{},
+			dataType:"text",
+			success:function(data) {
+				if(data === 'success') {
+					location.reload();
+				} else {
+					alert('로그아웃이 실패하였습니다.');
+				}
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -78,11 +114,5 @@ var LoginSubmitUtil = {
 }
 
 $(document).ready(function() {
-	$('#loginModalBtn').on('click', function() {
-		$('#loginModal').modal();
-	});
-
-	$('#loginSubmitBtn').on('click', function() {
-		LoginSubmitUtil.submit(LoginSubmitUtil.proc);
-	});
+	LoginSubmitUtil.loginBtnHandler();
 });
