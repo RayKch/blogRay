@@ -3,7 +3,6 @@ package ray.data.validator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import ray.data.MemberVo;
 import ray.data.param.LoginParamVo;
 
 public class MemberLoginValidator implements Validator {

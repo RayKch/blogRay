@@ -37,12 +37,11 @@ public class LoginController {
 	@RequestMapping("/proc")
 	public String proc(LoginParamVo vo, HttpServletRequest request, HttpServletResponse response, Model model, BindingResult result) {
 		Map<String, Object> map = new HashMap<>();
+
 		new MemberLoginValidator().validate(vo, result);
 		if (result.hasErrors()) {
-			response.setStatus( HttpServletResponse.SC_BAD_REQUEST );
-			map.put("error", "bind error");
-			map.put("errorList", result.getAllErrors());
-			return JsonHelper.render(map);
+			model.addAttribute("message", result.getFieldError().getDefaultMessage());
+			return Const.AJAX_PAGE;
 		}
 
 		try {
