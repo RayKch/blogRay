@@ -1,5 +1,7 @@
 var SideUtil = {
-	show:function() {
+	loginSeq:0
+	, loginId:''
+	, show:function() {
 		$('body').removeClass('menu-close').addClass('menu-open');
 		$('.scrollable-wrapper').css({'overflow':'hidden'}).removeClass('wrapper-left-clear').addClass('wrapper-left-move');
 	}
@@ -23,7 +25,7 @@ var SideUtil = {
 }
 
 var SideCategoryUtil = {
-	renderList:function(loginSeq, loginId) {
+	renderList:function() {
 		$.ajax({
 			url:"/category/list",
 			type:"get",
@@ -34,7 +36,8 @@ var SideCategoryUtil = {
 				if(list.length > 0) {
 					$("#ulList").html($("#liTemplate").tmpl(list));
 				}
-				if(loginSeq === '1' && loginId === 'rlacksgh08@naver.com') {
+
+				if(SideUtil.loginSeq === '1' && SideUtil.loginId === 'rlacksgh08@naver.com') {
 					var html = '<li><a href="/board/form">포스트 작성</a></li><li><a href="/category/form">카테고리 관리</a></li>';
 					$("#ulList").prepend(html);
 				}

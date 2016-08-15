@@ -8,7 +8,9 @@
 <script src="/scripts/common/common.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		SideCategoryUtil.renderList('${sessionScope.loginSeq}', '${sessionScope.loginId}');
+		SideUtil.loginSeq = "${sessionScope.loginSeq}";
+		SideUtil.loginId = "${sessionScope.loginId}";
+		SideCategoryUtil.renderList();
 	});
 </script>
 <%@ include file="/WEB-INF/view/include/login_modal.jsp" %>
