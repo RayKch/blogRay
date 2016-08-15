@@ -7,7 +7,9 @@
 <script src="/scripts/plugin/clean-blog.min.js"></script>
 <script src="/scripts/common/common.js"></script>
 <script type="text/javascript">
-	SideCategoryUtil.renderList('${sessionScope.loginSeq}', '${sessionScope.loginId}');
+	$(document).ready(function() {
+		SideCategoryUtil.renderList('${sessionScope.loginSeq}', '${sessionScope.loginId}');
+	});
 </script>
 <%@ include file="/WEB-INF/view/include/login_modal.jsp" %>
 <footer>
