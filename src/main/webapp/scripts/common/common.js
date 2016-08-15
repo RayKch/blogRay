@@ -22,6 +22,31 @@ var SideUtil = {
 	}
 }
 
+var SideCategoryUtil = {
+	renderList:function(loginSeq, loginId) {
+		$.ajax({
+			url:"/category/list",
+			type:"get",
+			data:{},
+			dataType:"text",
+			success:function(data) {
+				var list = $.parseJSON(data);
+				if(list.length > 0) {
+					$("#ulList").html($("#liTemplate").tmpl(list));
+
+					if(loginSeq === '1' && loginId === 'rlacksgh08@naver.com') {
+						var html = '<li><a href="/board/form">포스트 작성</a></li><li><a href="/category/form">카테고리 관리</a></li>';
+						$("#ulList").prepend(html);
+					}
+				}
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
+	}
+}
+
 $('.scrollable-wrapper').scroll(function(){
 	var height = $('.scrollable-wrapper').scrollTop();
 	height > 0 ? $('#TopButton').show() : $('#TopButton').hide();

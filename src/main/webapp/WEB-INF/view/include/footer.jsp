@@ -2,9 +2,13 @@
 <hr>
 <iframe id="zeroframe" name="zeroframe" src="about:blank" width="0" height="0" frameborder="0"></iframe>
 <script src="/scripts/plugin/jquery.js"></script>
+<script src="/scripts/plugin/jquery.tmpl.js"></script>
 <script src="/scripts/plugin/bootstrap.min.js"></script>
 <script src="/scripts/plugin/clean-blog.min.js"></script>
 <script src="/scripts/common/common.js"></script>
+<script type="text/javascript">
+	SideCategoryUtil.renderList('${sessionScope.loginSeq}', '${sessionScope.loginId}');
+</script>
 <%@ include file="/WEB-INF/view/include/login_modal.jsp" %>
 <footer>
 	<div class="container">
