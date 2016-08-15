@@ -84,7 +84,7 @@ var LoginSubmitUtil = {
 				if(data === 'success') {
 					location.reload();
 				} else {
-					alert('로그인이 실패하였습니다.');
+					alert(data);
 				}
 				LoginSubmitUtil.formReset();
 			},

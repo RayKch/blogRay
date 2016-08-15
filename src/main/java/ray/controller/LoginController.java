@@ -4,11 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ray.data.LoginVo;
 import ray.data.param.LoginParamVo;
+import ray.data.validator.MemberLoginValidator;
 import ray.service.LoginService;
 import ray.util.Const;
+import ray.util.JsonHelper;
 import ray.util.StringUtil;
 
 import javax.servlet.http.Cookie;
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -30,18 +35,27 @@ public class LoginController {
 	private LoginService loginService;
 
 	@RequestMapping("/proc")
-	public String proc(LoginParamVo vo, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String proc(LoginParamVo vo, HttpServletRequest request, HttpServletResponse response, Model model, BindingResult result) {
+		Map<String, Object> map = new HashMap<>();
+		new MemberLoginValidator().validate(vo, result);
+		if (result.hasErrors()) {
+			response.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+			map.put("error", "bind error");
+			map.put("errorList", result.getAllErrors());
+			return JsonHelper.render(map);
+		}
+
 		try {
 			vo.setPassword(StringUtil.encryptSha2(vo.getPassword()));
 		} catch(NoSuchAlgorithmException e) {
 			model.addAttribute("message", "비밀번호 암호화에 실패하였습니다.");
-			return Const.ALERT_PAGE;
+			return Const.AJAX_PAGE;
 		}
 
 		LoginVo rvo = loginService.getVo(vo);
 		if(rvo == null) {
 			model.addAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다");
-			return Const.ALERT_PAGE;
+			return Const.AJAX_PAGE;
 		}
 
 		/* 로그인 처리 */
