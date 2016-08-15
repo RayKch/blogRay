@@ -4,15 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ray.data.CategoryVo;
 import ray.data.PagingResultVo;
 import ray.data.param.CategoryParamVo;
+import ray.data.validator.CategoryInsertValidator;
+import ray.data.validator.MemberLoginValidator;
 import ray.service.CategoryService;
 import ray.util.Const;
 import ray.util.JsonHelper;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by BELL on 2016-08-10.
@@ -30,9 +35,14 @@ public class CategoryController {
 	}
 
 	@RequestMapping("/insert/proc")
-	public String insert(CategoryParamVo vo, Model model) {
-		/** 로그인을 구현하고나서 로그인 세션시퀀스를 박도록 해야한다. */
-		vo.setMemberSeq(1);
+	public String insert(CategoryParamVo vo, HttpSession session, Model model, BindingResult result) {
+		new CategoryInsertValidator().validate(vo, result);
+		if (result.hasErrors()) {
+			model.addAttribute("message", result.getFieldError().getDefaultMessage());
+			return Const.AJAX_PAGE;
+		}
+
+		vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
 
 		if(!categoryService.insertVo(vo)) {
 			model.addAttribute("message", "카테고리등록이 실패하였습니다.");
