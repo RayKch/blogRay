@@ -9,10 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Slf4j
 public class CategoryVo {
+	/** 시퀀스 */
+	private int seq;
 	/** 카테고리 명 */
 	private String title;
 	/** 카테고리 설명 */
 	private String description;
-	/** 회원번호 */
-	private int memberSeq;
 }

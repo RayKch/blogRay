@@ -18,6 +18,7 @@ import ray.util.Const;
 import ray.util.JsonHelper;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by BELL on 2016-08-10.
@@ -30,7 +31,11 @@ public class CategoryController {
 	private CategoryService categoryService;
 
 	@RequestMapping("/form")
-	public String form() {
+	public String form(HttpSession session, Model model) {
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다.");
+			return Const.BACK_PAGE;
+		}
 		return "/category/form.jsp";
 	}
 
@@ -52,13 +57,8 @@ public class CategoryController {
 		return Const.AJAX_PAGE;
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public String getCategoryList(CategoryParamVo vo) {
-		PagingResultVo resultVo = new PagingResultVo();
-//		resultVo.setTotal(categoryService.getListTotalCount(vo));
-//		resultVo.setList( categoryService.getList(vo) );
-
-		return JsonHelper.render(resultVo);
+	public @ResponseBody List<CategoryVo> list() {
+		return categoryService.getList();
 	}
 }

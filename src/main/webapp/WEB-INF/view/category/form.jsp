@@ -32,49 +32,22 @@
 									<col width="*"/>
 									<col width="35%"/>
 								</colgroup>
-								<tbody id="tbodyList">
-									<tr>
-										<%--<td class="text-warning text-center" colspan="2">--%>
-											<%--카테고리를 추가해주세요--%>
-										<%--</td>--%>
-										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JAVA
-										</td>
-										<td class="text-center">
-											<button type="button" class="btn btn-warning btn-sm">수정</button>
-											<button type="button" class="btn btn-danger btn-sm">삭제</button>
-										</td>
-									</tr>
+								<script id="tbodyTemplate" type="text/html">
 									<tr>
 										<%--<td class="text-warning text-center" colspan="2">--%>
 										<%--카테고리를 추가해주세요--%>
 										<%--</td>--%>
 										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JSP
+											<%="${title}"%>
 										</td>
 										<td class="text-center">
 											<button type="button" class="btn btn-warning btn-sm">수정</button>
 											<button type="button" class="btn btn-danger btn-sm">삭제</button>
 										</td>
 									</tr>
-									<tr>
-										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											HTML
-										</td>
-										<td class="text-center">
-											<button type="button" class="btn btn-warning btn-sm">수정</button>
-											<button type="button" class="btn btn-danger btn-sm">삭제</button>
-										</td>
-									</tr>
-									<tr>
-										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
-											JAVASCRIPT
-										</td>
-										<td class="text-center">
-											<button type="button" class="btn btn-warning btn-sm">수정</button>
-											<button type="button" class="btn btn-danger btn-sm">삭제</button>
-										</td>
-									</tr>
+								</script>
+								<tbody id="tbodyList">
+
 								</tbody>
 							</table>
 						</div>

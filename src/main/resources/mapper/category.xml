@@ -14,4 +14,13 @@
 			, NOW()
 		)
 	</insert>
+
+	<select id="getList" resultType="ray.data.CategoryVo">
+		SELECT
+			seq
+			, title
+			, description
+		FROM ch_category
+		WHERE 1=1
+	</select>
 </mapper>

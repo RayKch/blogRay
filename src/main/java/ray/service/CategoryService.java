@@ -10,6 +10,8 @@ import ray.data.CategoryVo;
 import ray.data.param.CategoryParamVo;
 import ray.repository.CategoryDao;
 
+import java.util.List;
+
 /**
  * Created by ChanPong on 2016-08-10.
  */
@@ -23,5 +25,9 @@ public class CategoryService {
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(CategoryParamVo vo) {
 		return categoryDao.insertVo(vo) > 0;
+	}
+
+	public List<CategoryVo> getList() {
+		return categoryDao.getList();
 	}
 }

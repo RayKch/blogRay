@@ -7,6 +7,25 @@ var CategoryUtil = {
 		$(obj).parents("tbody").find(".tr-current").removeClass("tr-current");
 		$(obj).addClass("tr-current");
 	}
+	, renderList:function() {
+		$.ajax({
+			url:"/category/list",
+			type:"get",
+			data:{},
+			dataType:"text",
+			success:function(data) {
+				var list = $.parseJSON(data);
+				if(list.length > 0) {
+					$("#tbodyList").html($("#tbodyTemplate").tmpl(list));
+				} else {
+					$("#tbodyList").html('<tr><td class="text-center" colspan="2">카테고리가 존재하지 않습니다.</td></tr>');
+				}
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
+	}
 }
 
 var CategorySubmitUtil = {
@@ -50,6 +69,7 @@ var CategorySubmitUtil = {
 				} else {
 					alert('실패하였습니다.');
 				}
+				CategoryUtil.renderList();
 				CategorySubmitUtil.formReset();
 			},
 			error:function(error) {
@@ -61,6 +81,8 @@ var CategorySubmitUtil = {
 
 $(document).ready(function() {
 	$('#tbodyList').tableDnD({onDragClass:"drag"});
+
+	CategoryUtil.renderList();
 
 	$('#categoryInsertBtn').on('click', function() {
 		CategorySubmitUtil.submit(CategorySubmitUtil.proc);
