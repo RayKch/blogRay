@@ -105,24 +105,26 @@ var CategorySubmitUtil = {
 
 var CategoryDeleteUtil = {
 	proc:function(seq) {
-		$.ajax({
-			url:"/category/delete/proc",
-			type:"post",
-			data:{'seq':seq},
-			dataType:"text",
-			success:function(data) {
-				if(data === 'success') {
-					alert('삭제되었습니다.');
-				} else {
-					alert('실패하였습니다.');
+		if(confirm('카테고리 삭제시 해당 카테고리에 등록된 게시물도 모두 삭제됩니다!!\n정말 삭제하시겠습니까?')) {
+			$.ajax({
+				url:"/category/delete/proc",
+				type:"post",
+				data:{'seq':seq},
+				dataType:"text",
+				success:function(data) {
+					if(data === 'success') {
+						alert('삭제되었습니다.');
+					} else {
+						alert('실패하였습니다.');
+					}
+					CategoryUtil.renderList();
+					CategorySubmitUtil.formReset();
+				},
+				error:function(error) {
+					console.log( error.status + ":" +error.statusText );
 				}
-				CategoryUtil.renderList();
-				CategorySubmitUtil.formReset();
-			},
-			error:function(error) {
-				console.log( error.status + ":" +error.statusText );
-			}
-		});
+			});
+		}
 	}
 }
 
