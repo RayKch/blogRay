@@ -6,7 +6,7 @@ CREATE TABLE `ch_member` (
    `nickname` varchar(300) NOT NULL COMMENT '닉네임',
    `login_token` varchar(50) NULL COMMENT '로그인 토큰',
    `last_ip` varchar(15)  NULL COMMENT '마지막 접속 아이피',
-   `last_date` DATE  NULL COMMENT '마지막 접속일',
+   `last_date` DATETIME  NULL COMMENT '마지막 접속일',
    `reg_date` DATETIME NULL COMMENT '등록일',
    `mod_date` DATETIME NULL COMMENT '수정일',
    PRIMARY KEY (`seq`)
