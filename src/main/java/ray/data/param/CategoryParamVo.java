@@ -11,12 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @EqualsAndHashCode(callSuper=false)
 public class CategoryParamVo extends ParamVo {
+	/** 시퀀스 */
+	private int seq;
+	/** 회원번호 */
+	private int memberSeq;
 	/** 카테고리 명 */
 	private String title;
 	/** 카테고리 설명 */
 	private String description;
-	/** 회원번호 */
-	private int memberSeq;
 
 	@Override
 	public String getSearch() {

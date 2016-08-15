@@ -22,12 +22,21 @@ public class CategoryService {
 	@Setter
 	private CategoryDao categoryDao;
 
+	public List<CategoryVo> getList() {
+		return categoryDao.getList();
+	}
+
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(CategoryParamVo vo) {
 		return categoryDao.insertVo(vo) > 0;
 	}
 
-	public List<CategoryVo> getList() {
-		return categoryDao.getList();
+	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
+	public boolean updateVo(CategoryParamVo vo) {
+		return categoryDao.updateVo(vo) > 0;
+	}
+
+	public boolean deleteVo(int seq) {
+		return categoryDao.deleteVo(seq) > 0;
 	}
 }

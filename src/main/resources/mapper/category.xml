@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="category">
+	<select id="getList" resultType="ray.data.CategoryVo">
+		SELECT
+			seq
+			, title
+			, description
+		FROM ch_category
+		WHERE 1=1
+	</select>
+
 	<insert id="insertVo" parameterType="ray.data.param.CategoryParamVo">
 		INSERT INTO ch_category (
 			member_seq
@@ -15,12 +24,16 @@
 		)
 	</insert>
 
-	<select id="getList" resultType="ray.data.CategoryVo">
-		SELECT
-			seq
-			, title
-			, description
-		FROM ch_category
-		WHERE 1=1
-	</select>
+	<update id="updateVo" parameterType="ray.data.param.CategoryParamVo">
+		UPDATE ch_category SET
+			title=#{title}
+			, description=#{description}
+			, mod_date=NOW()
+		WHERE seq = #{seq}
+		AND member_seq = #{memberSeq}
+	</update>
+
+	<delete id="deleteVo" parameterType="int">
+		DELETE FROM ch_category WHERE seq = #{value}
+	</delete>
 </mapper>

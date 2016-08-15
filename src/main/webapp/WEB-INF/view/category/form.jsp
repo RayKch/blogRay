@@ -33,21 +33,18 @@
 									<col width="35%"/>
 								</colgroup>
 								<script id="tbodyTemplate" type="text/html">
-									<tr>
-										<%--<td class="text-warning text-center" colspan="2">--%>
-										<%--카테고리를 추가해주세요--%>
-										<%--</td>--%>
+									<tr data-seq="<%="${seq}"%>">
 										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
 											<%="${title}"%>
 										</td>
 										<td class="text-center">
-											<button type="button" class="btn btn-warning btn-sm">수정</button>
-											<button type="button" class="btn btn-danger btn-sm">삭제</button>
+											<button type="button" class="btn btn-warning btn-sm" onclick="CategorySubmitUtil.updateModalShow('<%="${seq}"%>')">수정</button>
+											<button type="button" class="btn btn-danger btn-sm" onclick="CategoryDeleteUtil.proc('<%="${seq}"%>');">삭제</button>
 										</td>
 									</tr>
 								</script>
 								<tbody id="tbodyList">
-
+									<tr><td class="text-center" colspan="2"><img src="/image/common/ajaxloader.gif"/></td></tr>
 								</tbody>
 							</table>
 						</div>
@@ -55,11 +52,11 @@
 					<div class="area-right">
 						<div class="form-group">
 							<label for="title">카테고리명</label>
-							<input type="text" class="form-control" id="title" name="title" placeholder="카테고리명을 입력하세요" alt="카테고리명">
+							<input type="text" class="form-control" id="title" placeholder="카테고리명을 입력하세요" alt="카테고리명">
 						</div>
 						<div class="form-group">
 							<label for="description">카테고리 설명</label>
-							<input type="text" class="form-control" id="description" name="description" placeholder="카테고리 설명을 입력하세요" alt="카테고리설명">
+							<input type="text" class="form-control" id="description" placeholder="카테고리 설명을 입력하세요" alt="카테고리설명">
 						</div>
 						<div class="text-center"><button type="button" id="categoryInsertBtn" class="btn btn-info btn-lg">등록</button></div>
 					</div>
@@ -69,6 +66,7 @@
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
+<%@ include file="/WEB-INF/view/category/update_modal.jsp" %>
 <script src="/scripts/plugin/jquery.tablednd.js"></script>
 <script src="/scripts/category/category.js"></script>
 </body>

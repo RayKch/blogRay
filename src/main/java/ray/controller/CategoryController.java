@@ -33,13 +33,18 @@ public class CategoryController {
 	@RequestMapping("/form")
 	public String form(HttpSession session, Model model) {
 		if(session.getAttribute("loginSeq") == null) {
-			model.addAttribute("message", "로그인 후 이용가능합니다.");
+			model.addAttribute("message", "로그인 후 이용가능합니다");
 			return Const.BACK_PAGE;
 		}
 		return "/category/form.jsp";
 	}
 
-	@RequestMapping("/insert/proc")
+	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody List<CategoryVo> list() {
+		return categoryService.getList();
+	}
+
+	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String insert(CategoryParamVo vo, HttpSession session, Model model, BindingResult result) {
 		new CategoryInsertValidator().validate(vo, result);
 		if (result.hasErrors()) {
@@ -50,15 +55,38 @@ public class CategoryController {
 		vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
 
 		if(!categoryService.insertVo(vo)) {
-			model.addAttribute("message", "카테고리등록이 실패하였습니다.");
+			model.addAttribute("message", "카테고리등록이 실패하였습니다");
 			return Const.AJAX_PAGE;
 		}
 		model.addAttribute("message", "success");
 		return Const.AJAX_PAGE;
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public @ResponseBody List<CategoryVo> list() {
-		return categoryService.getList();
+	@RequestMapping(value = "/update/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String update(CategoryParamVo vo, HttpSession session, Model model, BindingResult result) {
+		new CategoryInsertValidator().validate(vo, result);
+		if (result.hasErrors()) {
+			model.addAttribute("message", result.getFieldError().getDefaultMessage());
+			return Const.AJAX_PAGE;
+		}
+
+		vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
+
+		if(!categoryService.updateVo(vo)) {
+			model.addAttribute("message", "카테고리수정이 실패하였습니다");
+			return Const.AJAX_PAGE;
+		}
+		model.addAttribute("message", "success");
+		return Const.AJAX_PAGE;
+	}
+
+	@RequestMapping(value = "/delete/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String delete(int seq, HttpSession session, Model model) {
+		if(!categoryService.deleteVo(seq)) {
+			model.addAttribute("message", "카테고리등록이 실패하였습니다");
+			return Const.AJAX_PAGE;
+		}
+		model.addAttribute("message", "success");
+		return Const.AJAX_PAGE;
 	}
 }
