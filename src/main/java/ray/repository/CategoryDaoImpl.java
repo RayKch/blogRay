@@ -30,7 +30,12 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public int updateVo(CategoryParamVo vo) {
-		return sqlSession.insert("category.updateVo", vo);
+		return sqlSession.update("category.updateVo", vo);
+	}
+
+	@Override
+	public int updateOrderNo(CategoryParamVo vo) {
+		return sqlSession.update("category.updateOrderNo", vo);
 	}
 
 	@Override

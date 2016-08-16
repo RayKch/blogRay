@@ -19,6 +19,8 @@ public class CategoryParamVo extends ParamVo {
 	private String title;
 	/** 카테고리 설명 */
 	private String description;
+	/** 정렬순서 */
+	private int orderNo;
 
 	@Override
 	public String getSearch() {

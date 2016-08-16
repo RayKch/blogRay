@@ -24,7 +24,7 @@
 					<div class="area-left">
 						<label>카테고리 목록</label>
 						<div class="alert alert-info alert-wrap">
-							카테고리명을 Drag & Drop으로 순서를 변경하고 <button type="button" class="btn btn-success btn-sm">순서 변경</button>
+							카테고리명을 Drag & Drop으로 순서를 변경하고 <button type="button" class="btn btn-success btn-sm" onclick="CategoryUtil.saveOrderNo('#tbodyList')">순서 변경</button>
 							버튼을 클릭하여 변경정보가 변경됩니다. <br/>
 							<span style="color:red">순서변경은 PC에서만 가능합니다.</span><br/>
 							<span style="color:red">카테고리 삭제시 해당 카테고리에 등록된 게시물도 모두 삭제됩니다.</span>
@@ -46,7 +46,7 @@
 										</td>
 									</tr>
 								</script>
-								<tbody id="tbodyList">
+								<tbody id="tbodyList" data-seq="0">
 									<tr><td class="text-center" colspan="2"><img src="/image/common/ajaxloader.gif"/></td></tr>
 								</tbody>
 							</table>

@@ -36,6 +36,11 @@ public class CategoryService {
 		return categoryDao.updateVo(vo) > 0;
 	}
 
+	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
+	public boolean updateOrderNo(CategoryParamVo vo) {
+		return categoryDao.updateOrderNo(vo) > 0;
+	}
+
 	public boolean deleteVo(int seq) {
 		return categoryDao.deleteVo(seq) > 0;
 	}

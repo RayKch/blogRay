@@ -17,6 +17,7 @@ import ray.service.CategoryService;
 import ray.util.Const;
 import ray.util.JsonHelper;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -77,6 +78,24 @@ public class CategoryController {
 			return Const.AJAX_PAGE;
 		}
 		model.addAttribute("message", "success");
+		return Const.AJAX_PAGE;
+	}
+
+	@RequestMapping("/update/order/proc")
+	public String updateOrder(CategoryParamVo vo, HttpServletRequest request, Model model) {
+		// todo : 사용자가 카테고리를 수정할 권한이 있는지 검사해야 한다
+
+		if(vo.getSeq() == 0 || vo.getOrderNo() < 0) {
+			model.addAttribute("message", "비정상적인 접근입니다");
+			return Const.AJAX_PAGE;
+		}
+
+		if(!categoryService.updateOrderNo(vo)) {
+			model.addAttribute("message", "정렬순서 수정이 실패했습니다");
+			return Const.AJAX_PAGE;
+		}
+
+		model.addAttribute("message", "OK");
 		return Const.AJAX_PAGE;
 	}
 

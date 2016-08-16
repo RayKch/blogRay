@@ -15,4 +15,6 @@ public class CategoryVo {
 	private String title;
 	/** 카테고리 설명 */
 	private String description;
+	/** 정렬순서 */
+	private int orderNo;
 }

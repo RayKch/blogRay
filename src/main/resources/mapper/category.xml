@@ -33,6 +33,14 @@
 		AND member_seq = #{memberSeq}
 	</update>
 
+	<update id="updateOrderNo" parameterType="ray.data.param.CategoryParamVo">
+		UPDATE ch_category SET
+			order_no=#{orderNo}
+			, mod_date=SYSDATE
+		WHERE seq = #{seq}
+		AND member_seq = #{memberSeq}
+	</update>
+
 	<delete id="deleteVo" parameterType="int">
 		DELETE FROM ch_category WHERE seq = #{value}
 	</delete>

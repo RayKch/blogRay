@@ -1,14 +1,6 @@
 var CategoryUtil = {
 	seq:0
 	, list:[]
-	, select: function (obj) {
-//			var seq = parseInt($(obj).parents("tr").attr("data-seq"), 10) || 0;
-//			var depth = parseInt($(obj).parents("tr").attr("data-depth"), 10) || 0;
-//			EBCategory.renderList(depth + 1, seq);
-
-		$(obj).parents("tbody").find(".tr-current").removeClass("tr-current");
-		$(obj).addClass("tr-current");
-	}
 	, renderList:function() {
 		$.ajax({
 			url:"/category/list",
@@ -27,6 +19,39 @@ var CategoryUtil = {
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
 			}
+		});
+	}
+	, saveOrderNo: function(id) {
+		var current = 1;
+		var length = $(id+">tr[data-seq]").length;
+		if(length === 0) {
+			alert("카테고리가 하나도 없습니다");
+			return;
+		}
+
+		$("#orderNoModal").modal().find(".bar").width(0);
+		var t = setTimeout(function(){
+			$("#orderNoModal").modal("hide");
+		},10000);
+		$(id+">tr[data-seq]").each(function(idx){
+			$.ajax({
+				url:"/category/update/order/proc",
+				type:"get",
+				data:{seq:$(this).attr("data-seq"), orderNo:idx},
+				dataType:"text",
+				success:function(data) {
+					$("#orderNoModal").find(".bar").width((current++/length*100)+"%");
+					if(current === length) {
+						setTimeout(function(){
+							$("#orderNoModal").modal("hide").find(".bar").width(0);
+						}, 1000);
+						clearTimeout(t);
+					}
+				},
+				error:function(error) {
+					console.log( error.status + ":" +error.statusText );
+				}
+			});
 		});
 	}
 }
