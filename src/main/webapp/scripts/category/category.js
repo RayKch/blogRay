@@ -93,8 +93,8 @@ var CategorySubmitUtil = {
 				} else {
 					alert('실패하였습니다.');
 				}
-				SideCategoryUtil.renderList();
 				CategoryUtil.renderList();
+				SideCategoryUtil.renderList();
 				CategorySubmitUtil.formReset(type);
 			},
 			error:function(error) {
@@ -118,8 +118,8 @@ var CategoryDeleteUtil = {
 					} else {
 						alert('실패하였습니다.');
 					}
-					SideCategoryUtil.renderList();
 					CategoryUtil.renderList();
+					SideCategoryUtil.renderList();
 				},
 				error:function(error) {
 					console.log( error.status + ":" +error.statusText );
