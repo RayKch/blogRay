@@ -14,11 +14,14 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<form method="post">
+					<form method="post" onsubmit="submitProc(this)" target="zeroframe">
 						<div class="form-group">
-							<label for="boardManageSeq">카테고리</label>
-							<select id="boardManageSeq" name="boardManageSeq" class="form-control">
+							<label for="categorySeq">카테고리</label>
+							<select id="categorySeq" name="categorySeq" class="form-control">
 								<option value="">- 카테고리를 선택하세요 -</option>
+								<c:forEach var="item" items="${categoryList}">
+									<option value="${item.seq}">${item.title}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="form-group">
