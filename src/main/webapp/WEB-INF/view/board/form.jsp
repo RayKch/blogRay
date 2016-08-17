@@ -18,7 +18,7 @@
 						<div class="form-group">
 							<label for="categorySeq">카테고리</label>
 							<select id="categorySeq" name="categorySeq" class="form-control">
-								<option value="">- 카테고리를 선택하세요 -</option>
+								<option value="">카테고리를 선택하세요</option>
 								<c:forEach var="item" items="${categoryList}">
 									<option value="${item.seq}">${item.title}</option>
 								</c:forEach>
