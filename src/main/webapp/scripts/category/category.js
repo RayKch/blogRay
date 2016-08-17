@@ -34,10 +34,11 @@ var CategoryUtil = {
 			return;
 		}
 
-		$("#orderNoModal").modal().find(".bar").width(0);
+		$("#orderNoProgressModal").modal().find(".progress-bar").width(0);
 		var t = setTimeout(function(){
-			$("#orderNoModal").modal("hide");
+			$("#orderNoProgressModal").modal("hide");
 		},10000);
+
 		$(id+">tr[data-seq]").each(function(idx){
 			$.ajax({
 				url:"/category/update/order/proc",
@@ -45,13 +46,16 @@ var CategoryUtil = {
 				data:{seq:$(this).attr("data-seq"), orderNo:idx},
 				dataType:"text",
 				success:function(data) {
-					$("#orderNoModal").find(".bar").width((current++/length*100)+"%");
+					$("#orderNoProgressModal").find(".progress-bar").width((current++/length*100)+"%");
+
 					if(current === length) {
 						setTimeout(function(){
-							$("#orderNoModal").modal("hide").find(".bar").width(0);
+							$("#orderNoProgressModal").modal("hide").find(".progress-bar").width(0);
 						}, 1000);
 						clearTimeout(t);
 					}
+					SideCategoryUtil.renderList();
+					CategoryUtil.renderList();
 				},
 				error:function(error) {
 					console.log( error.status + ":" +error.statusText );

@@ -8,6 +8,7 @@
 			, description
 		FROM ch_category
 		WHERE 1=1
+		ORDER BY order_no ASC
 	</select>
 
 	<insert id="insertVo" parameterType="ray.data.param.CategoryParamVo">
