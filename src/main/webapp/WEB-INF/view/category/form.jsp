@@ -70,6 +70,7 @@
 	</div>
 </div>
 <%@ include file="/WEB-INF/view/category/update_modal.jsp" %>
+<%@ include file="/WEB-INF/view/category/update_orderno_modal.jsp" %>
 <script src="/scripts/plugin/jquery.tablednd.js"></script>
 <script src="/scripts/category/category.js"></script>
 </body>

@@ -72,7 +72,6 @@ public class CategoryController {
 		}
 
 		vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
-
 		if(!categoryService.updateVo(vo)) {
 			model.addAttribute("message", "카테고리수정이 실패하였습니다");
 			return Const.AJAX_PAGE;
@@ -82,7 +81,7 @@ public class CategoryController {
 	}
 
 	@RequestMapping("/update/order/proc")
-	public String updateOrder(CategoryParamVo vo, HttpServletRequest request, Model model) {
+	public String updateOrder(CategoryParamVo vo, HttpSession session, Model model) {
 		// todo : 사용자가 카테고리를 수정할 권한이 있는지 검사해야 한다
 
 		if(vo.getSeq() == 0 || vo.getOrderNo() < 0) {
@@ -90,12 +89,13 @@ public class CategoryController {
 			return Const.AJAX_PAGE;
 		}
 
+		vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
 		if(!categoryService.updateOrderNo(vo)) {
 			model.addAttribute("message", "정렬순서 수정이 실패했습니다");
 			return Const.AJAX_PAGE;
 		}
 
-		model.addAttribute("message", "OK");
+		model.addAttribute("message", "success");
 		return Const.AJAX_PAGE;
 	}
 

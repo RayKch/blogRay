@@ -1,6 +1,10 @@
 var CategoryUtil = {
 	seq:0
 	, list:[]
+	, select:function(obj) {
+		$(obj).parents('tbody').find('.tr-current').removeClass('tr-current');
+		$(obj).addClass('tr-current');
+	}
 	, renderList:function() {
 		$.ajax({
 			url:"/category/list",
@@ -12,6 +16,7 @@ var CategoryUtil = {
 				CategoryUtil.list = list;
 				if(list.length > 0) {
 					$("#tbodyList").html($("#tbodyTemplate").tmpl(list));
+					$('#tbodyList').tableDnD({onDragClass:"drag"});
 				} else {
 					$("#tbodyList").html('<tr><td class="text-center" colspan="2">카테고리가 존재하지 않습니다.</td></tr>');
 				}
@@ -155,8 +160,6 @@ var CategoryDeleteUtil = {
 }
 
 $(document).ready(function() {
-	$('#tbodyList').tableDnD({onDragClass:"drag"});
-
 	$('#categoryInsertBtn').on('click', function() {
 		CategorySubmitUtil.submit(CategorySubmitUtil.proc, 'insert', 0);
 	});
