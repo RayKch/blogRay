@@ -1,14 +1,9 @@
-package ray.data;
-
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+package ray.data.param;
 
 /**
- * Created by BELL on 2016-08-08.
+ * Created by ChanPong on 2016-08-18.
  */
-@Data
-@Slf4j
-public class BoardVo {
+public class BoardParamVo extends ParamVo {
 	private int seq;
 	private int categorySeq;
 	private int memberSeq;
@@ -19,4 +14,9 @@ public class BoardVo {
 	private int viewCnt;
 	private String regDate;
 	private String modDate;
+
+	@Override
+	public String getSearch() {
+		return "";
+	}
 }

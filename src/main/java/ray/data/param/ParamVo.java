@@ -13,24 +13,129 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public abstract class ParamVo {
-	/** 현재 페이지 (0부터 시작함) */
-	@Getter
 	private int pageNum = 0;
+	private int rowCount = 20;
 
-	/**
-	 * 현재 페이지를 지정한다
-	 * @param pageNum (1보다 커야 한다)
-	 */
+	private int startRowNum = 0;
+	private int endRowNum = 0;
+
+	private int totalRowCount = 0;
+	private int pageCount = 10;
+
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	private void calc() {
+		startRowNum = pageNum * rowCount + 1;
+		endRowNum = startRowNum + rowCount - 1;
+	}
+
+
+	public String drawPagingNavigation(String jsFunctionName) {
+		StringBuffer _sb = new StringBuffer();
+		int totalPageCnt = totalRowCount / rowCount;
+
+		if (totalRowCount % rowCount > 0) {
+			totalPageCnt = totalPageCnt + 1;
+		}
+		int startPageNum = pageNum / pageCount * pageCount;
+		int endPageNum = totalPageCnt;
+		if (pageNum / pageCount != totalPageCnt / pageCount) {
+			endPageNum = startPageNum + pageCount;
+		}
+
+		_sb.append("<ul>");
+		if (startPageNum >= pageCount) {
+			_sb.append("<li><a href='#' onclick=\"");
+			_sb.append(jsFunctionName);
+			_sb.append("('");
+			_sb.append(startPageNum - 1);
+			_sb.append("');return false;\">Prev</a></li>");
+		} else {
+			_sb.append("<li class='disabled'><a href='#' onclick='return false;'>Prev</a></li>");
+		}
+		for (int i = startPageNum; i < endPageNum; i++) {
+			if (i == pageNum) {
+				_sb.append("<li class='active'><a href='#' onclick='return false;'>");
+				_sb.append(i + 1);
+				_sb.append("</a></li>");
+			} else {
+				_sb.append("<li><a href='#' onclick=\"");
+				_sb.append(jsFunctionName);
+				_sb.append("('");
+				_sb.append(i);
+				_sb.append("');return false;\">");
+				_sb.append(i + 1);
+				_sb.append("</a></li>");
+			}
+		}
+		if (endPageNum < totalPageCnt) {
+			_sb.append("<li><a href='#' onclick=\"");
+			_sb.append(jsFunctionName);
+			_sb.append("('");
+			_sb.append(endPageNum);
+			_sb.append("');return false;\">Next</a></li>");
+		} else {
+			_sb.append("<li class='disabled'><a href='#' onclick='return false;'>Next</a></li>");
+		}
+		_sb.append("</ul>");
+		return _sb.toString();
+	}
+
+	public void setStartRowNo(int startRowNo) {
+		this.startRowNum = startRowNo;
+	}
+
+	public void setEndRowNo(int endRowNo) {
+		this.endRowNum = endRowNo;
+	}
+
+	public int getPageNum() {
+		return pageNum;
+	}
+
 	public void setPageNum(int pageNum) {
-		if (pageNum < 1) {
+		if (pageNum < 0) {
 			return;
 		}
 		this.pageNum = pageNum;
 	}
 
-	/** 한 화면에 보여줄 게시물 수 */
-	@Setter @Getter
-	private int rowCount = 20;
+	public int getRowCount() {
+		return rowCount;
+	}
+
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
+	}
+
+	public int getStartRowNum() {
+		calc();
+		return startRowNum;
+	}
+
+	public int getEndRowNum() {
+		calc();
+		return endRowNum;
+	}
+
+	public int getTotalRowCount() {
+		return totalRowCount;
+	}
+
+	public void setTotalRowCount(int totalRowCount) {
+		this.totalRowCount = totalRowCount;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
 
 	/** 검색할 카테고리 (예: search=title, name, content) */
 	@Setter
