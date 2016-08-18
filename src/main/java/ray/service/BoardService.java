@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ray.data.BoardVo;
 import ray.data.param.BoardParamVo;
 import ray.repository.BoardDao;
+import ray.util.StringUtil;
 
 import java.util.List;
 
@@ -23,7 +24,12 @@ public class BoardService {
 	private BoardDao boardDao;
 
 	public List<BoardVo> getList(BoardParamVo vo) {
-		return boardDao.getList(vo);
+		List<BoardVo> list = boardDao.getList(vo);
+		for(int i=0; i<list.size(); i++) {
+			BoardVo tempVo = list.get(i);
+			tempVo.setContent(StringUtil.newLineToBr(tempVo.getContent()));
+		}
+		return list;
 	}
 
 	public int getListTotalCount(BoardParamVo vo) {

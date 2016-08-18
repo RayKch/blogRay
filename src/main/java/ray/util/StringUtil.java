@@ -25,12 +25,16 @@ public class StringUtil {
 
 	/**
 	 * email인지 아닌지 체크하는 메서드
-	 *
-	 * @author 강사무엘
-	 * @since 2013-01-14
 	 */
 	public static boolean isEmail(String email) {
 		return email != null && email.matches("^[\\w]+([\\w][-]?[.]?)*@[\\w]*([\\w][-]?[.]?)+[\\w]+$");
+	}
+
+	/**
+	 * newLine을 br로 변경하는 메서드
+	 */
+	public static String newLineToBr(String temp) {
+		return temp.replaceAll("\\n", "<br/>");
 	}
 
 	public static String clearXSS(String str) {
@@ -100,20 +104,6 @@ public class StringUtil {
 			s.append(Integer.toString(aDigest & 0x0f, 16));
 		}
 		return s.toString();
-	}
-
-
-	/**
-	 * 라이센스 유효성 체크
-	 * 라이센스 구성 : 맥어드레스^작업단말수^대상장비수
-	 * @param
-	 * @return
-	 */
-	public static boolean isValidLicense(String license) {
-		if(license == null) {
-			return false;
-		}
-		return license.matches("^([0-9a-fA-F]{2}:){5}([0-9a-fA-F]{2}\\^\\d+\\^\\d+)$");
 	}
 
 	/**
