@@ -39,7 +39,7 @@ public class BoardController {
 		return "/board/form.jsp";
 	}
 
-	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST)
 	public String insert(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
 		new BoardInsertValidator().validate(vo, result);
 		if (result.hasErrors()) {
