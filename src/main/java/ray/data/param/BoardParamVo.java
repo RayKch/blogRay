@@ -1,8 +1,15 @@
 package ray.data.param;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Created by ChanPong on 2016-08-18.
  */
+@Data
+@Slf4j
+@EqualsAndHashCode(callSuper=false)
 public class BoardParamVo extends ParamVo {
 	private int seq;
 	private int categorySeq;

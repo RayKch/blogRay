@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
-	<select id="getList" parameterType="ray.data.BoardParamVo" resultType="ray.data.BoardVo">
+	<select id="getList" parameterType="ray.data.param.BoardParamVo" resultType="ray.data.BoardVo">
 		SELECT
 			seq
 			, category_seq AS categorySeq
@@ -21,7 +21,7 @@
 		LIMIT ${pageNum * rowCount}, ${rowCount}
 	</select>
 
-	<select id="getListTotalCount" parameterType="ray.data.BoardParamVo" resultType="int">
+	<select id="getListTotalCount" parameterType="ray.data.param.BoardParamVo" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM ch_board

@@ -128,7 +128,7 @@ var LoginSubmitUtil = {
 			dataType:"text",
 			success:function(data) {
 				if(data === 'success') {
-					location.reload();
+					location.href = '/';
 				} else {
 					alert('로그아웃이 실패하였습니다.');
 				}
