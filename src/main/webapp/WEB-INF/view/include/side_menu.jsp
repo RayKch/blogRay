@@ -7,7 +7,7 @@
 	<div id="circle"></div>
 
 	<script id="liTemplate" type="text/html">
-		<li><a href="/board/list/<%="${seq}"%>"><%="${title}"%></a></li>
+		<li><a href="/?categorySeq=<%="${seq}"%>"><%="${title}"%></a></li>
 	</script>
 	<ul id="ulList">
 		<img src="/image/common/ajaxloader.gif"/>
