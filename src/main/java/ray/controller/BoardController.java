@@ -29,19 +29,14 @@ public class BoardController {
 	private CategoryService categoryService;
 
 	@RequestMapping("/form")
-	public String form(Model model) {
+	public String form(HttpSession session, Model model) {
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
+			return Const.BACK_PAGE;
+		}
+
 		model.addAttribute("categoryList", categoryService.getList());
 		return "/board/form.jsp";
-	}
-
-	@RequestMapping("/list")
-	public String list(BoardParamVo vo, Model model) {
-		vo.setTotalRowCount(boardService.getListTotalCount(vo));
-
-		model.addAttribute("list", boardService.getList(vo));
-		model.addAttribute("vo", vo);
-		model.addAttribute("paging", vo.drawPagingNavigation("goPage"));
-		return "/board/list.jsp";
 	}
 
 	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
@@ -58,7 +53,7 @@ public class BoardController {
 			return Const.AJAX_PAGE;
 		}
 		model.addAttribute("message", "포스트가 등록되었습니다.");
-		model.addAttribute("returnUrl", "/board/list?categorySeq="+vo.getCategorySeq());
+		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
 		return Const.REDIRECT_PAGE;
 	}
 }

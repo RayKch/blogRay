@@ -1,8 +1,12 @@
 package ray.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ray.data.param.BoardParamVo;
+import ray.service.BoardService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
@@ -13,23 +17,16 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 @Controller
 public class MainController {
+	@Autowired
+	private BoardService boardService;
+
 	@RequestMapping({"/index", "/"})
-	public String index() {
-		return "/index.jsp";
-	}
+	public String index(BoardParamVo vo, Model model) {
+		vo.setTotalRowCount(boardService.getListTotalCount(vo));
 
-	@RequestMapping("/about")
-	public String about() {
-		return "/index.jsp";
-	}
-
-	@RequestMapping("/contact")
-	public String contact() {
-		return "/index.jsp";
-	}
-
-	@RequestMapping("/post")
-	public String post() {
+		model.addAttribute("list", boardService.getList(vo));
+		model.addAttribute("vo", vo);
+		model.addAttribute("paging", vo.drawPagingNavigation("goPage"));
 		return "/index.jsp";
 	}
 }

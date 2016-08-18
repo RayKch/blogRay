@@ -14,7 +14,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<form action="/board/insert/proc" method="post" onsubmit="BoardUtil.submitProc(this)" target="zeroframe">
+					<form action="/board/insert/proc" method="post" onsubmit="return BoardUtil.submitProc(this)" target="zeroframe">
 						<div class="form-group">
 							<label for="categorySeq">카테고리</label>
 							<select id="categorySeq" name="categorySeq" class="form-control" alt="카테고리">

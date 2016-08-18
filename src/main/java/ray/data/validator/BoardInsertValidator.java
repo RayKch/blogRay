@@ -18,9 +18,9 @@ public class BoardInsertValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		BoardParamVo vo = (BoardParamVo) target;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "categorySeq", "0", "카테고리가 선택되지 않았습니다");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "null", "제목이 입력되지 않았습니다");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "null", "내용이 입력되지 않았습니다");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "categorySeq", "", "카테고리가 선택되지 않았습니다");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "", "제목이 입력되지 않았습니다");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "content", "", "내용이 입력되지 않았습니다");
 
 		if(vo.getTitle() != null && vo.getTitle().length() > 100) {
 			errors.rejectValue("title", "size", "제목은 100글자 이상 입력하실 수 없습니다");
