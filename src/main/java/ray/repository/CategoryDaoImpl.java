@@ -39,7 +39,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
-	public int deleteVo(int seq) {
+	public int deleteVo(Integer seq) {
 		return sqlSession.delete("category.deleteVo", seq);
 	}
 }

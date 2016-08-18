@@ -39,7 +39,7 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int deleteVo(int seq) {
+	public int deleteVo(Integer seq) {
 		return sqlSession.delete("board.deleteVo", seq);
 	}
 }

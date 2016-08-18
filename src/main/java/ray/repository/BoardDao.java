@@ -15,5 +15,5 @@ public interface BoardDao {
 	public int getListTotalCount(BoardParamVo vo);
 	public int insertVo(BoardParamVo vo);
 	public int updateVo(BoardParamVo vo);
-	public int deleteVo(int seq);
+	public int deleteVo(Integer seq);
 }

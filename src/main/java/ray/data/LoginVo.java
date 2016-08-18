@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Slf4j
 public class LoginVo {
-	private String seq;
+	private Integer seq;
 	private String id;
 	private String password;
 	private String nickname;

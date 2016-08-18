@@ -42,7 +42,7 @@
 		AND member_seq = #{memberSeq}
 	</update>
 
-	<delete id="deleteVo" parameterType="int">
+	<delete id="deleteVo" parameterType="Integer">
 		DELETE FROM ch_category WHERE seq = #{value}
 	</delete>
 </mapper>

@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CategoryVo {
 	/** 시퀀스 */
-	private int seq;
+	private Integer seq;
 	/** 카테고리 명 */
 	private String title;
 	/** 카테고리 설명 */

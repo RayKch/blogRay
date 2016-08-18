@@ -15,5 +15,5 @@ public interface CategoryDao {
 	public int insertVo(CategoryParamVo vo);
 	public int updateVo(CategoryParamVo vo);
 	public int updateOrderNo(CategoryParamVo vo);
-	public int deleteVo(int seq);
+	public int deleteVo(Integer seq);
 }

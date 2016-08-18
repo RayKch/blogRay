@@ -3,21 +3,23 @@
 <mapper namespace="board">
 	<select id="getList" parameterType="ray.data.param.BoardParamVo" resultType="ray.data.BoardVo">
 		SELECT
-			seq
-			, category_seq AS categorySeq
-			, member_seq AS memberSeq
-			, title
-			, content
-			, recommend
-			, un_recommend AS unRecommend
-			, view_cnt AS viewCnt
-			, reg_date AS regDate
-			, mod_date AS modDate
-		FROM ch_board
+			a.seq
+			, a.category_seq AS categorySeq
+			, a.member_seq AS memberSeq
+		  , (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
+			, a.title
+			, a.content
+			, a.recommend
+			, a.un_recommend AS unRecommend
+			, a.view_cnt AS viewCnt
+			, a.reg_date AS regDate
+			, a.mod_date AS modDate
+		FROM ch_board a
 		WHERE 1=1
-		<if test="categorySeq > 0">
-			AND category_seq = #{categorySeq}
+		<if test="categorySeq != null">
+			AND a.category_seq = #{categorySeq}
 		</if>
+		ORDER BY a.seq DESC
 		LIMIT ${pageNum * rowCount}, ${rowCount}
 	</select>
 
@@ -26,7 +28,7 @@
 			COUNT(*)
 		FROM ch_board
 		WHERE 1=1
-		<if test="categorySeq > 0">
+		<if test="categorySeq != null">
 			AND category_seq = #{categorySeq}
 		</if>
 	</select>
@@ -57,7 +59,7 @@
 		WHERE seq = #{seq}
 	</update>
 
-	<delete id="deleteVo" parameterType="int">
+	<delete id="deleteVo" parameterType="Integer">
 		DELETE FROM ch_board WHERE seq = #{value}
 	</delete>
 </mapper>

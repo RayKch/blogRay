@@ -40,7 +40,7 @@ public class BoardService {
 		return boardDao.updateVo(vo) > 0;
 	}
 
-	public boolean deleteVo(int seq) {
+	public boolean deleteVo(Integer seq) {
 		return boardDao.deleteVo(seq) > 0;
 	}
 }

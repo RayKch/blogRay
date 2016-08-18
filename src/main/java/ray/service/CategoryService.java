@@ -41,7 +41,7 @@ public class CategoryService {
 		return categoryDao.updateOrderNo(vo) > 0;
 	}
 
-	public boolean deleteVo(int seq) {
+	public boolean deleteVo(Integer seq) {
 		return categoryDao.deleteVo(seq) > 0;
 	}
 }
