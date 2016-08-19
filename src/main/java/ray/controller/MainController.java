@@ -34,4 +34,10 @@ public class MainController {
 		model.addAttribute("categoryVo", categoryService.getVo(vo.getCategorySeq()));
 		return "/index.jsp";
 	}
+
+	@RequestMapping("/view")
+	public String view(BoardParamVo vo, Model model) {
+		model.addAttribute("vo", boardService.getVo(vo.getSeq()));
+		return "/view.jsp";
+	}
 }

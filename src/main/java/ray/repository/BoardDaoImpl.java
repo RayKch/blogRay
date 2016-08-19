@@ -29,6 +29,11 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
+	public BoardVo getVo(Integer seq) {
+		return sqlSession.selectOne("board.getVo", seq);
+	}
+
+	@Override
 	public int insertVo(BoardParamVo vo) {
 		return sqlSession.insert("board.insertVo", vo);
 	}

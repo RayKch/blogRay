@@ -36,6 +36,10 @@ public class BoardService {
 		return boardDao.getListTotalCount(vo);
 	}
 
+	public BoardVo getVo(Integer seq) {
+		return boardDao.getVo(seq);
+	}
+
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(BoardParamVo vo) {
 		return boardDao.insertVo(vo) > 0;

@@ -33,6 +33,23 @@
 		</if>
 	</select>
 
+	<select id="getVo" parameterType="Integer" resultType="ray.data.BoardVo">
+		SELECT
+		a.seq
+		, a.category_seq AS categorySeq
+		, a.member_seq AS memberSeq
+		, (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
+		, a.title
+		, a.content
+		, a.recommend
+		, a.un_recommend AS unRecommend
+		, a.view_cnt AS viewCnt
+		, a.reg_date AS regDate
+		, a.mod_date AS modDate
+		FROM ch_board a
+		WHERE seq = #{seq}
+	</select>
+
 	<insert id="insertVo" parameterType="ray.data.param.BoardParamVo">
 		INSERT INTO ch_board (
 			category_seq
