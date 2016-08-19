@@ -15,6 +15,8 @@ public class BoardVo {
 	private String nickname;
 	private String title;
 	private String content;
+	private String categoryTitle;
+	private String categoryDescription;
 	private int recomment;
 	private int unRecommend;
 	private int viewCnt;

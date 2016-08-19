@@ -26,6 +26,10 @@ public class CategoryService {
 		return categoryDao.getList();
 	}
 
+	public CategoryVo getVo(Integer seq) {
+		return categoryDao.getVo(seq);
+	}
+
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(CategoryParamVo vo) {
 		return categoryDao.insertVo(vo) > 0;

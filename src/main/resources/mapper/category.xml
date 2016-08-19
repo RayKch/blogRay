@@ -11,6 +11,15 @@
 		ORDER BY order_no ASC
 	</select>
 
+	<select id="getVo" parameterType="Integer" resultType="ray.data.CategoryVo">
+		SELECT
+			seq
+			, title
+			, description
+		FROM ch_category
+		WHERE seq = #{seq}
+	</select>
+
 	<insert id="insertVo" parameterType="ray.data.param.CategoryParamVo">
 		INSERT INTO ch_category (
 			member_seq

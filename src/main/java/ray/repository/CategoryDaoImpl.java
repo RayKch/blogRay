@@ -24,6 +24,11 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
+	public CategoryVo getVo(Integer seq) {
+		return sqlSession.selectOne("category.getVo", seq);
+	}
+
+	@Override
 	public int insertVo(CategoryParamVo vo) {
 		return sqlSession.insert("category.insertVo", vo);
 	}

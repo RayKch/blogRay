@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ray.data.param.BoardParamVo;
 import ray.service.BoardService;
+import ray.service.CategoryService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
@@ -18,6 +19,9 @@ import java.security.NoSuchAlgorithmException;
 @Controller
 public class MainController {
 	@Autowired
+	private CategoryService categoryService;
+
+	@Autowired
 	private BoardService boardService;
 
 	@RequestMapping({"/index", "/"})
@@ -27,6 +31,7 @@ public class MainController {
 		model.addAttribute("list", boardService.getList(vo));
 		model.addAttribute("vo", vo);
 		model.addAttribute("paging", vo.drawPagingNavigation("goPage"));
+		model.addAttribute("categoryVo", categoryService.getVo(vo.getCategorySeq()));
 		return "/index.jsp";
 	}
 }

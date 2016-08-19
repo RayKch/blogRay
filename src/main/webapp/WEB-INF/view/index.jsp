@@ -14,9 +14,17 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						<c:if test="${categoryVo ne null}">
+							<div class="list-header-wrap text-center">
+								<h2>${categoryVo.title}</h2>
+								<hr class="list-hr">
+								<span class="list-description">${categoryVo.description}</span>
+							</div>
+						</c:if>
+
 						<c:forEach var="item" items="${list}">
 							<div class="post-preview">
-								<a href="post.html">
+								<a href="#">
 									<h2 class="post-title">
 										${item.title}
 									</h2>

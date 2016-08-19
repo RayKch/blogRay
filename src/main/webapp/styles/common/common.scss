@@ -70,6 +70,8 @@ button.btn {
 }
 
 .intro-header {
+  margin-bottom:15px;
+
   .site-heading {
     a {
       color:#fff;
@@ -181,6 +183,13 @@ button.btn {
         font-weight: 600;
       }
     }
+  }
+}
+
+.list-header-wrap {
+  hr.list-hr {
+    margin-bottom:5px;
+    border-top: 2px solid #0085a1;
   }
 }
 
