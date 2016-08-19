@@ -36,13 +36,13 @@
 							</div>
 							<hr>
 						</c:forEach>
-
-						<!-- Pager -->
-						<ul class="pager">
-							<li class="next">
-								<a href="#">Older Posts &rarr;</a>
-							</li>
-						</ul>
+						<c:if test="${fn:length(list) eq 0}">
+							<div class="post-preview empty-list">
+								<h2 class="post-title text-center">
+									포스트가 없습니다.
+								</h2>
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
