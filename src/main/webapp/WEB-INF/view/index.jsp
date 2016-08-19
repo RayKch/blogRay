@@ -23,7 +23,7 @@
 						</c:if>
 
 						<c:forEach var="item" items="${list}">
-							<div class="post-preview">
+							<div class="post-preview list-top-margin">
 								<a href="#">
 									<h2 class="post-title">
 										${item.title}
@@ -37,7 +37,7 @@
 							<hr>
 						</c:forEach>
 						<c:if test="${fn:length(list) eq 0}">
-							<div class="post-preview empty-list">
+							<div class="post-preview list-top-margin">
 								<h2 class="post-title text-center">
 									포스트가 없습니다.
 								</h2>
