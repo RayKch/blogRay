@@ -24,7 +24,7 @@
 
 						<c:forEach var="item" items="${list}">
 							<div class="post-preview list-top-margin">
-								<a href="/view?seq=${item.seq}}">
+								<a href="/view?seq=${item.seq}">
 									<h2 class="post-title">
 										${item.title}
 									</h2>
