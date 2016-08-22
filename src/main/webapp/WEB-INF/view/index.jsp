@@ -32,7 +32,10 @@
 										${item.content}
 									</h3>
 								</a>
-								<p class="post-meta">Posted by <a href="#">${item.nickname}</a> on ${fn:substring(item.regDate, 0, 10)}</p>
+								<p class="post-meta">
+									Posted by <a href="#">${item.nickname}</a> on ${fn:substring(item.regDate, 0, 10)}
+									<i class="fa fa-times pull-right" aria-hidden="true"></i>
+								</p>
 							</div>
 							<hr>
 						</c:forEach>

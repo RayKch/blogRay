@@ -12,6 +12,7 @@ public class BoardVo {
 	private Integer seq;
 	private Integer categorySeq;
 	private Integer memberSeq;
+	private String categoryName;
 	private String nickname;
 	private String title;
 	private String content;
