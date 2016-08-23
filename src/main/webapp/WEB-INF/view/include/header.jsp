@@ -17,6 +17,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 	<link href="${pageContext.request.contextPath}/styles/plugin/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/styles/plugin/clean-blog.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/styles/plugin/comment-form.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/styles/common/common.css" rel="stylesheet">
 	<title>찬퐁 블로그</title>
 	<!--[if lt IE 9]>
