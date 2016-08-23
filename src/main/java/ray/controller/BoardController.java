@@ -56,4 +56,14 @@ public class BoardController {
 		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
 		return Const.REDIRECT_PAGE;
 	}
+
+	@RequestMapping(value = "/delete/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public String delete(int seq, HttpSession session, Model model) {
+		if(!categoryService.deleteVo(seq)) {
+			model.addAttribute("message", "포스트삭제가 실패하였습니다");
+			return Const.AJAX_PAGE;
+		}
+		model.addAttribute("message", "success");
+		return Const.AJAX_PAGE;
+	}
 }
