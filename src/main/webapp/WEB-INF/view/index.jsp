@@ -34,7 +34,9 @@
 								</a>
 								<p class="post-meta">
 									Posted by <a href="#">${item.nickname}</a> on ${fn:substring(item.regDate, 0, 10)}
-									<i class="fa fa-times pull-right" aria-hidden="true"></i>
+									<c:if test="${sessionScope.loginSeq eq item.memberSeq}">
+										<i class="fa fa-times pull-right remove-btn" aria-hidden="true" data-seq="${item.seq}"></i>
+									</c:if>
 								</p>
 							</div>
 							<hr>
@@ -53,5 +55,14 @@
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
+<script src="/scripts/board/board.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.remove-btn').on('click', function() {
+			$(this).attr('data-seq')
+
+		});
+	});
+</script>
 </body>
 </html>
