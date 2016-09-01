@@ -39,6 +39,7 @@
 		, a.category_seq AS categorySeq
 		, a.member_seq AS memberSeq
 		, (SELECT title FROM ch_category WHERE seq = a.category_seq) AS categoryName
+		, (SELECT description FROM ch_category WHERE seq = a.category_seq) AS categoryDescription
 		, (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
 		, a.title
 		, a.content

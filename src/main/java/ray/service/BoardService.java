@@ -37,7 +37,9 @@ public class BoardService {
 	}
 
 	public BoardVo getVo(Integer seq) {
-		return boardDao.getVo(seq);
+		BoardVo vo = boardDao.getVo(seq);
+		vo.setContent(StringUtil.newLineToBr(vo.getContent()));
+		return vo;
 	}
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})

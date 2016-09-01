@@ -13,15 +13,18 @@
 		<div id="page-content-wrapper">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<c:if test="${categoryVo ne null}">
-							<div class="list-header-wrap text-center">
-								<h2>${categoryVo.title}</h2>
-								<hr class="list-hr">
-								<span class="list-description">${categoryVo.description}</span>
+					<c:if test="${categoryVo ne null}">
+						<div class="col-sm-10 col-sm-offset-1">
+							<div class="post-preview list-top-margin list-header-wrap">
+								<h2 class="text-center">${categoryVo.title}</h2>
+								<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both">${categoryVo.description}</p>
+								<div class="clearfix"></div>
+								<hr class="list-hr" style="margin-top:5px">
 							</div>
-						</c:if>
+						</div>
+					</c:if>
 
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 						<c:forEach var="item" items="${list}">
 							<div class="post-preview list-top-margin">
 								<a href="/view?seq=${item.seq}">

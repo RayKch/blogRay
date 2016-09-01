@@ -16,9 +16,11 @@
 					<div class="col-sm-10 col-sm-offset-1">
 						<div class="post-preview list-top-margin list-header-wrap">
 							<h2 class="text-center">${vo.title}</h2>
-							<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both">${vo.categoryName}</p>
+							<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both">${vo.categoryName} - ${vo.categoryDescription}</p>
+
 							<div class="clearfix"></div>
 							<hr class="list-hr" style="margin-top:5px">
+
 							<p class="post-meta pull-right" style="font-size:12px;">Posted by <a href="#">${vo.nickname}</a> on ${fn:substring(vo.regDate, 0, 10)}</p>
 							<div class="clearfix"></div>
 						</div>
