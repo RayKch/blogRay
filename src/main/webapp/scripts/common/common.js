@@ -27,7 +27,7 @@ var SideUtil = {
 var SideCategoryUtil = {
 	renderList:function() {
 		$.ajax({
-			url:"/category/list",
+			url:"/category/list/json",
 			type:"get",
 			data:{},
 			dataType:"text",

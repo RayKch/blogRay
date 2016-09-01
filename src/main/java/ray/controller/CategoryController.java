@@ -40,12 +40,12 @@ public class CategoryController {
 		return "/category/form.jsp";
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public @ResponseBody List<CategoryVo> list() {
 		return categoryService.getList();
 	}
 
-	@RequestMapping(value = "/data/ajax", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/data/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public @ResponseBody CategoryVo data(Integer seq) {
 		return categoryService.getVo(seq);
 	}

@@ -7,7 +7,7 @@ var CategoryUtil = {
 	}
 	, renderList:function() {
 		$.ajax({
-			url:"/category/list",
+			url:"/category/list/json",
 			type:"get",
 			data:{},
 			dataType:"text",

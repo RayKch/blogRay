@@ -42,12 +42,12 @@ public class BoardController {
 		return "/board/form.jsp";
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public @ResponseBody List<BoardVo> list(BoardParamVo vo) {
 		return boardService.getList(vo);
 	}
 
-	@RequestMapping(value = "/data/ajax", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/data/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public @ResponseBody BoardVo data(Integer seq) {
 		return boardService.getVo(seq);
 	}
