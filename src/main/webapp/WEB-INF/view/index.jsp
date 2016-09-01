@@ -24,33 +24,28 @@
 						</div>
 					</c:if>
 
-					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<c:forEach var="item" items="${list}">
+
+					<div id="divContentList" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						<script id="contentTemplate" type="text/html">
 							<div class="post-preview list-top-margin">
-								<a href="/view?seq=${item.seq}">
-									<h2 class="post-title">
-										${item.title}
-									</h2>
-									<h3 class="post-subtitle">
-										${item.content}
-									</h3>
+								<a href="/view?seq=<%="${seq}"%>">
+									<h2 class="post-title"><%="${title}"%></h2>
+									<h3 class="post-subtitle"><%="${content}"%></h3>
 								</a>
 								<p class="post-meta">
-									Posted by <a href="#">${item.nickname}</a> on ${fn:substring(item.regDate, 0, 10)}
+									Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
 									<c:if test="${sessionScope.loginSeq eq item.memberSeq}">
-										<i class="fa fa-times pull-right remove-btn" aria-hidden="true" data-seq="${item.seq}"></i>
+										<i class="fa fa-times pull-right remove-btn" aria-hidden="true" data-seq="<%="${seq}"%>"></i>
 									</c:if>
 								</p>
 							</div>
 							<hr>
-						</c:forEach>
-						<c:if test="${fn:length(list) eq 0}">
+						</script>
+						<script id="emptyContentTemplate" type="text/html">
 							<div class="post-preview list-top-margin">
-								<h2 class="post-title text-center">
-									포스트가 없습니다.
-								</h2>
+								<h2 class="post-title text-center">포스트가 없습니다.</h2>
 							</div>
-						</c:if>
+						</script>
 					</div>
 				</div>
 			</div>
@@ -61,9 +56,11 @@
 <script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.remove-btn').on('click', function() {
-			$(this).attr('data-seq')
+		BoardUtil.loginSeq = "${sessionScope.loginSeq}";
+		BoardUtil.vo = "${vo}";
 
+		$('.remove-btn').on('click', function() {
+			$(this).attr('data-seq');
 		});
 	});
 </script>

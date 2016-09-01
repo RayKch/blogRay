@@ -124,5 +124,6 @@
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
+<script src="/scripts/board/board.js"></script>
 </body>
 </html>

@@ -45,6 +45,11 @@ public class CategoryController {
 		return categoryService.getList();
 	}
 
+	@RequestMapping(value = "/data/ajax", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody CategoryVo data(Integer seq) {
+		return categoryService.getVo(seq);
+	}
+
 	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String insert(CategoryParamVo vo, HttpSession session, Model model, BindingResult result) {
 		new CategoryInsertValidator().validate(vo, result);

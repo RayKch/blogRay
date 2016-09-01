@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import ray.data.BoardVo;
 import ray.data.param.BoardParamVo;
 import ray.data.validator.BoardInsertValidator;
 import ray.service.BoardService;
@@ -14,6 +16,7 @@ import ray.service.CategoryService;
 import ray.util.Const;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by ChanPong on 2016-05-17.
@@ -37,6 +40,16 @@ public class BoardController {
 
 		model.addAttribute("categoryList", categoryService.getList());
 		return "/board/form.jsp";
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody List<BoardVo> list(BoardParamVo vo) {
+		return boardService.getList(vo);
+	}
+
+	@RequestMapping(value = "/data/ajax", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody BoardVo data(Integer seq) {
+		return boardService.getVo(seq);
 	}
 
 	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST)
