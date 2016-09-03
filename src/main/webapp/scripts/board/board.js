@@ -1,6 +1,5 @@
 var BoardUtil = {
-	loginSeq:0
-	, vo:{}
+	vo:{}
 };
 
 var BaordRenderUtil = {
@@ -12,11 +11,10 @@ var BaordRenderUtil = {
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
-				var obj = {};
 				if(list.length > 0) {
 					$("#divContentList").html($("#contentTemplate").tmpl(list));
 				} else {
-
+					$("#divContentList").html($("#emptyContentTemplate").tmpl());
 				}
 			},
 			error:function(error) {

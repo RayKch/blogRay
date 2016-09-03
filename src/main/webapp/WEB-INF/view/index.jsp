@@ -24,7 +24,6 @@
 						</div>
 					</c:if>
 
-
 					<div id="divContentList" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 						<script id="contentTemplate" type="text/html">
 							<div class="post-preview list-top-margin">
@@ -34,8 +33,10 @@
 								</a>
 								<p class="post-meta">
 									Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
-									<c:if test="${sessionScope.loginSeq eq item.memberSeq}">
-										<i class="fa fa-times pull-right remove-btn" aria-hidden="true" data-seq="<%="${seq}"%>"></i>
+									<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
+										{{if  ${sessionScope.loginSeq} === memberSeq}}
+											<i class="fa fa-times pull-right remove-btn" aria-hidden="true" data-seq="<%="${seq}"%>"></i>
+										{{/if}}
 									</c:if>
 								</p>
 							</div>
@@ -46,6 +47,7 @@
 								<h2 class="post-title text-center">포스트가 없습니다.</h2>
 							</div>
 						</script>
+						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
 				</div>
 			</div>
@@ -56,7 +58,6 @@
 <script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		BoardUtil.loginSeq = "${sessionScope.loginSeq}";
 		BoardUtil.vo = "${vo}";
 
 		$('.remove-btn').on('click', function() {

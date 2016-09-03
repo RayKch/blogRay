@@ -27,7 +27,6 @@ public class BoardService {
 		List<BoardVo> list = boardDao.getList(vo);
 		for(int i=0; i<list.size(); i++) {
 			BoardVo tempVo = list.get(i);
-			tempVo.setContent(StringUtil.newLineToBr(tempVo.getContent()));
 		}
 		return list;
 	}
