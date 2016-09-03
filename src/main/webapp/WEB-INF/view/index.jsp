@@ -35,7 +35,7 @@
 									Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
 									<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
 										{{if  ${sessionScope.loginSeq} === memberSeq}}
-											<i class="fa fa-times pull-right remove-btn" aria-hidden="true" data-seq="<%="${seq}"%>"></i>
+											<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" onclick="BoardDeleteUtil.proc('<%="${seq}"%>')"></i>
 										{{/if}}
 									</c:if>
 								</p>
@@ -55,14 +55,9 @@
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
-<script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		BoardUtil.vo = "${vo}";
-
-		$('.remove-btn').on('click', function() {
-			$(this).attr('data-seq');
-		});
 	});
 </script>
 </body>

@@ -14,7 +14,7 @@ var BaordRenderUtil = {
 				if(list.length > 0) {
 					$("#divContentList").html($("#contentTemplate").tmpl(list));
 				} else {
-					$("#divContentList").html($("#emptyContentTemplate").tmpl());
+					$("#divContentList").html($("#emptyContentTemplate"));
 				}
 			},
 			error:function(error) {
@@ -25,8 +25,28 @@ var BaordRenderUtil = {
 };
 
 var BoardDeleteUtil = {
-	deletePost:function(seq) {
-
+	proc:function(seq) {
+		if(confirm('정말 삭제하시겠습니까?')) {
+			$.ajax({
+				url:"/board/delete/proc",
+				type:"post",
+				data:{'seq':seq},
+				dataType:"text",
+				success:function(data) {
+					if(data === 'success') {
+						alert('삭제되었습니다.');
+					} else {
+						alert('실패하였습니다.');
+					}
+					CategoryUtil.renderList();
+					SideCategoryUtil.renderList();
+					BaordRenderUtil.renderList(BoardUtil.vo);
+				},
+				error:function(error) {
+					console.log( error.status + ":" +error.statusText );
+				}
+			});
+		}
 	}
 };
 
