@@ -13,16 +13,15 @@
 		<div id="page-content-wrapper">
 			<div class="container">
 				<div class="row">
-					<c:if test="${categoryVo ne null}">
-						<div class="col-sm-10 col-sm-offset-1">
-							<div class="post-preview list-top-margin list-header-wrap">
-								<h2 class="text-center">${categoryVo.title}</h2>
-								<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both">${categoryVo.description}</p>
-								<div class="clearfix"></div>
-								<hr class="list-hr" style="margin-top:5px">
-							</div>
+					<script id="categoryTemplate" type="text/html">
+						<div class="post-preview list-top-margin list-header-wrap">
+							<h2 class="text-center"><%="${title}"%></h2>
+							<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both"><%="${description}"%></p>
+							<div class="clearfix"></div>
+							<hr class="list-hr" style="margin-top:5px">
 						</div>
-					</c:if>
+					</script>
+					<div id="divCategoryWrap" class="col-sm-10 col-sm-offset-1"></div>
 
 					<div id="divContentList" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 						<script id="contentTemplate" type="text/html">
@@ -59,7 +58,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		BoardUtil.vo = "${vo}";
-		BaordRenderUtil.renderList(BoardUtil.vo);
+		BaordRenderUtil.renderCategory("${vo.categorySeq}");
+		BaordRenderUtil.renderList("${vo.categorySeq}");
 	});
 </script>
 </body>

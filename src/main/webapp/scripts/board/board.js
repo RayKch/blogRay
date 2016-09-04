@@ -3,7 +3,22 @@ var BoardUtil = {
 };
 
 var BaordRenderUtil = {
-	render:function(seq) {
+	renderCategory:function(seq) {
+		$.ajax({
+			url:"/category/data/json",
+			type:"get",
+			data:{'seq':seq},
+			dataType:"text",
+			success:function(data) {
+				var vo = $.parseJSON(data);
+				$("#divCategoryWrap").html($("#categoryTemplate").tmpl(vo));
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
+	}
+	, render:function(seq) {
 		$.ajax({
 			url:"/board/data/json",
 			type:"get",
@@ -18,11 +33,11 @@ var BaordRenderUtil = {
 			}
 		});
 	}
-	,renderList:function(vo) {
+	, renderList:function(seq) {
 		$.ajax({
 			url:"/board/list/json",
 			type:"get",
-			data:vo,
+			data:{'categorySeq':seq},
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
