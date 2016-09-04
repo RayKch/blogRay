@@ -131,7 +131,8 @@
 <script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		BaordRenderUtil.render("${seq}");
+		BoardUtil.boardSeq = "${seq}";
+		BaordRenderUtil.render();
 	});
 </script>
 </body>

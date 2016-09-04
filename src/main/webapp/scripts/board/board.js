@@ -1,28 +1,31 @@
 var BoardUtil = {
-	vo:{}
+	boardSeq:0
+	, categorySeq:0
 };
 
 var BaordRenderUtil = {
-	renderCategory:function(seq) {
+	renderCategory:function() {
 		$.ajax({
 			url:"/category/data/json",
 			type:"get",
-			data:{'seq':seq},
+			data:{'seq':BoardUtil.categorySeq},
 			dataType:"text",
 			success:function(data) {
-				var vo = $.parseJSON(data);
-				$("#divCategoryWrap").html($("#categoryTemplate").tmpl(vo));
+				if(data !== '') {
+					var vo = $.parseJSON(data);
+					$("#divCategoryWrap").html($("#categoryTemplate").tmpl(vo));
+				}
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
 			}
 		});
 	}
-	, render:function(seq) {
+	, render:function() {
 		$.ajax({
 			url:"/board/data/json",
 			type:"get",
-			data:{'seq':seq},
+			data:{'seq':BoardUtil.boardSeq},
 			dataType:"text",
 			success:function(data) {
 				var vo = $.parseJSON(data);
@@ -33,11 +36,11 @@ var BaordRenderUtil = {
 			}
 		});
 	}
-	, renderList:function(seq) {
+	, renderList:function() {
 		$.ajax({
 			url:"/board/list/json",
 			type:"get",
-			data:{'categorySeq':seq},
+			data:{'categorySeq':BoardUtil.categorySeq},
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
@@ -55,7 +58,7 @@ var BaordRenderUtil = {
 };
 
 var BoardDeleteUtil = {
-	proc:function(seq) {
+	proc:function(seq, typeCode) {
 		if(confirm('정말 삭제하시겠습니까?')) {
 			$.ajax({
 				url:"/board/delete/proc",
@@ -68,7 +71,11 @@ var BoardDeleteUtil = {
 					} else {
 						alert('실패하였습니다.');
 					}
-					BaordRenderUtil.renderList(BoardUtil.vo);
+					if(typeCode === 'list') {
+						BaordRenderUtil.renderList();
+					} else {
+						BaordRenderUtil.render(BoardUtil.boardSeq);
+					}
 				},
 				error:function(error) {
 					console.log( error.status + ":" +error.statusText );

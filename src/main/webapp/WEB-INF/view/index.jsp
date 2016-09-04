@@ -23,29 +23,29 @@
 					</script>
 					<div id="divCategoryWrap" class="col-sm-10 col-sm-offset-1"></div>
 
+					<script id="contentTemplate" type="text/html">
+						<div class="post-preview list-top-margin">
+							<a href="/view?seq=<%="${seq}"%>">
+								<h2 class="post-title"><%="${title}"%></h2>
+								<h3 class="post-subtitle"><%="${content}"%></h3>
+							</a>
+							<p class="post-meta">
+								Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
+								<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
+									{{if  ${sessionScope.loginSeq} === memberSeq}}
+									<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" onclick="BoardDeleteUtil.proc('<%="${seq}"%>', 'list')"></i>
+									{{/if}}
+								</c:if>
+							</p>
+						</div>
+						<hr>
+					</script>
+					<script id="emptyContentTemplate" type="text/html">
+						<div class="post-preview list-top-margin">
+							<h2 class="post-title text-center empty-post">포스트가 없습니다.</h2>
+						</div>
+					</script>
 					<div id="divContentList" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<script id="contentTemplate" type="text/html">
-							<div class="post-preview list-top-margin">
-								<a href="/view?seq=<%="${seq}"%>">
-									<h2 class="post-title"><%="${title}"%></h2>
-									<h3 class="post-subtitle"><%="${content}"%></h3>
-								</a>
-								<p class="post-meta">
-									Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
-									<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
-										{{if  ${sessionScope.loginSeq} === memberSeq}}
-											<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" onclick="BoardDeleteUtil.proc('<%="${seq}"%>')"></i>
-										{{/if}}
-									</c:if>
-								</p>
-							</div>
-							<hr>
-						</script>
-						<script id="emptyContentTemplate" type="text/html">
-							<div class="post-preview list-top-margin">
-								<h2 class="post-title text-center empty-post">포스트가 없습니다.</h2>
-							</div>
-						</script>
 						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
 				</div>
@@ -57,9 +57,9 @@
 <script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		BoardUtil.vo = "${vo}";
-		BaordRenderUtil.renderCategory("${vo.categorySeq}");
-		BaordRenderUtil.renderList("${vo.categorySeq}");
+		BoardUtil.categorySeq = "${vo.categorySeq}";
+		BaordRenderUtil.renderCategory();
+		BaordRenderUtil.renderList();
 	});
 </script>
 </body>
