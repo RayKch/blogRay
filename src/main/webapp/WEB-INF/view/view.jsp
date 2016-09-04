@@ -13,18 +13,21 @@
 		<div id="page-content-wrapper">
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-10 col-sm-offset-1">
+					<script id="contentTemplate" type="text/html">
 						<div class="post-preview list-top-margin list-header-wrap">
-							<h2 class="text-center">${vo.title}</h2>
-							<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both">${vo.categoryName} - ${vo.categoryDescription}</p>
+							<h2 class="text-center"><%="${title}"%></h2>
+							<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both"><%="${categoryName}"%> - <%="${categoryDescription}"%></p>
 
 							<div class="clearfix"></div>
 							<hr class="list-hr" style="margin-top:5px">
 
-							<p class="post-meta pull-right" style="font-size:12px;">Posted by <a href="#">${vo.nickname}</a> on ${fn:substring(vo.regDate, 0, 10)}</p>
+							<p class="post-meta pull-right" style="font-size:12px;">Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%></p>
 							<div class="clearfix"></div>
 						</div>
-						<div class="text-left">${vo.content}</div>
+						<div class="text-left"><%="${content}"%></div>
+					</script>
+					<div id="divContentWrap" class="col-sm-10 col-sm-offset-1">
+						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
 				</div>
 			</div>
@@ -125,5 +128,10 @@
 	</div>
 </div>
 <script src="/scripts/board/board.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		BaordRenderUtil.render("${seq}");
+	});
+</script>
 </body>
 </html>

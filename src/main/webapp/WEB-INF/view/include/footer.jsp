@@ -6,8 +6,6 @@
 <script src="/scripts/plugin/bootstrap.min.js"></script>
 <script src="/scripts/plugin/clean-blog.min.js"></script>
 <script src="/scripts/common/common.js"></script>
-<script src="/scripts/category/category.js"></script>
-<script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		SideUtil.loginSeq = "${sessionScope.loginSeq}";

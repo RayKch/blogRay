@@ -27,6 +27,7 @@ public class BoardService {
 		List<BoardVo> list = boardDao.getList(vo);
 		for(int i=0; i<list.size(); i++) {
 			BoardVo tempVo = list.get(i);
+			tempVo.setRegDate(tempVo.getRegDate().substring(0, 10));
 		}
 		return list;
 	}
@@ -37,7 +38,7 @@ public class BoardService {
 
 	public BoardVo getVo(Integer seq) {
 		BoardVo vo = boardDao.getVo(seq);
-		vo.setContent(StringUtil.newLineToBr(vo.getContent()));
+		vo.setRegDate(vo.getRegDate().substring(0, 10));
 		return vo;
 	}
 

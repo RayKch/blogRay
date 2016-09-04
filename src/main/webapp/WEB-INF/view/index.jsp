@@ -55,9 +55,11 @@
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
+<script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		BoardUtil.vo = "${vo}";
+		BaordRenderUtil.renderList(BoardUtil.vo);
 	});
 </script>
 </body>

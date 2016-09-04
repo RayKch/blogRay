@@ -3,7 +3,22 @@ var BoardUtil = {
 };
 
 var BaordRenderUtil = {
-	renderList:function(vo) {
+	render:function(seq) {
+		$.ajax({
+			url:"/board/data/json",
+			type:"get",
+			data:{'seq':seq},
+			dataType:"text",
+			success:function(data) {
+				var vo = $.parseJSON(data);
+				$("#divContentWrap").html($("#contentTemplate").tmpl(vo));
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
+	}
+	,renderList:function(vo) {
 		$.ajax({
 			url:"/board/list/json",
 			type:"get",
@@ -47,7 +62,3 @@ var BoardDeleteUtil = {
 		}
 	}
 };
-
-$(document).ready(function() {
-	BaordRenderUtil.renderList(BoardUtil.vo);
-});
