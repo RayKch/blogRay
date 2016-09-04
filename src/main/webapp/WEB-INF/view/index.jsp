@@ -44,7 +44,7 @@
 						</script>
 						<script id="emptyContentTemplate" type="text/html">
 							<div class="post-preview list-top-margin">
-								<h2 class="post-title text-center">포스트가 없습니다.</h2>
+								<h2 class="post-title text-center empty-post">포스트가 없습니다.</h2>
 							</div>
 						</script>
 						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>

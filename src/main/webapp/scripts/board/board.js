@@ -14,7 +14,7 @@ var BaordRenderUtil = {
 				if(list.length > 0) {
 					$("#divContentList").html($("#contentTemplate").tmpl(list));
 				} else {
-					$("#divContentList").html($("#emptyContentTemplate"));
+					$("#divContentList").html($("#emptyContentTemplate").tmpl());
 				}
 			},
 			error:function(error) {
@@ -38,8 +38,6 @@ var BoardDeleteUtil = {
 					} else {
 						alert('실패하였습니다.');
 					}
-					CategoryUtil.renderList();
-					SideCategoryUtil.renderList();
 					BaordRenderUtil.renderList(BoardUtil.vo);
 				},
 				error:function(error) {
