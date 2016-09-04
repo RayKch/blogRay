@@ -24,7 +24,8 @@
 							<p class="post-meta pull-right" style="font-size:12px;">Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%></p>
 							<div class="clearfix"></div>
 						</div>
-						<div class="text-left"><%="${content}"%></div>
+						<%--<div class="text-left"><%="${content}"%></div>--%>
+						<div id="contentWrap" class="text-left"></div>
 					</script>
 					<div id="divContentWrap" class="col-sm-10 col-sm-offset-1">
 						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
