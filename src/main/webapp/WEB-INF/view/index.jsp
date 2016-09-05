@@ -21,13 +21,13 @@
 							<hr class="list-hr" style="margin-top:5px">
 						</div>
 					</script>
-					<div id="divCategoryWrap" class="col-sm-10 col-sm-offset-1"></div>
+					<div id="divCategoryWrap" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"></div>
 
 					<script id="contentTemplate" type="text/html">
 						<div class="post-preview list-top-margin">
 							<a href="/view?seq=<%="${seq}"%>">
 								<h2 class="post-title"><%="${title}"%></h2>
-								<h3 class="post-subtitle"><%="${content}"%></h3>
+								<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>
 							</a>
 							<p class="post-meta">
 								Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
