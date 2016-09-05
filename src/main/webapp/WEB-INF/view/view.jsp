@@ -27,7 +27,7 @@
 						<div class="text-left">{{html content.replace(/\n/gi, '<br/>')}}</div>
 					</script>
 					<div id="divContentWrap" class="col-sm-10 col-sm-offset-1">
-						<%--<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>--%>
+						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
 				</div>
 			</div>
