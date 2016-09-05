@@ -58,6 +58,11 @@ public class CategoryController {
 			return Const.AJAX_PAGE;
 		}
 
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
+			return Const.AJAX_PAGE;
+		}
+
 		vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
 
 		if(!categoryService.insertVo(vo)) {
@@ -73,6 +78,11 @@ public class CategoryController {
 		new CategoryInsertValidator().validate(vo, result);
 		if (result.hasErrors()) {
 			model.addAttribute("message", result.getFieldError().getDefaultMessage());
+			return Const.AJAX_PAGE;
+		}
+
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
 			return Const.AJAX_PAGE;
 		}
 
@@ -94,6 +104,11 @@ public class CategoryController {
 			return Const.AJAX_PAGE;
 		}
 
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
+			return Const.AJAX_PAGE;
+		}
+
 		vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
 		if(!categoryService.updateOrderNo(vo)) {
 			model.addAttribute("message", "정렬순서 수정이 실패했습니다");
@@ -106,6 +121,11 @@ public class CategoryController {
 
 	@RequestMapping(value = "/delete/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
 	public String delete(int seq, HttpSession session, Model model) {
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
+			return Const.AJAX_PAGE;
+		}
+
 		if(!categoryService.deleteVo(seq)) {
 			model.addAttribute("message", "카테고리삭제가 실패하였습니다");
 			return Const.AJAX_PAGE;

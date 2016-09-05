@@ -54,6 +54,11 @@ public class BoardController {
 
 	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST)
 	public String insert(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
+			return Const.AJAX_PAGE;
+		}
+
 		new BoardInsertValidator().validate(vo, result);
 		if (result.hasErrors()) {
 			model.addAttribute("message", result.getFieldError().getDefaultMessage());
@@ -71,7 +76,12 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/delete/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String delete(int seq, Model model) {
+	public String delete(int seq, HttpSession session, Model model) {
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
+			return Const.AJAX_PAGE;
+		}
+
 		if(!boardService.deleteVo(seq)) {
 			model.addAttribute("message", "포스트삭제가 실패하였습니다");
 			return Const.AJAX_PAGE;
