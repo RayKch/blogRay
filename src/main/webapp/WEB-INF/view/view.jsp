@@ -24,11 +24,10 @@
 							<p class="post-meta pull-right" style="font-size:12px;">Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%></p>
 							<div class="clearfix"></div>
 						</div>
-						<%--<div class="text-left"><%="${content}"%></div>--%>
-						<div id="contentWrap" class="text-left"></div>
+						<div class="text-left">{{html content.replace(/\n/gi, '<br/>')}}</div>
 					</script>
 					<div id="divContentWrap" class="col-sm-10 col-sm-offset-1">
-						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
+						<%--<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>--%>
 					</div>
 				</div>
 			</div>
@@ -111,7 +110,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="" class="col-sm-2 control-label">Comment</label>
+							<label class="col-sm-2 control-label">Comment</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
 							</div>

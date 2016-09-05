@@ -38,11 +38,6 @@ public class BoardService {
 
 	public BoardVo getVo(Integer seq) {
 		BoardVo vo = boardDao.getVo(seq);
-		vo.setContent(vo.getContent().replaceAll("\n", "\\\\n"));
-		vo.setContent(vo.getContent().replaceAll("\r", "\\\\r"));
-		vo.setContent(vo.getContent().replaceAll("\"", "\\\\\""));
-		vo.setContent(vo.getContent().replaceAll("\t", "\\\\t"));
-		vo.setContent(vo.getContent().replaceAll(new Character((char)3).toString(), ""));
 		vo.setRegDate(vo.getRegDate().substring(0, 10));
 		return vo;
 	}

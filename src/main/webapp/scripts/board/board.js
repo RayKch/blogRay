@@ -29,7 +29,8 @@ var BaordRenderUtil = {
 			dataType:"text",
 			success:function(data) {
 				var vo = $.parseJSON(data);
-				$("#divContentWrap").html($("#contentTemplate").tmpl(vo));
+//				$("#contentTemplate").tmpl(vo).appendTo("#divContentWrap");
+				$("#divContentWrap").append($("#contentTemplate").tmpl(vo));
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
