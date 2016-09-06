@@ -48,6 +48,7 @@
 					<div id="divContentList" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
+					<div id="divPaging"></div>
 				</div>
 			</div>
 		</div>

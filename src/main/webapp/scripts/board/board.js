@@ -51,10 +51,31 @@ var BaordRenderUtil = {
 				} else {
 					$("#divContentList").html($("#emptyContentTemplate").tmpl());
 				}
+				BaordRenderUtil.renderPaging(list.length);
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
 			}
+		});
+	}
+	, renderPaging:function(totall) {
+		$('#divPaging').bootpag({
+			total: totall,
+			page: 2,
+			maxVisible: 5,
+			leaps: true,
+			firstLastUse: true,
+			first: '←',
+			last: '→',
+			wrapClass: 'pagination',
+			activeClass: 'active',
+			disabledClass: 'disabled',
+			nextClass: 'next',
+			prevClass: 'prev',
+			lastClass: 'last',
+			firstClass: 'first'
+		}).on("page", function(event, num){
+//			$(".content4").html("Page " + num); // or some ajax content loading...
 		});
 	}
 };
