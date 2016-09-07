@@ -60,7 +60,9 @@
 	$(document).ready(function() {
 		BoardUtil.categorySeq = "${vo.categorySeq}";
 		BaordRenderUtil.renderCategory();
-		BaordRenderUtil.renderList();
+		BaordRenderUtil.renderList(0, (function () {
+			BaordRenderUtil.renderPaging(0);
+		})());
 	});
 </script>
 </body>

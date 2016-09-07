@@ -44,7 +44,16 @@ public class BoardController {
 
 	@RequestMapping(value = "/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public @ResponseBody List<BoardVo> list(BoardParamVo vo) {
+		vo.setRowCount(5);
+		vo.setTotalRowCount(boardService.getListTotalCount(vo));
 		return boardService.getList(vo);
+	}
+
+	@RequestMapping(value = "/list/paging/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody String paging(BoardParamVo vo) {
+		vo.setRowCount(5);
+		vo.setTotalRowCount(boardService.getListTotalCount(vo));
+		return vo.drawPagingNavigation("goPage");
 	}
 
 	@RequestMapping(value = "/data/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")

@@ -38,11 +38,11 @@ var BaordRenderUtil = {
 			}
 		});
 	}
-	, renderList:function() {
+	, renderList:function(pageNum, callback) {
 		$.ajax({
 			url:"/board/list/json",
 			type:"get",
-			data:{'categorySeq':BoardUtil.categorySeq},
+			data:{'categorySeq':BoardUtil.categorySeq, 'pageNum': pageNum},
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
@@ -51,31 +51,29 @@ var BaordRenderUtil = {
 				} else {
 					$("#divContentList").html($("#emptyContentTemplate").tmpl());
 				}
-				BaordRenderUtil.renderPaging(list.length);
+
+				if (typeof callback === "function") {
+					callback();
+				}
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
 			}
 		});
 	}
-	, renderPaging:function(totall) {
-		$('#divPaging').bootpag({
-			total: totall,
-			page: 2,
-			maxVisible: 5,
-			leaps: true,
-			firstLastUse: true,
-			first: '←',
-			last: '→',
-			wrapClass: 'pagination',
-			activeClass: 'active',
-			disabledClass: 'disabled',
-			nextClass: 'next',
-			prevClass: 'prev',
-			lastClass: 'last',
-			firstClass: 'first'
-		}).on("page", function(event, num){
-//			$(".content4").html("Page " + num); // or some ajax content loading...
+	, renderPaging:function(pageNum) {
+		$.ajax({
+			url:"/board/list/paging/json",
+			type:"get",
+			data:{'categorySeq':BoardUtil.categorySeq, 'pageNum': pageNum},
+			dataType:"text",
+			success:function(data) {
+				$("#divPaging").html(data);
+				$("#divPaging").addClass("pagination").addClass("alternate");
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
 		});
 	}
 };
@@ -106,4 +104,10 @@ var BoardDeleteUtil = {
 			});
 		}
 	}
+};
+
+var goPage = function (page) {
+	BaordRenderUtil.renderList(page, (function () {
+		BaordRenderUtil.renderPaging(page);
+	})());
 };

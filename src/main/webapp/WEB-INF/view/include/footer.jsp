@@ -5,7 +5,6 @@
 <script src="/scripts/plugin/jquery.tmpl.js"></script>
 <script src="/scripts/plugin/bootstrap.min.js"></script>
 <script src="/scripts/plugin/clean-blog.min.js"></script>
-<script src="/scripts/plugin/jquery.bootpag.min.js"></script>
 <script src="/scripts/common/common.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
