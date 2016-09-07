@@ -69,7 +69,7 @@ var BaordRenderUtil = {
 			dataType:"text",
 			success:function(data) {
 				$("#divPaging").html(data);
-				$("#divPaging").addClass("pagination").addClass("alternate");
+				$("#divPaging").addClass("pagination");
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
