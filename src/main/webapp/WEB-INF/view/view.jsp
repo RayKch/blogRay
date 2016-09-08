@@ -29,9 +29,15 @@
 					<div id="divContentWrap" class="col-sm-10 col-sm-offset-1">
 						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
+
+					<div id="modifyWrap" class="col-sm-10 col-sm-offset-1" style="margin-top:20px">
+						<i class="fa fa-times pull-right pointer" aria-hidden="true" style="margin-left:0.6em;" onclick="BoardDeleteUtil.proc('${seq}')"></i>
+						<i class="fa fa-pencil pull-right pointer" aria-hidden="true"></i>
+					</div>
 				</div>
 			</div>
 		</div>
+
 		<div class="container" style="margin-top:100px">
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
@@ -52,15 +58,11 @@
 										Great snippet! Thanks for sharing.
 									</p>
 									<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-									<a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> 2 comments</a>
 								</div>
 							</div>
-							<div class="collapse" id="replyOne">
+							<div>
 								<ul class="media-list">
 									<li class="media media-replied">
-										<a class="pull-left" href="#">
-											<img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
-										</a>
 										<div class="media-body">
 											<div class="well well-lg">
 												<h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> The Hipster</h4>
@@ -72,14 +74,10 @@
 												<p class="media-comment">
 													Nice job Maria.
 												</p>
-												<a class="btn btn-info btn-circle text-uppercase" href="#"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
 											</div>
 										</div>
 									</li>
 									<li class="media media-replied" id="replied">
-										<a class="pull-left" href="#">
-											<img class="media-object img-circle" src="https://pbs.twimg.com/profile_images/442656111636668417/Q_9oP8iZ.jpeg" alt="profile">
-										</a>
 										<div class="media-body">
 											<div class="well well-lg">
 												<h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> Mary</h4></h4>
@@ -91,7 +89,6 @@
 												<p class="media-comment">
 													Thank you Guys!
 												</p>
-												<a class="btn btn-info btn-circle text-uppercase" href="#"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
 											</div>
 										</div>
 									</li>

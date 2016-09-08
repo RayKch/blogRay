@@ -29,9 +29,8 @@ var BaordRenderUtil = {
 			dataType:"text",
 			success:function(data) {
 				var vo = $.parseJSON(data);
-//				$("#contentTemplate").tmpl(vo).appendTo("#divContentWrap");
-//				$("#divContentWrap").append($("#contentTemplate").tmpl(vo));
-				$("#divContentWrap").html($("#contentTemplate").tmpl(vo))
+				$("#divContentWrap").html($("#contentTemplate").tmpl(vo));
+				BoardUtil.categorySeq = vo.categorySeq;
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -48,12 +47,13 @@ var BaordRenderUtil = {
 				var list = $.parseJSON(data);
 				if(list.length > 0) {
 					$("#divContentList").html($("#contentTemplate").tmpl(list));
-				} else {
-					$("#divContentList").html($("#emptyContentTemplate").tmpl());
-				}
 
-				if (typeof callback === "function") {
-					callback();
+					if (typeof callback === "function") {
+						callback();
+					}
+				} else {
+					$('#divPaging').hide();
+					$("#divContentList").html($("#emptyContentTemplate").tmpl());
 				}
 			},
 			error:function(error) {
@@ -79,7 +79,7 @@ var BaordRenderUtil = {
 };
 
 var BoardDeleteUtil = {
-	proc:function(seq, typeCode) {
+	proc:function(seq) {
 		if(confirm('정말 삭제하시겠습니까?')) {
 			$.ajax({
 				url:"/board/delete/proc",
@@ -89,13 +89,9 @@ var BoardDeleteUtil = {
 				success:function(data) {
 					if(data === 'success') {
 						alert('삭제되었습니다.');
+						location.href='/?categorySeq='+BoardUtil.categorySeq;
 					} else {
 						alert('실패하였습니다.');
-					}
-					if(typeCode === 'list') {
-						BaordRenderUtil.renderList();
-					} else {
-						BaordRenderUtil.render(BoardUtil.boardSeq);
 					}
 				},
 				error:function(error) {
