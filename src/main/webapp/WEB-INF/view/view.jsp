@@ -31,7 +31,7 @@
 					</div>
 
 					<div id="modifyWrap" class="col-sm-10 col-sm-offset-1" style="margin-top:20px">
-						<i class="fa fa-times pull-right pointer" aria-hidden="true" style="margin-left:0.6em;" onclick="BoardDeleteUtil.proc('${seq}')"></i>
+						<i class="fa fa-times pull-right pointer" aria-hidden="true" style="margin-left:0.6em;" onclick="BoardDeleteUtil.proc('${seq}', 'view')"></i>
 						<i class="fa fa-pencil pull-right pointer" aria-hidden="true"></i>
 					</div>
 				</div>

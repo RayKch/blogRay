@@ -79,7 +79,7 @@ var BaordRenderUtil = {
 };
 
 var BoardDeleteUtil = {
-	proc:function(seq) {
+	proc:function(seq, type) {
 		if(confirm('정말 삭제하시겠습니까?')) {
 			$.ajax({
 				url:"/board/delete/proc",
@@ -89,7 +89,12 @@ var BoardDeleteUtil = {
 				success:function(data) {
 					if(data === 'success') {
 						alert('삭제되었습니다.');
-						location.href='/?categorySeq='+BoardUtil.categorySeq;
+
+						if(type === 'list') {
+							BaordRenderUtil.renderList(0);
+						} else {
+							location.href='/?categorySeq='+BoardUtil.categorySeq;
+						}
 					} else {
 						alert('실패하였습니다.');
 					}
