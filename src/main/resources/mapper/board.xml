@@ -72,8 +72,8 @@
 		UPDATE ch_board SET
 			category_seq = #{categorySeq}
 			, member_seq = #{memberSeq}
-			, title
-			, content
+			, title = #{title}
+			, content = #{content}
 			, mod_date=NOW()
 		WHERE seq = #{seq}
 	</update>

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +32,7 @@ public class BoardController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping("/form")
+	@RequestMapping({"/form"})
 	public String form(HttpSession session, Model model) {
 		if(session.getAttribute("loginSeq") == null) {
 			model.addAttribute("message", "로그인 후 이용가능합니다");
@@ -39,6 +40,19 @@ public class BoardController {
 		}
 
 		model.addAttribute("categoryList", categoryService.getList());
+		return "/board/form.jsp";
+	}
+
+	@RequestMapping("/form/{seq}")
+	public String form(@PathVariable Integer seq, HttpSession session, Model model) {
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
+			return Const.BACK_PAGE;
+		}
+
+		model.addAttribute("categoryList", categoryService.getList());
+		model.addAttribute("vo", boardService.getVo(seq));
+		model.addAttribute("seq", seq);
 		return "/board/form.jsp";
 	}
 
@@ -80,6 +94,29 @@ public class BoardController {
 			return Const.AJAX_PAGE;
 		}
 		model.addAttribute("message", "포스트가 등록되었습니다.");
+		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
+		return Const.REDIRECT_PAGE;
+	}
+
+	@RequestMapping(value = "/update/proc", method = RequestMethod.POST)
+	public String update(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
+		if(session.getAttribute("loginSeq") == null) {
+			model.addAttribute("message", "로그인 후 이용가능합니다");
+			return Const.AJAX_PAGE;
+		}
+
+		new BoardInsertValidator().validate(vo, result);
+		if (result.hasErrors()) {
+			model.addAttribute("message", result.getFieldError().getDefaultMessage());
+			return Const.AJAX_PAGE;
+		}
+
+		vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
+		if(!boardService.updateVo(vo)) {
+			model.addAttribute("message", "포스트 수정이 실패하였습니다");
+			return Const.AJAX_PAGE;
+		}
+		model.addAttribute("message", "포스트가 수정되었습니다.");
 		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
 		return Const.REDIRECT_PAGE;
 	}
