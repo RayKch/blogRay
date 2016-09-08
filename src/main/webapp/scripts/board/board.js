@@ -96,7 +96,7 @@ var BoardDeleteUtil = {
 							location.href='/?categorySeq='+BoardUtil.categorySeq;
 						}
 					} else {
-						alert('실패하였습니다.');
+						alert(data);
 					}
 				},
 				error:function(error) {

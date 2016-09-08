@@ -25,7 +25,7 @@
 
 					<script id="contentTemplate" type="text/html">
 						<div class="post-preview list-top-margin">
-							<a href="/view?seq=<%="${seq}"%>">
+							<a href="/view/<%="${seq}"%>">
 								<h2 class="post-title"><%="${title}"%></h2>
 								<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>
 							</a>

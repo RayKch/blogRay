@@ -32,27 +32,20 @@ public class BoardController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping({"/form"})
-	public String form(HttpSession session, Model model) {
+	@RequestMapping("/form")
+	public String form(Integer seq, HttpSession session, Model model) {
 		if(session.getAttribute("loginSeq") == null) {
 			model.addAttribute("message", "로그인 후 이용가능합니다");
 			return Const.BACK_PAGE;
 		}
 
 		model.addAttribute("categoryList", categoryService.getList());
-		return "/board/form.jsp";
-	}
 
-	@RequestMapping("/form/{seq}")
-	public String form(@PathVariable Integer seq, HttpSession session, Model model) {
-		if(session.getAttribute("loginSeq") == null) {
-			model.addAttribute("message", "로그인 후 이용가능합니다");
-			return Const.BACK_PAGE;
+		if(seq != null) {
+			model.addAttribute("vo", boardService.getVo(seq));
+			model.addAttribute("seq", seq);
 		}
 
-		model.addAttribute("categoryList", categoryService.getList());
-		model.addAttribute("vo", boardService.getVo(seq));
-		model.addAttribute("seq", seq);
 		return "/board/form.jsp";
 	}
 

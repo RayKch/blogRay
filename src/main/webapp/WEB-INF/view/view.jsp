@@ -30,10 +30,12 @@
 						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
 
-					<div id="modifyWrap" class="col-sm-10 col-sm-offset-1" style="margin-top:20px">
-						<i class="fa fa-times pull-right pointer" aria-hidden="true" style="margin-left:0.6em;" onclick="BoardDeleteUtil.proc('${seq}', 'view')"></i>
-						<a href="/board/form/${seq}"><i class="fa fa-pencil pull-right pointer" aria-hidden="true"></i></a>
-					</div>
+					<c:if test="${sessionScope.loginSeq eq vo.memberSeq}">
+						<div class="col-sm-10 col-sm-offset-1" style="margin-top:20px">
+							<i class="fa fa-times pull-right pointer" aria-hidden="true" style="margin-left:0.6em;" onclick="BoardDeleteUtil.proc('${seq}', 'view')"></i>
+							<a href="/board/form?seq=${seq}"><i class="fa fa-pencil pull-right pointer" aria-hidden="true"></i></a>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
