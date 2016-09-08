@@ -19,6 +19,7 @@ CREATE TABLE `ch_board` (
 /* 블로그 게시판 댓글(댓글은 모두 가능) */
 CREATE TABLE `ch_board_comment` (
  `seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '번호',
+ `parent_seq` int(11) NOT NULL COMMENT '상위 댓글 시퀀스',
  `board_seq` int(11) NOT NULL COMMENT '블로그 게시판 번호',
  `member_seq` int(11) NULL COMMENT '회원 번호',
  `nickname` varchar(300) NULL COMMENT '닉네임',
