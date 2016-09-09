@@ -1,6 +1,7 @@
 var BoardUtil = {
 	boardSeq:0
 	, categorySeq:0
+	, count:0
 };
 
 var BaordRenderUtil = {
@@ -13,7 +14,11 @@ var BaordRenderUtil = {
 			success:function(data) {
 				if(data !== '') {
 					var vo = $.parseJSON(data);
+					vo.count = BoardUtil.count;
 					$("#divCategoryWrap").html($("#categoryTemplate").tmpl(vo));
+				} else {
+					var obj = {'title':'전체', 'description':'', 'count':BoardUtil.count};
+					$("#divCategoryWrap").html($("#categoryTemplate").tmpl(obj));
 				}
 			},
 			error:function(error) {
@@ -55,6 +60,7 @@ var BaordRenderUtil = {
 					$('#divPaging').hide();
 					$("#divContentList").html($("#emptyContentTemplate").tmpl());
 				}
+				BoardUtil.count = list.length;
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
