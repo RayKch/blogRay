@@ -13,10 +13,11 @@
 
 	<select id="getVo" parameterType="Integer" resultType="ray.data.CategoryVo">
 		SELECT
-			seq
-			, title
-			, description
-		FROM ch_category
+			a.seq
+			, a.title
+			, a.description
+			, (SELECT count(*) FROM ch_board WHERE category_seq=a.seq) AS boardCount
+		FROM ch_category a
 		WHERE seq = #{seq}
 	</select>
 

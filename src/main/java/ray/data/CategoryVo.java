@@ -17,4 +17,6 @@ public class CategoryVo {
 	private String description;
 	/** 정렬순서 */
 	private int orderNo;
+	/** 포스트 전체글 갯수 */
+	private int boardCount;
 }

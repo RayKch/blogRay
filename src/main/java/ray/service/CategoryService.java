@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ray.data.CategoryVo;
+import ray.data.param.BoardParamVo;
 import ray.data.param.CategoryParamVo;
+import ray.repository.BoardDao;
 import ray.repository.CategoryDao;
 
 import java.util.List;
@@ -22,12 +24,24 @@ public class CategoryService {
 	@Setter
 	private CategoryDao categoryDao;
 
+	@Autowired
+	@Setter
+	private BoardDao boardDao;
+
 	public List<CategoryVo> getList() {
 		return categoryDao.getList();
 	}
 
 	public CategoryVo getVo(Integer seq) {
-		return categoryDao.getVo(seq);
+		CategoryVo vo = new CategoryVo();
+		CategoryVo getVo = categoryDao.getVo(seq);
+		if(getVo == null) {
+			BoardParamVo paramVo = new BoardParamVo();
+			vo.setBoardCount(boardDao.getListTotalCount(paramVo));
+		} else {
+			vo = getVo;
+		}
+		return vo;
 	}
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})

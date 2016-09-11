@@ -15,7 +15,7 @@
 				<div class="row">
 					<script id="categoryTemplate" type="text/html">
 						<div class="post-preview list-top-margin list-header-wrap">
-							<h2 class="text-center"><%="${title}"%> (<%="${count}"%>)</h2>
+							<h2 class="text-center"><%="${title}"%> (<%="${boardCount}"%>)</h2>
 							<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both"><%="${description}"%></p>
 							<div class="clearfix"></div>
 							<hr class="list-hr" style="margin-top:5px">
@@ -60,9 +60,10 @@
 	$(document).ready(function() {
 		BoardUtil.categorySeq = "${vo.categorySeq}";
 		BaordRenderUtil.renderList(0, (function () {
-			BaordRenderUtil.renderPaging(0);
+			BaordRenderUtil.renderPaging(0, (function () {
+				BaordRenderUtil.renderCategory();
+			})());
 		})());
-		BaordRenderUtil.renderCategory();
 	});
 </script>
 </body>

@@ -12,13 +12,12 @@ var BaordRenderUtil = {
 			data:{'seq':BoardUtil.categorySeq},
 			dataType:"text",
 			success:function(data) {
-				if(data !== '') {
-					var vo = $.parseJSON(data);
-					vo.count = BoardUtil.count;
-					$("#divCategoryWrap").html($("#categoryTemplate").tmpl(vo));
-				} else {
-					var obj = {'title':'전체', 'description':'', 'count':BoardUtil.count};
+				var vo = $.parseJSON(data);
+				if(vo.title === null) {
+					var obj = {'title':'전체', 'description':'', 'boardCount':vo.boardCount};
 					$("#divCategoryWrap").html($("#categoryTemplate").tmpl(obj));
+				} else {
+					$("#divCategoryWrap").html($("#categoryTemplate").tmpl(vo));
 				}
 			},
 			error:function(error) {
@@ -60,14 +59,13 @@ var BaordRenderUtil = {
 					$('#divPaging').hide();
 					$("#divContentList").html($("#emptyContentTemplate").tmpl());
 				}
-				BoardUtil.count = list.length;
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
 			}
 		});
 	}
-	, renderPaging:function(pageNum) {
+	, renderPaging:function(pageNum, callback) {
 		$.ajax({
 			url:"/board/list/paging/json",
 			type:"get",
@@ -76,6 +74,10 @@ var BaordRenderUtil = {
 			success:function(data) {
 				$("#divPaging").html(data);
 				$("#divPaging").addClass("pagination");
+
+				if (typeof callback === "function") {
+					callback();
+				}
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -97,7 +99,9 @@ var BoardDeleteUtil = {
 						alert('삭제되었습니다.');
 
 						if(type === 'list') {
-							BaordRenderUtil.renderList(0);
+							BaordRenderUtil.renderList(0, (function () {
+								BaordRenderUtil.renderPaging(0);
+							})());
 						} else {
 							location.href='/?categorySeq='+BoardUtil.categorySeq;
 						}
@@ -115,6 +119,8 @@ var BoardDeleteUtil = {
 
 var goPage = function (page) {
 	BaordRenderUtil.renderList(page, (function () {
-		BaordRenderUtil.renderPaging(page);
+		BaordRenderUtil.renderPaging(page, (function () {
+			BaordRenderUtil.renderCategory();
+		})());
 	})());
 };
