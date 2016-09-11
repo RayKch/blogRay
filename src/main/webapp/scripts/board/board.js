@@ -117,6 +117,22 @@ var BoardDeleteUtil = {
 	}
 };
 
+//코맨트 로직 처리부분
+var BoardCommentRenderUtil = {
+	renderList:function() {
+
+	}
+	, renderPaging:function() {
+
+	}
+};
+
+var BoardCommentDeleteUtil = {
+	proc:function() {
+
+	}
+};
+
 var goPage = function (page) {
 	BaordRenderUtil.renderList(page, (function () {
 		BaordRenderUtil.renderPaging(page, (function () {
