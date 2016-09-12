@@ -120,10 +120,24 @@ var BoardDeleteUtil = {
 //코맨트 로직 처리부분
 var BoardCommentRenderUtil = {
 	renderList:function() {
-
-	}
-	, renderPaging:function() {
-
+		$.ajax({
+			url:"/board/comment/list/json",
+			type:"get",
+			data:{'boardSeq':BoardUtil.boardSeq},
+			dataType:"text",
+			success:function(data) {
+				var list = $.parseJSON(data);
+				alert(list.length);
+				if(list.length > 0) {
+					$("#ulCommentWrap").html($("#commentTemplate").tmpl(list));
+				} else {
+					$("#ulCommentWrap").html($("#nonCommentTemplate").tmpl());
+				}
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
 	}
 };
 
