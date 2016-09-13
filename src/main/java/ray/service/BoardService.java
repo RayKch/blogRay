@@ -42,6 +42,15 @@ public class BoardService {
 		return vo;
 	}
 
+	public List<BoardVo> getCommentList(BoardParamVo vo) {
+		List<BoardVo> list = boardDao.getCommentList(vo);
+		for(int i=0; i<list.size(); i++) {
+			BoardVo tempVo = list.get(i);
+			tempVo.setRegDate(tempVo.getRegDate().substring(0, 10));
+		}
+		return list;
+	}
+
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(BoardParamVo vo) {
 		return boardDao.insertVo(vo) > 0;

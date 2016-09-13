@@ -34,6 +34,11 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
+	public List<BoardVo> getCommentList(BoardParamVo vo) {
+		return sqlSession.selectList("board.getCommentList", vo);
+	}
+
+	@Override
 	public int insertVo(BoardParamVo vo) {
 		return sqlSession.insert("board.insertVo", vo);
 	}

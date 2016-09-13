@@ -14,7 +14,10 @@ public interface BoardDao {
 	public List<BoardVo> getList(BoardParamVo vo);
 	public int getListTotalCount(BoardParamVo vo);
 	public BoardVo getVo(Integer seq);
+	public List<BoardVo> getCommentList(BoardParamVo vo);
 	public int insertVo(BoardParamVo vo);
 	public int updateVo(BoardParamVo vo);
 	public int deleteVo(Integer seq);
+
+
 }

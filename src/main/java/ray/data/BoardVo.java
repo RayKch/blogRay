@@ -10,9 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BoardVo {
 	private Integer seq;
+	private Integer parentSeq;
+	private Integer boardSeq;
 	private Integer categorySeq;
 	private Integer memberSeq;
 	private Integer loginSeq;
+	private String password;
 	private String categoryName;
 	private String nickname;
 	private String title;

@@ -127,7 +127,6 @@ var BoardCommentRenderUtil = {
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
-				alert(list.length);
 				if(list.length > 0) {
 					$("#ulCommentWrap").html($("#commentTemplate").tmpl(list));
 				} else {

@@ -12,8 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper=false)
 public class BoardParamVo extends ParamVo {
 	private Integer seq;
+	private Integer parentSeq;
+	private Integer boardSeq;
 	private Integer categorySeq;
 	private Integer memberSeq;
+	private String password;
 	private String title;
 	private String content;
 	private int recomment;

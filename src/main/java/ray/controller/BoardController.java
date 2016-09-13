@@ -68,6 +68,11 @@ public class BoardController {
 		return boardService.getVo(seq);
 	}
 
+	@RequestMapping(value = "/comment/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody List<BoardVo> commentList(BoardParamVo vo) {
+		return boardService.getCommentList(vo);
+	}
+
 	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST)
 	public String insert(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
 		if(session.getAttribute("loginSeq") == null) {
