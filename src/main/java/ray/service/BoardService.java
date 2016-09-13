@@ -36,12 +36,6 @@ public class BoardService {
 		return boardDao.getListTotalCount(vo);
 	}
 
-	public BoardVo getVo(Integer seq) {
-		BoardVo vo = boardDao.getVo(seq);
-		vo.setRegDate(vo.getRegDate().substring(0, 10));
-		return vo;
-	}
-
 	public List<BoardVo> getCommentList(BoardParamVo vo) {
 		List<BoardVo> list = boardDao.getCommentList(vo);
 		for(int i=0; i<list.size(); i++) {
@@ -51,9 +45,20 @@ public class BoardService {
 		return list;
 	}
 
+	public BoardVo getVo(Integer seq) {
+		BoardVo vo = boardDao.getVo(seq);
+		vo.setRegDate(vo.getRegDate().substring(0, 10));
+		return vo;
+	}
+
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(BoardParamVo vo) {
 		return boardDao.insertVo(vo) > 0;
+	}
+
+	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
+	public boolean insertCommentVo(BoardParamVo vo) {
+		return boardDao.insertCommentVo(vo) > 0;
 	}
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})

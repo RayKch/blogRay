@@ -140,6 +140,62 @@ var BoardCommentRenderUtil = {
 	}
 };
 
+var BoardCommentSubmitUtil = {
+	validation:function() {
+		var flag = true;
+		$('#commentForm').find("input[alt], textarea[alt], select[alt]").each( function() {
+			if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
+
+				alert($(this).attr("alt") + "란을 채워주세요.");
+				flag = false;
+				$(this).focus();
+			}
+		});
+		return flag;
+	}
+	, mappingVo:function() {
+		var data = {
+			'nickname':$('#nickname').val()
+			, 'content':$('#content').val()
+			, 'boardSeq':BoardUtil.boardSeq
+		}
+		return data;
+	}
+	, formReset:function() {
+		$('#nickname').val('');
+		$('#content').val('');
+	}
+	, submit:function(callback, type) {
+		if(BoardCommentSubmitUtil.validation()) {
+			callback(type);
+		}
+	}
+	, proc:function(type) {
+		$.ajax({
+			url:"/board/comment/"+type+"/proc",
+			type:"post",
+			data:BoardCommentSubmitUtil.mappingVo(),
+			dataType:"text",
+			success:function(data) {
+				if(data === 'success') {
+					if(type === 'insert') {
+						alert('등록되었습니다');
+					} else {
+						alert('수정되었습니다');
+					}
+				} else {
+					alert('실패하였습니다.');
+				}
+				BoardCommentRenderUtil.renderList();
+				BoardCommentSubmitUtil.formReset(type);
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
+	}
+}
+
 var BoardCommentDeleteUtil = {
 	proc:function() {
 

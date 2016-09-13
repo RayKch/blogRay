@@ -65,7 +65,7 @@
 		, a.un_recommend AS unRecommend
 		, a.reg_date AS regDate
 		, a.mod_date AS modDate
-		FROM ch_board a
+		FROM ch_board_comment a
 		WHERE 1=1
 		AND a.board_seq = #{boardSeq}
 		ORDER BY a.seq DESC
@@ -82,6 +82,42 @@
 			#{categorySeq}
 			, #{memberSeq}
 			, #{title}
+			, #{content}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertCommentVo" parameterType="ray.data.param.BoardParamVo">
+		INSERT INTO ch_board_comment (
+			board_seq
+			<if test="parentSeq != null">
+				, parent_seq
+			</if>
+			<if test="memberSeq != null">
+				, member_seq
+			</if>
+			<if test="nickname != null">
+				, nickname
+			</if>
+			<if test="password != null">
+				, password
+			</if>
+			, content
+			, reg_date
+		) VALUES (
+			#{boardSeq}
+			<if test="parentSeq != null">
+				, #{parentSeq}
+			</if>
+			<if test="memberSeq != null">
+				, #{memberSeq}
+			</if>
+			<if test="nickname != null">
+				, #{nickname}
+			</if>
+			<if test="password != null">
+				, #{password}
+			</if>
 			, #{content}
 			, NOW()
 		)

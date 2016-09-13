@@ -146,9 +146,7 @@
 					</script>
 
 					<script id="nonCommentTemplate" type="text/html">
-						<div class="well well-lg">
-							댓글이 없습니다.
-						</div>
+						<div class="well well-lg text-center" style="font-size:12px;">댓글이 없습니다.</div>
 					</script>
 
 					<ul id="ulCommentWrap" class="media-list">
@@ -161,20 +159,20 @@
 
 					<form action="#" method="post" class="form-horizontal" id="commentForm" role="form">
 						<div class="form-group">
-							<label for="uploadMedia" class="col-sm-2 control-label">NickName</label>
+							<label for="nickname" class="col-sm-2 control-label">NickName</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="uploadMedia" id="uploadMedia">
+								<input type="text" class="form-control" name="nickname" id="nickname">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Comment</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+								<textarea class="form-control" name="content" id="content" rows="5"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Summit comment</button>
+								<button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> 등록</button>
 							</div>
 						</div>
 					</form>
@@ -190,6 +188,10 @@
 		BoardUtil.boardSeq = "${seq}";
 		BaordRenderUtil.render();
 		BoardCommentRenderUtil.renderList();
+
+		$('#submitComment').on('click', function() {
+			BoardCommentSubmitUtil.submit(BoardCommentSubmitUtil.proc, 'insert');
+		});
 	});
 </script>
 </body>
