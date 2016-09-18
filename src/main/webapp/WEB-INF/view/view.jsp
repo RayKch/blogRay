@@ -167,7 +167,7 @@
 
 				<div class="col-sm-10 col-sm-offset-1">
 					<div class="page-header">
-						<h3 class="reviews">comment (<span id="commentCount"></span>)</h3>
+						<h3 class="reviews">Comment (<span id="commentCount"></span>)</h3>
 					</div>
 
 					<ul id="ulCommentWrap" class="media-list">
@@ -181,21 +181,21 @@
 					<form id="commentForm" class="form-horizontal">
 						<c:if test="${sessionScope.loginSeq eq null}">
 							<div class="form-group">
-								<label for="nickname" class="col-sm-2 control-label">NickName</label>
+								<label for="nickname" class="col-sm-2 control-label">닉네임</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" name="nickname" id="nickname" alt="닉네임">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label for="nickname" class="col-sm-2 control-label">Password</label>
+								<label for="nickname" class="col-sm-2 control-label">비밀번호</label>
 								<div class="col-sm-10">
 									<input type="password" class="form-control" name="password" id="submitCommentPassword" alt="비밀번호">
 								</div>
 							</div>
 						</c:if>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Comment</label>
+							<label class="col-sm-2 control-label">내용</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" name="content" id="content" rows="5" alt="내용"></textarea>
 							</div>

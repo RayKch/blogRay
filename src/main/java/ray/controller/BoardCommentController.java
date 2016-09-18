@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +14,10 @@ import ray.data.param.BoardParamVo;
 import ray.data.validator.BoardCommentInsertValidator;
 import ray.service.BoardService;
 import ray.util.Const;
+import ray.util.StringUtil;
 
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -46,6 +49,15 @@ public class BoardCommentController {
 			return Const.AJAX_PAGE;
 		}
 
+		if(!StringUtils.isEmpty(vo.getPassword())) {
+			try {
+				vo.setPassword(StringUtil.encryptSha2(vo.getPassword()));
+			} catch(NoSuchAlgorithmException e) {
+				model.addAttribute("message", "비밀번호 암호화에 실패하였습니다.");
+				return Const.AJAX_PAGE;
+			}
+		}
+
 		if(!boardService.insertCommentVo(vo)) {
 			model.addAttribute("message", "댓글 등록이 실패하였습니다");
 			return Const.AJAX_PAGE;
@@ -70,6 +82,15 @@ public class BoardCommentController {
 				return Const.AJAX_PAGE;
 			} else {
 				vo.setMemberSeq(Integer.parseInt(loginSeq));
+			}
+		}
+
+		if(!StringUtils.isEmpty(vo.getPassword())) {
+			try {
+				vo.setPassword(StringUtil.encryptSha2(vo.getPassword()));
+			} catch(NoSuchAlgorithmException e) {
+				model.addAttribute("message", "비밀번호 암호화에 실패하였습니다.");
+				return Const.AJAX_PAGE;
 			}
 		}
 
