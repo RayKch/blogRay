@@ -25,10 +25,8 @@
 
 					<script id="contentTemplate" type="text/html">
 						<div class="post-preview list-top-margin">
-							<a href="/view/<%="${seq}"%>">
-								<h2 class="post-title"><%="${title}"%></h2>
-								<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>
-							</a>
+							<a href="/view/<%="${seq}"%>"><h2 class="post-title"><%="${title}"%></h2></a>
+							<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>
 							<p class="post-meta">
 								Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
 								<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
