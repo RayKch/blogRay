@@ -29,11 +29,6 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public List<BoardVo> getCommentList(BoardParamVo vo) {
-		return sqlSession.selectList("board.getCommentList", vo);
-	}
-
-	@Override
 	public BoardVo getVo(Integer seq) {
 		return sqlSession.selectOne("board.getVo", seq);
 	}
@@ -44,11 +39,6 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public int insertCommentVo(BoardParamVo vo) {
-		return sqlSession.insert("board.insertCommentVo", vo);
-	}
-
-	@Override
 	public int updateVo(BoardParamVo vo) {
 		return sqlSession.update("board.updateVo", vo);
 	}
@@ -56,5 +46,25 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int deleteVo(Integer seq) {
 		return sqlSession.delete("board.deleteVo", seq);
+	}
+
+	@Override
+	public List<BoardVo> getCommentList(BoardParamVo vo) {
+		return sqlSession.selectList("board.getCommentList", vo);
+	}
+
+	@Override
+	public int getCommentCnt(Integer loginSeq) {
+		return sqlSession.selectOne("board.getCommentCnt", loginSeq);
+	}
+
+	@Override
+	public int insertCommentVo(BoardParamVo vo) {
+		return sqlSession.insert("board.insertCommentVo", vo);
+	}
+
+	@Override
+	public int deleteCommentVo(BoardParamVo vo) {
+		return sqlSession.delete("board.deleteCommentVo", vo);
 	}
 }

@@ -36,15 +36,6 @@ public class BoardService {
 		return boardDao.getListTotalCount(vo);
 	}
 
-	public List<BoardVo> getCommentList(BoardParamVo vo) {
-		List<BoardVo> list = boardDao.getCommentList(vo);
-		for(int i=0; i<list.size(); i++) {
-			BoardVo tempVo = list.get(i);
-			tempVo.setRegDate(tempVo.getRegDate().substring(0, 10));
-		}
-		return list;
-	}
-
 	public BoardVo getVo(Integer seq) {
 		BoardVo vo = boardDao.getVo(seq);
 		vo.setRegDate(vo.getRegDate().substring(0, 10));
@@ -57,16 +48,33 @@ public class BoardService {
 	}
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
-	public boolean insertCommentVo(BoardParamVo vo) {
-		return boardDao.insertCommentVo(vo) > 0;
-	}
-
-	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean updateVo(BoardParamVo vo) {
 		return boardDao.updateVo(vo) > 0;
 	}
 
 	public boolean deleteVo(Integer seq) {
 		return boardDao.deleteVo(seq) > 0;
+	}
+
+	public List<BoardVo> getCommentList(BoardParamVo vo) {
+		List<BoardVo> list = boardDao.getCommentList(vo);
+		for(int i=0; i<list.size(); i++) {
+			BoardVo tempVo = list.get(i);
+			tempVo.setRegDate(tempVo.getRegDate().substring(0, 10));
+		}
+		return list;
+	}
+
+	public boolean getCommentCnt(Integer loginSeq) {
+		return boardDao.getCommentCnt(loginSeq) > 0;
+	}
+
+	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
+	public boolean insertCommentVo(BoardParamVo vo) {
+		return boardDao.insertCommentVo(vo) > 0;
+	}
+
+	public boolean deleteCommentVo(BoardParamVo vo) {
+		return boardDao.deleteCommentVo(vo) > 0;
 	}
 }

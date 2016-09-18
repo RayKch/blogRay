@@ -18,6 +18,7 @@ public class BoardVo {
 	private String password;
 	private String categoryName;
 	private String nickname;
+	private String nonSignUpNickname;
 	private String title;
 	private String content;
 	private String categoryTitle;

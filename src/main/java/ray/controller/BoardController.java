@@ -64,11 +64,6 @@ public class BoardController {
 		return vo.drawPagingNavigation("goPage");
 	}
 
-	@RequestMapping(value = "/comment/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public @ResponseBody List<BoardVo> commentList(BoardParamVo vo) {
-		return boardService.getCommentList(vo);
-	}
-
 	@RequestMapping(value = "/data/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public @ResponseBody BoardVo data(Integer seq) {
 		return boardService.getVo(seq);
@@ -96,28 +91,6 @@ public class BoardController {
 		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
 		return Const.REDIRECT_PAGE;
 	}
-
-	@RequestMapping(value = "/comment/insert/proc", method = RequestMethod.POST)
-	public String insertComment(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
-		new BoardCommentInsertValidator().validate(vo, result);
-		if (result.hasErrors()) {
-			model.addAttribute("message", result.getFieldError().getDefaultMessage());
-			return Const.AJAX_PAGE;
-		}
-
-		String loginSeq = ""+session.getAttribute("loginSeq");
-		if(loginSeq != "") {
-			vo.setMemberSeq(Integer.parseInt(""+session.getAttribute("loginSeq")));
-		}
-
-		if(!boardService.insertCommentVo(vo)) {
-			model.addAttribute("message", "댓글 등록이 실패하였습니다");
-			return Const.AJAX_PAGE;
-		}
-		model.addAttribute("message", "success");
-		return Const.AJAX_PAGE;
-	}
-
 
 	@RequestMapping(value = "/update/proc", method = RequestMethod.POST)
 	public String update(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {

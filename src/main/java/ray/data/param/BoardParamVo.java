@@ -16,6 +16,7 @@ public class BoardParamVo extends ParamVo {
 	private Integer boardSeq;
 	private Integer categorySeq;
 	private Integer memberSeq;
+	private String nickname;
 	private String password;
 	private String title;
 	private String content;

@@ -52,25 +52,6 @@
 		WHERE seq = #{seq}
 	</select>
 
-	<select id="getCommentList" parameterType="ray.data.param.BoardParamVo" resultType="ray.data.BoardVo">
-		SELECT
-		a.seq
-		, a.parent_seq AS parentSeq
-		, a.board_seq AS boardSeq
-		, a.member_seq AS memberSeq
-		, (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
-		, a.password
-		, a.content
-		, a.recommend
-		, a.un_recommend AS unRecommend
-		, a.reg_date AS regDate
-		, a.mod_date AS modDate
-		FROM ch_board_comment a
-		WHERE 1=1
-		AND a.board_seq = #{boardSeq}
-		ORDER BY a.seq DESC
-	</select>
-
 	<insert id="insertVo" parameterType="ray.data.param.BoardParamVo">
 		INSERT INTO ch_board (
 			category_seq
@@ -82,42 +63,6 @@
 			#{categorySeq}
 			, #{memberSeq}
 			, #{title}
-			, #{content}
-			, NOW()
-		)
-	</insert>
-
-	<insert id="insertCommentVo" parameterType="ray.data.param.BoardParamVo">
-		INSERT INTO ch_board_comment (
-			board_seq
-			<if test="parentSeq != null">
-				, parent_seq
-			</if>
-			<if test="memberSeq != null">
-				, member_seq
-			</if>
-			<if test="nickname != null">
-				, nickname
-			</if>
-			<if test="password != null">
-				, password
-			</if>
-			, content
-			, reg_date
-		) VALUES (
-			#{boardSeq}
-			<if test="parentSeq != null">
-				, #{parentSeq}
-			</if>
-			<if test="memberSeq != null">
-				, #{memberSeq}
-			</if>
-			<if test="nickname != null">
-				, #{nickname}
-			</if>
-			<if test="password != null">
-				, #{password}
-			</if>
 			, #{content}
 			, NOW()
 		)
@@ -135,5 +80,78 @@
 
 	<delete id="deleteVo" parameterType="Integer">
 		DELETE FROM ch_board WHERE seq = #{value}
+	</delete>
+
+	<select id="getCommentList" parameterType="ray.data.param.BoardParamVo" resultType="ray.data.BoardVo">
+		SELECT
+		a.seq
+		, a.parent_seq AS parentSeq
+		, a.board_seq AS boardSeq
+		, a.member_seq AS memberSeq
+		, (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
+		, a.nickname AS nonSignUpNickname
+		, a.password
+		, a.content
+		, a.recommend
+		, a.un_recommend AS unRecommend
+		, a.reg_date AS regDate
+		, a.mod_date AS modDate
+		FROM ch_board_comment a
+		WHERE 1=1
+		AND a.board_seq = #{boardSeq}
+		ORDER BY a.seq DESC
+	</select>
+
+	<select id="getCommentCnt" parameterType="Integer" resultType="int">
+		SELECT COUNT(*)
+		FROM ch_board_comment
+		WHERE member_seq = #{value}
+	</select>
+
+	<insert id="insertCommentVo" parameterType="ray.data.param.BoardParamVo">
+		INSERT INTO ch_board_comment (
+		board_seq
+		<if test="parentSeq != null">
+			, parent_seq
+		</if>
+		<if test="memberSeq != null">
+			, member_seq
+		</if>
+		<if test="nickname != null">
+			, nickname
+		</if>
+		<if test="password != null">
+			, password
+		</if>
+		, content
+		, reg_date
+		) VALUES (
+		#{boardSeq}
+		<if test="parentSeq != null">
+			, #{parentSeq}
+		</if>
+		<if test="memberSeq != null">
+			, #{memberSeq}
+		</if>
+		<if test="nickname != null">
+			, #{nickname}
+		</if>
+		<if test="password != null">
+			, #{password}
+		</if>
+		, #{content}
+		, NOW()
+		)
+	</insert>
+
+	<delete id="deleteCommentVo" parameterType="ray.data.param.BoardParamVo">
+		DELETE FROM ch_board_comment
+		WHERE seq = #{seq}
+		<if test="password != null">
+			AND password = #{password}
+		</if>
+		<if test="memberSeq != null">
+			AND member_seq = #{memberSeq}
+		</if>
 	</delete>
 </mapper>

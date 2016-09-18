@@ -118,6 +118,10 @@ var BoardDeleteUtil = {
 };
 
 //코맨트 로직 처리부분
+var BoardCommentUtil = {
+	seq:0
+};
+
 var BoardCommentRenderUtil = {
 	renderList:function() {
 		$.ajax({
@@ -132,6 +136,7 @@ var BoardCommentRenderUtil = {
 				} else {
 					$("#ulCommentWrap").html($("#nonCommentTemplate").tmpl());
 				}
+				$('#commentCount').text(list.length);
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -157,6 +162,7 @@ var BoardCommentSubmitUtil = {
 		var data = {
 			'nickname':$('#nickname').val()
 			, 'content':$('#content').val()
+			, 'password':$('#submitCommentPassword').val()
 			, 'boardSeq':BoardUtil.boardSeq
 		}
 		return data;
@@ -184,7 +190,7 @@ var BoardCommentSubmitUtil = {
 						alert('수정되었습니다');
 					}
 				} else {
-					alert('실패하였습니다.');
+					alert(data);
 				}
 				BoardCommentRenderUtil.renderList();
 				BoardCommentSubmitUtil.formReset(type);
@@ -197,8 +203,62 @@ var BoardCommentSubmitUtil = {
 }
 
 var BoardCommentDeleteUtil = {
-	proc:function() {
+	deleteBtnHandler:function() {
+		$('#authSubmitBtn').on('click', function() {
+			BoardCommentDeleteUtil.submit(BoardCommentDeleteUtil.proc);
+		});
+	}
+	, auth:function(type, seq) {
+		BoardCommentUtil.seq = seq;
+		if(type === 'nonMember') {
+			$('#authModal').modal();
+		} else {
+			BoardCommentDeleteUtil.proc(seq);
+		}
+	}
+	, validation:function() {
+		var flag = true;
+		$('#authModal').find("input[alt], textarea[alt], select[alt]").each( function() {
+			if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
 
+				alert($(this).attr("alt") + "란을 채워주세요.");
+				flag = false;
+				$(this).focus();
+			}
+		});
+		return flag;
+	}
+	, formReset:function() {
+		$('#commentPassword').val('');
+	}
+	, submit:function(callback) {
+		if(BoardCommentDeleteUtil.validation()) {
+			callback(BoardCommentUtil.seq, $('#commentPassword').val());
+		}
+	}
+	, proc:function(seq, password) {
+		if(confirm('정말 삭제하시겠습니까?')) {
+			$.ajax({
+				url:"/board/comment/delete/proc",
+				type:"post",
+				data:{'seq':seq, 'password':password},
+				dataType:"text",
+				success:function(data) {
+					if(data === 'success') {
+						alert('삭제되었습니다.');
+						BaordRenderUtil.render();
+						BoardCommentRenderUtil.renderList();
+					} else {
+						alert(data);
+					}
+					$('#authModal').modal('hide');
+					BoardCommentDeleteUtil.formReset();
+				},
+				error:function(error) {
+					console.log( error.status + ":" +error.statusText );
+				}
+			});
+		}
 	}
 };
 
@@ -209,3 +269,7 @@ var goPage = function (page) {
 		})());
 	})());
 };
+
+$(document).ready(function() {
+	BoardCommentDeleteUtil.deleteBtnHandler();
+});

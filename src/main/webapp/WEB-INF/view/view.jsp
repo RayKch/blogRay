@@ -120,34 +120,49 @@
 				<%--</div>--%>
 			<%--</div>--%>
 		<%--</div>--%>
+
 		<div class="container" style="margin-top:100px">
 			<div class="row">
-				<div class="col-sm-10 col-sm-offset-1">
-					<div class="page-header">
-						<h3 class="reviews">comment</h3>
-					</div>
-					<script id="commentTemplate" type="text/html">
-						<li class="media">
-							<div class="media-body">
-								<div class="well well-lg">
-									<h4 class="media-heading text-uppercase reviews">Marco </h4>
-									<ul class="media-date text-uppercase reviews list-inline">
-										<li class="dd">22</li>
-										<li class="mm">09</li>
-										<li class="aaaa">2014</li>
-									</ul>
-									<p class="media-comment">
-										Great snippet! Thanks for sharing.
-									</p>
+				<%--댓글리스트--%>
+				<script id="commentTemplate" type="text/html">
+					<li class="media">
+						<div class="media-body">
+							<div class="well well-lg">
+								<h4 class="media-heading text-uppercase reviews"><%="${nonSignUpNickname}"%> </h4>
+								<ul class="media-date text-uppercase reviews list-inline">
+									<li class="dd"><%="${regDate}"%></li>
+								</ul>
+								<p class="media-comment">
+									{{html content.replace(/\n/gi, '<br/>')}}
+								</p>
+								<div>
 									<a class="btn btn-info btn-circle text-uppercase" href="#" class="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+									<c:choose>
+										<c:when test="${sessionScope.loginSeq eq null}"> <%--비회원일 경우--%>
+											{{if memberSeq === null}}
+												<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" style="margin-top:10px;" onclick="BoardCommentDeleteUtil.auth('nonMember', '<%="${seq}"%>')"></i>
+											{{/if}}
+										</c:when>
+										<c:otherwise> <%--회원일 경우--%>
+											{{if ${sessionScope.loginSeq} === memberSeq}}
+												<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" style="margin-top:10px;" onclick="BoardCommentDeleteUtil.auth('member', '<%="${seq}"%>')"></i>
+											{{/if}}
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
-						</li>
-					</script>
+						</div>
+					</li>
+				</script>
+				<%--non댓글리스트--%>
+				<script id="nonCommentTemplate" type="text/html">
+					<div class="well well-lg text-center" style="font-size:12px;">댓글이 없습니다.</div>
+				</script>
 
-					<script id="nonCommentTemplate" type="text/html">
-						<div class="well well-lg text-center" style="font-size:12px;">댓글이 없습니다.</div>
-					</script>
+				<div class="col-sm-10 col-sm-offset-1">
+					<div class="page-header">
+						<h3 class="reviews">comment (<span id="commentCount"></span>)</h3>
+					</div>
 
 					<ul id="ulCommentWrap" class="media-list">
 						<li class="media">
@@ -157,22 +172,30 @@
 						</li>
 					</ul>
 
-					<form action="#" method="post" class="form-horizontal" id="commentForm" role="form">
+					<form id="commentForm" class="form-horizontal">
 						<div class="form-group">
 							<label for="nickname" class="col-sm-2 control-label">NickName</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="nickname" id="nickname">
+								<input type="text" class="form-control" name="nickname" id="nickname" alt="닉네임">
 							</div>
 						</div>
+						<c:if test="${sessionScope.loginSeq eq null}">
+							<div class="form-group">
+								<label for="nickname" class="col-sm-2 control-label">Password</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" name="password" id="submitCommentPassword" alt="비밀번호">
+								</div>
+							</div>
+						</c:if>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Comment</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" name="content" id="content" rows="5"></textarea>
+								<textarea class="form-control" name="content" id="content" rows="5" alt="내용"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> 등록</button>
+								<button type="button" id="submitComment" class="btn btn-success btn-circle text-uppercase pull-right"><span class="glyphicon glyphicon-send"></span> 등록</button>
 							</div>
 						</div>
 					</form>
@@ -182,6 +205,7 @@
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
+<%@ include file="/WEB-INF/view/comment_auth_modal.jsp" %>
 <script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
