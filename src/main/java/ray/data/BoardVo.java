@@ -26,6 +26,7 @@ public class BoardVo {
 	private int recomment;
 	private int unRecommend;
 	private int viewCnt;
+	private int commentCount;
 	private String regDate;
 	private String modDate;
 }
