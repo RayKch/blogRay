@@ -35,16 +35,15 @@ public class BoardCommentController {
 
 	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST)
 	public String insertComment(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
+		String loginSeq = ""+session.getAttribute("loginSeq");
+		if(!"null".equals(loginSeq)) {
+			vo.setMemberSeq(Integer.parseInt(loginSeq));
+		}
+
 		new BoardCommentInsertValidator().validate(vo, result);
 		if (result.hasErrors()) {
 			model.addAttribute("message", result.getFieldError().getDefaultMessage());
 			return Const.AJAX_PAGE;
-		}
-
-		/** 회원가입이 된 사람이 댓글을 쓴다면 loginSeq를 적용한다. */
-		String loginSeq = ""+session.getAttribute("loginSeq");
-		if(!"null".equals(loginSeq)) {
-			vo.setMemberSeq(Integer.parseInt(loginSeq));
 		}
 
 		if(!boardService.insertCommentVo(vo)) {

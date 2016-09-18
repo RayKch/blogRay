@@ -128,7 +128,13 @@
 					<li class="media">
 						<div class="media-body">
 							<div class="well well-lg">
-								<h4 class="media-heading text-uppercase reviews"><%="${nonSignUpNickname}"%> </h4>
+								<h4 class="media-heading text-uppercase reviews">
+									{{if nonSignUpNickname === null}}
+										<%="${nickname}"%>
+									{{else}}
+										<%="${nonSignUpNickname}"%>
+									{{/if}}
+								</h4>
 								<ul class="media-date text-uppercase reviews list-inline">
 									<li class="dd"><%="${regDate}"%></li>
 								</ul>
@@ -173,13 +179,14 @@
 					</ul>
 
 					<form id="commentForm" class="form-horizontal">
-						<div class="form-group">
-							<label for="nickname" class="col-sm-2 control-label">NickName</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="nickname" id="nickname" alt="닉네임">
-							</div>
-						</div>
 						<c:if test="${sessionScope.loginSeq eq null}">
+							<div class="form-group">
+								<label for="nickname" class="col-sm-2 control-label">NickName</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="nickname" id="nickname" alt="닉네임">
+								</div>
+							</div>
+
 							<div class="form-group">
 								<label for="nickname" class="col-sm-2 control-label">Password</label>
 								<div class="col-sm-10">
