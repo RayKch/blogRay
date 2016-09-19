@@ -62,7 +62,7 @@
 									{{html content.replace(/\n/gi, '<br/>')}}
 								</p>
 								<div>
-									<a class="btn btn-info btn-circle text-uppercase" href="#" class="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+									<a class="btn btn-info btn-circle text-uppercase" href="#" onclick="BoardCommentSubmitUtil.openChildForm(<%="${seq}"%>)" class="reply"><span class="glyphicon glyphicon-share-alt"></span> reply</a>
 									<c:choose>
 										<c:when test="${sessionScope.loginSeq eq null}"> <%--비회원일 경우--%>
 											{{if memberSeq === null}}
@@ -78,25 +78,26 @@
 								</div>
 							</div>
 						</div>
-						<div>
-							<ul class="media-list">
-								<li class="media media-replied">
-									<div class="media-body">
-										<div class="well well-lg">
-											<h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> The Hipster</h4>
-											<ul class="media-date text-uppercase reviews list-inline">
-												<li class="dd">22</li>
-												<li class="mm">09</li>
-												<li class="aaaa">2014</li>
-											</ul>
-											<p class="media-comment">
-												Nice job Maria.
-											</p>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
+						<form name="childForm<%="${seq}"%>" class="form-horizontal"></form>
+						<%--<div>--%>
+							<%--<ul class="media-list">--%>
+								<%--<li class="media media-replied">--%>
+									<%--<div class="media-body">--%>
+										<%--<div class="well well-lg">--%>
+											<%--<h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> The Hipster</h4>--%>
+											<%--<ul class="media-date text-uppercase reviews list-inline">--%>
+												<%--<li class="dd">22</li>--%>
+												<%--<li class="mm">09</li>--%>
+												<%--<li class="aaaa">2014</li>--%>
+											<%--</ul>--%>
+											<%--<p class="media-comment">--%>
+												<%--Nice job Maria.--%>
+											<%--</p>--%>
+										<%--</div>--%>
+									<%--</div>--%>
+								<%--</li>--%>
+							<%--</ul>--%>
+						<%--</div>--%>
 					</li>
 					{{/each}}
 				</script>
@@ -118,9 +119,8 @@
 						</li>
 					</ul>
 
-					<form id="parentForm" class="form-horizontal">
-						<%@ include file="/WEB-INF/view/comment_form.jsp" %>
-					</form>
+					<%--고정 댓글--%>
+					<form name="parentForm" class="form-horizontal"></form>
 				</div>
 			</div>
 		</div>
@@ -128,16 +128,17 @@
 	</div>
 </div>
 <%@ include file="/WEB-INF/view/comment_auth_modal.jsp" %>
+<%@ include file="/WEB-INF/view/comment_form.jsp" %>
 <script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		BoardUtil.boardSeq = "${seq}";
+		$("form[name=parentForm]").html($("#commentFormTemplate").tmpl());
+
 		BaordRenderUtil.render();
 		BoardCommentRenderUtil.renderList();
-
-		$('.submit-comment').on('click', function() {
-			BoardCommentSubmitUtil.submit(BoardCommentSubmitUtil.proc, 'insert', this);
-		});
+		BoardCommentSubmitUtil.btnHandler();
+		BoardCommentDeleteUtil.deleteBtnHandler();
 	});
 </script>
 </body>

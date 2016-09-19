@@ -147,10 +147,23 @@ var BoardCommentRenderUtil = {
 };
 
 var BoardCommentSubmitUtil = {
-	validation:function(obj) {
-		var formId = $(obj).parents('form').attr('id');
+	openChildForm:function(index) {
+		var flag = $("form[name=childForm"+index+"]").find('div').hasClass('comment-form-wrapper');
+		if(flag) {
+			$("form[name=childForm"+index+"]").find('.comment-form-wrapper').remove();
+		} else {
+			$("form[name=childForm"+index+"]").html($("#commentFormTemplate").tmpl());
+		}
+	}
+	, btnHandler:function() {
+		$('.submit-comment').on('click', function() {
+			BoardCommentSubmitUtil.submit(BoardCommentSubmitUtil.proc, 'insert', this);
+		});
+	}
+	, validation:function(obj) {
+		var formName = $(obj).parents('form').attr('name');
 		var flag = true;
-		$('#'+formId).find("input[alt], textarea[alt], select[alt]").each( function() {
+		$('form[name='+formName+']').find("input[alt], textarea[alt], select[alt]").each( function() {
 			if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
 
 				alert($(this).attr("alt") + "란을 채워주세요.");
@@ -161,20 +174,20 @@ var BoardCommentSubmitUtil = {
 		return flag;
 	}
 	, mappingVo:function(obj) {
-		var formId = $(obj).parents('form').attr('id');
+		var formName = $(obj).parents('form').attr('name');
 		var data = {
-			'nickname':$('#'+formId).find('input[name=nickname]').val()
-			, 'content':$('#'+formId).find('textarea[name=content]').val()
-			, 'password':$('#'+formId).find('input[name=password]').val()
+			'nickname':$('form[name='+formName+']').find('input[name=nickname]').val()
+			, 'content':$('form[name='+formName+']').find('textarea[name=content]').val()
+			, 'password':$('form[name='+formName+']').find('input[name=password]').val()
 			, 'boardSeq':BoardUtil.boardSeq
 		}
 		return data;
 	}
 	, formReset:function(obj) {
-		var formId = $(obj).parents('form').attr('id');
-		$('#'+formId).find('input[name=nickname]').val('');
-		$('#'+formId).find('textarea[name=content]').val('');
-		$('#'+formId).find('input[name=password]').val('');
+		var formName = $(obj).parents('form').attr('name');
+		$($('form[name='+formName+']')).find('input[name=nickname]').val('');
+		$($('form[name='+formName+']')).find('textarea[name=content]').val('');
+		$($('form[name='+formName+']')).find('input[name=password]').val('');
 	}
 	, submit:function(callback, type, obj) {
 		if(BoardCommentSubmitUtil.validation(obj)) {
@@ -274,7 +287,3 @@ var goPage = function (page) {
 		})());
 	})());
 };
-
-$(document).ready(function() {
-	BoardCommentDeleteUtil.deleteBtnHandler();
-});
