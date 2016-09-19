@@ -132,7 +132,8 @@ var BoardCommentRenderUtil = {
 			success:function(data) {
 				var list = $.parseJSON(data);
 				if(list.length > 0) {
-					$("#ulCommentWrap").html($("#commentTemplate").tmpl(list));
+					var obj = {'parentList':list, 'childList':[]};
+					$("#ulCommentWrap").html($("#commentTemplate").tmpl(obj));
 				} else {
 					$("#ulCommentWrap").html($("#nonCommentTemplate").tmpl());
 				}
@@ -146,9 +147,10 @@ var BoardCommentRenderUtil = {
 };
 
 var BoardCommentSubmitUtil = {
-	validation:function() {
+	validation:function(obj) {
+		var formId = $(obj).parents('form').attr('id');
 		var flag = true;
-		$('#commentForm').find("input[alt], textarea[alt], select[alt]").each( function() {
+		$('#'+formId).find("input[alt], textarea[alt], select[alt]").each( function() {
 			if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
 
 				alert($(this).attr("alt") + "란을 채워주세요.");
@@ -158,29 +160,32 @@ var BoardCommentSubmitUtil = {
 		});
 		return flag;
 	}
-	, mappingVo:function() {
+	, mappingVo:function(obj) {
+		var formId = $(obj).parents('form').attr('id');
 		var data = {
-			'nickname':$('#nickname').val()
-			, 'content':$('#content').val()
-			, 'password':$('#submitCommentPassword').val()
+			'nickname':$('#'+formId).find('input[name=nickname]').val()
+			, 'content':$('#'+formId).find('textarea[name=content]').val()
+			, 'password':$('#'+formId).find('input[name=password]').val()
 			, 'boardSeq':BoardUtil.boardSeq
 		}
 		return data;
 	}
-	, formReset:function() {
-		$('#nickname').val('');
-		$('#content').val('');
+	, formReset:function(obj) {
+		var formId = $(obj).parents('form').attr('id');
+		$('#'+formId).find('input[name=nickname]').val('');
+		$('#'+formId).find('textarea[name=content]').val('');
+		$('#'+formId).find('input[name=password]').val('');
 	}
-	, submit:function(callback, type) {
-		if(BoardCommentSubmitUtil.validation()) {
-			callback(type);
+	, submit:function(callback, type, obj) {
+		if(BoardCommentSubmitUtil.validation(obj)) {
+			callback(type, obj);
 		}
 	}
-	, proc:function(type) {
+	, proc:function(type, obj) {
 		$.ajax({
 			url:"/board/comment/"+type+"/proc",
 			type:"post",
-			data:BoardCommentSubmitUtil.mappingVo(),
+			data:BoardCommentSubmitUtil.mappingVo(obj),
 			dataType:"text",
 			success:function(data) {
 				if(data === 'success') {
@@ -193,7 +198,7 @@ var BoardCommentSubmitUtil = {
 					alert(data);
 				}
 				BoardCommentRenderUtil.renderList();
-				BoardCommentSubmitUtil.formReset(type);
+				BoardCommentSubmitUtil.formReset(obj);
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );

@@ -40,91 +40,11 @@
 			</div>
 		</div>
 
-		<%--<div class="container" style="margin-top:100px">--%>
-			<%--<div class="row">--%>
-				<%--<div class="col-sm-10 col-sm-offset-1">--%>
-					<%--<div class="page-header">--%>
-						<%--<h3 class="reviews">comment</h3>--%>
-					<%--</div>--%>
-					<%--<ul class="media-list">--%>
-						<%--<li class="media">--%>
-							<%--<div class="media-body">--%>
-								<%--<div class="well well-lg">--%>
-									<%--<h4 class="media-heading text-uppercase reviews">Marco </h4>--%>
-									<%--<ul class="media-date text-uppercase reviews list-inline">--%>
-										<%--<li class="dd">22</li>--%>
-										<%--<li class="mm">09</li>--%>
-										<%--<li class="aaaa">2014</li>--%>
-									<%--</ul>--%>
-									<%--<p class="media-comment">--%>
-										<%--Great snippet! Thanks for sharing.--%>
-									<%--</p>--%>
-									<%--<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>--%>
-								<%--</div>--%>
-							<%--</div>--%>
-							<%--<div>--%>
-								<%--<ul class="media-list">--%>
-									<%--<li class="media media-replied">--%>
-										<%--<div class="media-body">--%>
-											<%--<div class="well well-lg">--%>
-												<%--<h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> The Hipster</h4>--%>
-												<%--<ul class="media-date text-uppercase reviews list-inline">--%>
-													<%--<li class="dd">22</li>--%>
-													<%--<li class="mm">09</li>--%>
-													<%--<li class="aaaa">2014</li>--%>
-												<%--</ul>--%>
-												<%--<p class="media-comment">--%>
-													<%--Nice job Maria.--%>
-												<%--</p>--%>
-											<%--</div>--%>
-										<%--</div>--%>
-									<%--</li>--%>
-									<%--<li class="media media-replied" id="replied">--%>
-										<%--<div class="media-body">--%>
-											<%--<div class="well well-lg">--%>
-												<%--<h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> Mary</h4></h4>--%>
-												<%--<ul class="media-date text-uppercase reviews list-inline">--%>
-													<%--<li class="dd">22</li>--%>
-													<%--<li class="mm">09</li>--%>
-													<%--<li class="aaaa">2014</li>--%>
-												<%--</ul>--%>
-												<%--<p class="media-comment">--%>
-													<%--Thank you Guys!--%>
-												<%--</p>--%>
-											<%--</div>--%>
-										<%--</div>--%>
-									<%--</li>--%>
-								<%--</ul>--%>
-							<%--</div>--%>
-						<%--</li>--%>
-					<%--</ul>--%>
-					<%--<form action="#" method="post" class="form-horizontal" id="commentForm" role="form">--%>
-						<%--<div class="form-group">--%>
-							<%--<label for="uploadMedia" class="col-sm-2 control-label">NickName</label>--%>
-							<%--<div class="col-sm-10">--%>
-								<%--<input type="text" class="form-control" name="uploadMedia" id="uploadMedia">--%>
-							<%--</div>--%>
-						<%--</div>--%>
-						<%--<div class="form-group">--%>
-							<%--<label class="col-sm-2 control-label">Comment</label>--%>
-							<%--<div class="col-sm-10">--%>
-								<%--<textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>--%>
-							<%--</div>--%>
-						<%--</div>--%>
-						<%--<div class="form-group">--%>
-							<%--<div class="col-sm-offset-2 col-sm-10">--%>
-								<%--<button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Summit comment</button>--%>
-							<%--</div>--%>
-						<%--</div>--%>
-					<%--</form>--%>
-				<%--</div>--%>
-			<%--</div>--%>
-		<%--</div>--%>
-
 		<div class="container" style="margin-top:100px">
 			<div class="row">
 				<%--댓글리스트--%>
 				<script id="commentTemplate" type="text/html">
+					{{each parentList}}
 					<li class="media">
 						<div class="media-body">
 							<div class="well well-lg">
@@ -158,7 +78,27 @@
 								</div>
 							</div>
 						</div>
+						<div>
+							<ul class="media-list">
+								<li class="media media-replied">
+									<div class="media-body">
+										<div class="well well-lg">
+											<h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> The Hipster</h4>
+											<ul class="media-date text-uppercase reviews list-inline">
+												<li class="dd">22</li>
+												<li class="mm">09</li>
+												<li class="aaaa">2014</li>
+											</ul>
+											<p class="media-comment">
+												Nice job Maria.
+											</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
 					</li>
+					{{/each}}
 				</script>
 				<%--non댓글리스트--%>
 				<script id="nonCommentTemplate" type="text/html">
@@ -178,33 +118,8 @@
 						</li>
 					</ul>
 
-					<form id="commentForm" class="form-horizontal">
-						<c:if test="${sessionScope.loginSeq eq null}">
-							<div class="form-group">
-								<label for="nickname" class="col-sm-2 control-label">닉네임</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="nickname" id="nickname" alt="닉네임">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="nickname" class="col-sm-2 control-label">비밀번호</label>
-								<div class="col-sm-10">
-									<input type="password" class="form-control" name="password" id="submitCommentPassword" alt="비밀번호">
-								</div>
-							</div>
-						</c:if>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">내용</label>
-							<div class="col-sm-10">
-								<textarea class="form-control" name="content" id="content" rows="5" alt="내용"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="button" id="submitComment" class="btn btn-success btn-circle text-uppercase pull-right"><span class="glyphicon glyphicon-send"></span> 등록</button>
-							</div>
-						</div>
+					<form id="parentForm" class="form-horizontal">
+						<%@ include file="/WEB-INF/view/comment_form.jsp" %>
 					</form>
 				</div>
 			</div>
@@ -220,8 +135,8 @@
 		BaordRenderUtil.render();
 		BoardCommentRenderUtil.renderList();
 
-		$('#submitComment').on('click', function() {
-			BoardCommentSubmitUtil.submit(BoardCommentSubmitUtil.proc, 'insert');
+		$('.submit-comment').on('click', function() {
+			BoardCommentSubmitUtil.submit(BoardCommentSubmitUtil.proc, 'insert', this);
 		});
 	});
 </script>
