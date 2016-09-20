@@ -186,6 +186,7 @@ var BoardCommentSubmitUtil = {
 		$($('form[name='+formName+']')).find('input[name=nickname]').val('');
 		$($('form[name='+formName+']')).find('textarea[name=content]').val('');
 		$($('form[name='+formName+']')).find('input[name=password]').val('');
+		BoardCommentUtil.parentSeq = null;
 	}
 	, submit:function(callback, type, obj) {
 		if(BoardCommentSubmitUtil.validation(obj)) {
