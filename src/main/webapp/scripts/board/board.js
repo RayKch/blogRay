@@ -120,6 +120,7 @@ var BoardDeleteUtil = {
 //코맨트 로직 처리부분
 var BoardCommentUtil = {
 	seq:0
+	, parentSeq:0
 };
 
 var BoardCommentRenderUtil = {
@@ -132,7 +133,7 @@ var BoardCommentRenderUtil = {
 			success:function(data) {
 				var list = $.parseJSON(data);
 				if(list.length > 0) {
-					var obj = {'parentList':list, 'childList':[]};
+					var obj = {'parentList':list, 'childList':list};
 					$("#ulCommentWrap").html($("#commentTemplate").tmpl(obj));
 				} else {
 					$("#ulCommentWrap").html($("#nonCommentTemplate").tmpl());
@@ -147,18 +148,14 @@ var BoardCommentRenderUtil = {
 };
 
 var BoardCommentSubmitUtil = {
-	openChildForm:function(index) {
-		var flag = $("form[name=childForm"+index+"]").find('div').hasClass('comment-form-wrapper');
+	openChildForm:function(seq) {
+		BoardCommentUtil.parentSeq = seq;
+		var flag = $("form[name=childForm"+seq+"]").find('div').hasClass('comment-form-wrapper');
 		if(flag) {
-			$("form[name=childForm"+index+"]").find('.comment-form-wrapper').remove();
+			$("form[name=childForm"+seq+"]").find('.comment-form-wrapper').remove();
 		} else {
-			$("form[name=childForm"+index+"]").html($("#commentFormTemplate").tmpl());
+			$("form[name=childForm"+seq+"]").html($("#commentFormTemplate").tmpl());
 		}
-	}
-	, btnHandler:function() {
-		$('.submit-comment').on('click', function() {
-			BoardCommentSubmitUtil.submit(BoardCommentSubmitUtil.proc, 'insert', this);
-		});
 	}
 	, validation:function(obj) {
 		var formName = $(obj).parents('form').attr('name');
@@ -180,6 +177,7 @@ var BoardCommentSubmitUtil = {
 			, 'content':$('form[name='+formName+']').find('textarea[name=content]').val()
 			, 'password':$('form[name='+formName+']').find('input[name=password]').val()
 			, 'boardSeq':BoardUtil.boardSeq
+			, 'parentSeq':BoardCommentUtil.parentSeq
 		}
 		return data;
 	}

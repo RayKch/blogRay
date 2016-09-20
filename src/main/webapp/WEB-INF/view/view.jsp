@@ -44,60 +44,69 @@
 			<div class="row">
 				<%--댓글리스트--%>
 				<script id="commentTemplate" type="text/html">
-					{{each parentList}}
+					{{each(i, item1) parentList}}
 					<li class="media">
 						<div class="media-body">
 							<div class="well well-lg">
 								<h4 class="media-heading text-uppercase reviews">
-									{{if nonSignUpNickname === null}}
-										<%="${nickname}"%>
+									{{if item1.nonSignUpNickname === null}}
+										<%="${item1.nickname}"%>
 									{{else}}
-										<%="${nonSignUpNickname}"%>
+										<%="${item1.nonSignUpNickname}"%>
 									{{/if}}
 								</h4>
 								<ul class="media-date text-uppercase reviews list-inline">
-									<li class="dd"><%="${regDate}"%></li>
+									<li class="dd"><%="${item1.regDate}"%></li>
 								</ul>
 								<p class="media-comment">
-									{{html content.replace(/\n/gi, '<br/>')}}
+									{{html item1.content.replace(/\n/gi, '<br/>')}}
 								</p>
 								<div>
-									<a class="btn btn-info btn-circle text-uppercase" href="#" onclick="BoardCommentSubmitUtil.openChildForm(<%="${seq}"%>)" class="reply"><span class="glyphicon glyphicon-share-alt"></span> reply</a>
+									<a class="btn btn-info btn-circle text-uppercase" href="#" onclick="BoardCommentSubmitUtil.openChildForm(<%="${item1.seq}"%>)" class="reply"><span class="glyphicon glyphicon-share-alt"></span> reply</a>
 									<c:choose>
 										<c:when test="${sessionScope.loginSeq eq null}"> <%--비회원일 경우--%>
-											{{if memberSeq === null}}
-												<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" style="margin-top:10px;" onclick="BoardCommentDeleteUtil.auth('nonMember', '<%="${seq}"%>')"></i>
+											{{if item1.memberSeq === null}}
+												<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" style="margin-top:10px;" onclick="BoardCommentDeleteUtil.auth('nonMember', '<%="${item1.seq}"%>')"></i>
 											{{/if}}
 										</c:when>
 										<c:otherwise> <%--회원일 경우--%>
-											{{if ${sessionScope.loginSeq} === memberSeq}}
-												<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" style="margin-top:10px;" onclick="BoardCommentDeleteUtil.auth('member', '<%="${seq}"%>')"></i>
+											{{if ${sessionScope.loginSeq} === item1.memberSeq}}
+												<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" style="margin-top:10px;" onclick="BoardCommentDeleteUtil.auth('member', '<%="${item1.seq}"%>')"></i>
 											{{/if}}
 										</c:otherwise>
 									</c:choose>
 								</div>
 							</div>
 						</div>
-						<form name="childForm<%="${seq}"%>" class="form-horizontal"></form>
-						<%--<div>--%>
-							<%--<ul class="media-list">--%>
-								<%--<li class="media media-replied">--%>
-									<%--<div class="media-body">--%>
-										<%--<div class="well well-lg">--%>
-											<%--<h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> The Hipster</h4>--%>
-											<%--<ul class="media-date text-uppercase reviews list-inline">--%>
-												<%--<li class="dd">22</li>--%>
-												<%--<li class="mm">09</li>--%>
-												<%--<li class="aaaa">2014</li>--%>
-											<%--</ul>--%>
-											<%--<p class="media-comment">--%>
-												<%--Nice job Maria.--%>
-											<%--</p>--%>
-										<%--</div>--%>
-									<%--</div>--%>
-								<%--</li>--%>
-							<%--</ul>--%>
-						<%--</div>--%>
+						<form name="childForm<%="${item1.seq}"%>" class="form-horizontal"></form>
+						{{each(j, item2) childList}}
+							{{if item1.seq === item2.parentSeq}}
+							<div>
+								<ul class="media-list">
+									<li class="media media-replied">
+										<div class="media-body">
+											<div class="well well-lg">
+												<h4 class="media-heading text-uppercase reviews">
+													<span class="glyphicon glyphicon-share-alt"></span>
+													{{if item2.nonSignUpNickname === null}}
+														<%="${item2.nickname}"%>
+													{{else}}
+														<%="${item2.nonSignUpNickname}"%>
+													{{/if}}
+												</h4>
+												<ul class="media-date text-uppercase reviews list-inline">
+													<li class="dd"><%="${item2.regDate}"%></li>
+												</ul>
+												<p class="media-comment">
+													{{html item2.content.replace(/\n/gi, '<br/>')}}
+												</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							{{/if}}
+						{{/each}}
 					</li>
 					{{/each}}
 				</script>
@@ -137,7 +146,6 @@
 
 		BaordRenderUtil.render();
 		BoardCommentRenderUtil.renderList();
-		BoardCommentSubmitUtil.btnHandler();
 		BoardCommentDeleteUtil.deleteBtnHandler();
 	});
 </script>

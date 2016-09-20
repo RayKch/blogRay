@@ -24,7 +24,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<button type="button" class="btn btn-success btn-circle text-uppercase pull-right submit-comment"><span class="glyphicon glyphicon-send"></span> 등록</button>
+			<button type="button" class="btn btn-success btn-circle text-uppercase pull-right submit-comment" onclick="BoardCommentSubmitUtil.submit(BoardCommentSubmitUtil.proc, 'insert', this)"><span class="glyphicon glyphicon-send"></span> 등록</button>
 		</div>
 	</div>
 </div>
