@@ -85,18 +85,18 @@
 
 	<select id="getCommentList" parameterType="ray.data.param.BoardParamVo" resultType="ray.data.BoardVo">
 		SELECT
-		a.seq
-		, a.parent_seq AS parentSeq
-		, a.board_seq AS boardSeq
-		, a.member_seq AS memberSeq
-		, (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
-		, a.nickname AS nonSignUpNickname
-		, a.password
-		, a.content
-		, a.recommend
-		, a.un_recommend AS unRecommend
-		, a.reg_date AS regDate
-		, a.mod_date AS modDate
+			a.seq
+			, a.parent_seq AS parentSeq
+			, a.board_seq AS boardSeq
+			, a.member_seq AS memberSeq
+			, (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
+			, a.nickname AS nonSignUpNickname
+			, a.password
+			, a.content
+			, a.recommend
+			, a.un_recommend AS unRecommend
+			, a.reg_date AS regDate
+			, a.mod_date AS modDate
 		FROM ch_board_comment a
 		WHERE 1=1
 		AND a.board_seq = #{boardSeq}
