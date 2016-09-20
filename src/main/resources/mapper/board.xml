@@ -89,17 +89,24 @@
 			, a.parent_seq AS parentSeq
 			, a.board_seq AS boardSeq
 			, a.member_seq AS memberSeq
+			, (SELECT COUNT(*) FROM ch_board_comment WHERE parent_seq = a.seq) AS childCount
 			, (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
 			, a.nickname AS nonSignUpNickname
 			, a.password
 			, a.content
 			, a.recommend
 			, a.un_recommend AS unRecommend
+			, a.del_yn AS delYn
 			, a.reg_date AS regDate
 			, a.mod_date AS modDate
 		FROM ch_board_comment a
 		WHERE 1=1
-		AND a.board_seq = #{boardSeq}
+		<if test="boardSeq != null">
+			AND a.board_seq = #{boardSeq}
+		</if>
+		<if test="parentSeq != null">
+			AND a.parent_seq = #{parentSeq}
+		</if>
 		ORDER BY a.seq DESC
 	</select>
 
@@ -111,42 +118,46 @@
 
 	<insert id="insertCommentVo" parameterType="ray.data.param.BoardParamVo">
 		INSERT INTO ch_board_comment (
-		board_seq
-		<if test="parentSeq != null">
-			, parent_seq
-		</if>
-		<if test="memberSeq != null">
-			, member_seq
-		</if>
-		<if test="nickname != null">
-			, nickname
-		</if>
-		<if test="password != null">
-			, password
-		</if>
-		, content
-		, reg_date
-		) VALUES (
-		#{boardSeq}
-		<if test="parentSeq != null">
-			, #{parentSeq}
-		</if>
-		<if test="memberSeq != null">
-			, #{memberSeq}
-		</if>
-		<if test="nickname != null">
-			, #{nickname}
-		</if>
-		<if test="password != null">
-			, #{password}
-		</if>
-		, #{content}
-		, NOW()
+				board_seq
+				<if test="parentSeq != null">
+					, parent_seq
+				</if>
+				<if test="memberSeq != null">
+					, member_seq
+				</if>
+				<if test="nickname != null">
+					, nickname
+				</if>
+				<if test="password != null">
+					, password
+				</if>
+				, content
+				, del_yn
+				, reg_date
+			) VALUES (
+				#{boardSeq}
+				<if test="parentSeq != null">
+					, #{parentSeq}
+				</if>
+				<if test="memberSeq != null">
+					, #{memberSeq}
+				</if>
+				<if test="nickname != null">
+					, #{nickname}
+				</if>
+				<if test="password != null">
+					, #{password}
+				</if>
+				, #{content}
+				, 'N'
+				, NOW()
 		)
 	</insert>
 
-	<delete id="deleteCommentVo" parameterType="ray.data.param.BoardParamVo">
-		DELETE FROM ch_board_comment
+	<update id="deleteCommentVo" parameterType="ray.data.param.BoardParamVo">
+		UPDATE ch_board_comment SET
+			del_yn = 'Y'
+			, del_date = NOW()
 		WHERE seq = #{seq}
 		<if test="password != null">
 			AND password = #{password}
@@ -154,5 +165,5 @@
 		<if test="memberSeq != null">
 			AND member_seq = #{memberSeq}
 		</if>
-	</delete>
+	</update>
 </mapper>

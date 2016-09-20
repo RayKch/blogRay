@@ -27,6 +27,8 @@ CREATE TABLE `ch_board_comment` (
  `content` text NOT NULL COMMENT '내용',
  `recommend` int(11) NULL DEFAULT 0 COMMENT '추천',
  `un_recommend` int(11) NULL DEFAULT 0 COMMENT '비추천',
+ `del_yn` varchar(1) NULL COMMENT '삭제 여부',
+ `del_date` DATETIME NULL COMMENT '삭제일',
  `reg_date` DATETIME NULL COMMENT '등록일',
  `mod_date` DATETIME NULL COMMENT '수정일',
  PRIMARY KEY (`seq`),

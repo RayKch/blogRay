@@ -17,6 +17,7 @@ public class BoardVo {
 	private Integer loginSeq;
 	private String password;
 	private String categoryName;
+	private int childCount;
 	private String nickname;
 	private String nonSignUpNickname;
 	private String title;
@@ -27,6 +28,7 @@ public class BoardVo {
 	private int unRecommend;
 	private int viewCnt;
 	private int commentCount;
+	private String delYn;
 	private String regDate;
 	private String modDate;
 }

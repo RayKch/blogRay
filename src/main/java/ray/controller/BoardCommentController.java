@@ -67,7 +67,7 @@ public class BoardCommentController {
 	}
 
 	@RequestMapping(value = "/delete/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String deleteComment(BoardParamVo vo, HttpSession session, Model model) {
+	public String deleteComment(BoardParamVo vo, HttpSession session, Model model) throws Exception {
 		String loginSeq = ""+session.getAttribute("loginSeq");
 
 		//삭제를 하는데 로그인이 되어있지 않으면 비원으로 댓글을 작성한 것이고 패스워드가 있어야지만 삭제를 할 수 있도록 한다.
