@@ -89,7 +89,7 @@
 			, a.parent_seq AS parentSeq
 			, a.board_seq AS boardSeq
 			, a.member_seq AS memberSeq
-			, (SELECT COUNT(*) FROM ch_board_comment WHERE parent_seq = a.seq) AS childCount
+			, (SELECT COUNT(*) FROM ch_board_comment WHERE parent_seq = a.seq AND del_yn = 'N') AS childCount
 			, (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
 			, a.nickname AS nonSignUpNickname
 			, a.password
