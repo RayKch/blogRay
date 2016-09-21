@@ -138,7 +138,14 @@ var BoardCommentRenderUtil = {
 				} else {
 					$("#ulCommentWrap").html($("#nonCommentTemplate").tmpl());
 				}
-				$('#commentCount').text(list.length);
+
+				var sizeCnt = 0;
+				for(var i=0; i<list.length; i++) {
+					if(list[i].delYn === 'N') {
+						sizeCnt++;
+					}
+				}
+				$('#commentCount').text(sizeCnt);
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
