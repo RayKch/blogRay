@@ -37,6 +37,12 @@ public class MainController {
 		BoardVo vo = boardService.getVo(seq);
 		model.addAttribute("seq", seq);
 		model.addAttribute("vo", vo);
+
+		try {
+			boardService.updateViewCnt(seq);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return "/view.jsp";
 	}
 }

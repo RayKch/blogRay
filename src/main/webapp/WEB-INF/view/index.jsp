@@ -28,7 +28,7 @@
 							<a href="/view/<%="${seq}"%>"><h2 class="post-title"><%="${title}"%> <span style="font-size:25px">(<%="${commentCount}"%>)</span></h2></a>
 							<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>
 							<p class="post-meta">
-								Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
+								<%="${viewCnt}"%> view     Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
 								<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
 									{{if  ${sessionScope.loginSeq} === memberSeq}}
 									<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" onclick="BoardDeleteUtil.proc('<%="${seq}"%>', 'list')"></i>

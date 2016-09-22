@@ -67,4 +67,9 @@ public class BoardDaoImpl implements BoardDao {
 	public int deleteCommentVo(BoardParamVo vo) {
 		return sqlSession.delete("board.deleteCommentVo", vo);
 	}
+
+	@Override
+	public int updateViewCnt(int seq) {
+		return sqlSession.update("board.updateViewCnt", seq);
+	}
 }

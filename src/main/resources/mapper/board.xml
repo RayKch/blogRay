@@ -166,4 +166,10 @@
 			AND member_seq = #{memberSeq}
 		</if>
 	</update>
+
+	<update id="updateViewCnt" parameterType="Integer">
+		UPDATE ch_board SET
+			view_cnt = view_cnt + 1
+		WHERE seq = #{value}
+	</update>
 </mapper>

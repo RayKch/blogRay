@@ -21,4 +21,5 @@ public interface BoardDao {
 	public int getCommentCnt(Integer loginSeq);
 	public int insertCommentVo(BoardParamVo vo);
 	public int deleteCommentVo(BoardParamVo vo);
+	public int updateViewCnt(int seq);
 }

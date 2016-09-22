@@ -77,4 +77,8 @@ public class BoardService {
 	public boolean deleteCommentVo(BoardParamVo vo) {
 		return boardDao.deleteCommentVo(vo) > 0;
 	}
+
+	public int updateViewCnt(int seq) {
+		return boardDao.updateViewCnt(seq);
+	}
 }
