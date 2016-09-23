@@ -4,6 +4,7 @@
 <head>
 	<%@ include file="/WEB-INF/view/include/header.jsp" %>
 	<link href="${pageContext.request.contextPath}/styles/board/board.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/styles/plugin/summernote.css" rel="stylesheet">
 </head>
 
 <body>
@@ -40,7 +41,8 @@
 						</div>
 						<div class="form-group">
 							<label for="content">내용</label>
-							<textarea class="form-control" id="content" name="content" rows="5" alt="내용">${vo.content}</textarea>
+							<div id="content">${vo.content}</div>
+							<textarea class="form-control" name="content" rows="5" alt="내용">${vo.content}</textarea>
 						</div>
 						<button type="submit" class="btn btn-info pull-right">
 							<c:choose>
@@ -59,8 +61,17 @@
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
+<script src="/scripts/plugin/summernote.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		// codeview 상태라면 강제로 에디터 상태로 변경한다
+		if($("#content").parent().find(".codeview").length > 0) {
+			$("#content").parent().find("button[data-event=codeview]").click();
+
+			alert("에디터 상태를 일반 모드로 변경합니다. 확인을 눌러주세요");
+		}
+
+		$("textarea[name=content]").val( $("#content").code() );
 	});
 
 	var BoardUtil = {
