@@ -64,11 +64,6 @@ we can do to make something better
 
 ## back-end level tech stack
 
-- gradle
-- spring 3.2+
+- **gradle**
+- **spring 3.2+**
 - dbunit 3.4
-
-## back-end level building guide
-
-- you can see [this note](http://confluence.sm-pro.co.kr/pages/viewpage.action?pageId=2949484) with our Confluence document in SDAC project.
-- It's just easy and simple but you don't have any skill of grunt, then you can call @EBvi.
