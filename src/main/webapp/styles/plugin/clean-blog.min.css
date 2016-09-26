@@ -4,18 +4,7 @@
  * Licensed under Apache 2.0 (https://github.com/IronSummitMedia/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-body {
-    font-family: Lora, 'Times New Roman', serif;
-    font-size: 20px;
-    color: #404040
-}
-
-p {
-    line-height: 1.5;
-    margin: 30px 0
-}
-
-p a {
+a {
     text-decoration: underline
 }
 
