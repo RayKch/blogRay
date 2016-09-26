@@ -24,7 +24,7 @@
 							<p class="post-meta pull-right" style="margin:0; font-size:12px;">Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%></p>
 							<div class="clearfix"></div>
 							<div class="post-meta pull-right" style="font-size:12px;"><%="${viewCnt}"%> views</div>
-							<br/><br/><br/>
+							<br/><br/>
 							<div class="clearfix"></div>
 						</div>
 						<div class="text-left">{{html content.replace(/\n/gi, '<br/>')}}</div>

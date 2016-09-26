@@ -41,9 +41,8 @@
 						</div>
 						<div class="form-group">
 							<label for="content">내용</label>
-							<div id="content"></div>
+							<div id="content">${vo.content}</div>
 							<div class="hide"><textarea name="content"></textarea></div>
-							<%--<textarea class="form-control" id="content" name="content" rows="5" alt="내용">${vo.content}</textarea>--%>
 						</div>
 						<button type="submit" class="btn btn-info pull-right">
 							<c:choose>
