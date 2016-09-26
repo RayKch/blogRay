@@ -29,13 +29,13 @@
 							<%--<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>--%>
 							<p class="post-meta" style="margin-bottom:0">
 								Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
-								<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
-									{{if  ${sessionScope.loginSeq} === memberSeq}}
-									<i class="fa fa-times pull-right remove-btn pointer" aria-hidden="true" onclick="BoardDeleteUtil.proc('<%="${seq}"%>', 'list')"></i>
-									{{/if}}
-								</c:if>
 							</p>
 							<div class="post-meta"><%="${viewCnt}"%> view</div>
+							<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
+								{{if  ${sessionScope.loginSeq} === memberSeq}}
+									<i class="fa fa-times pull-right remove-btn pointer" style="margin-top:-20px" aria-hidden="true" onclick="BoardDeleteUtil.proc('<%="${seq}"%>', 'list')"></i>
+								{{/if}}
+							</c:if>
 						</div>
 						<hr>
 					</script>
