@@ -25,8 +25,8 @@
 
 					<script id="contentTemplate" type="text/html">
 						<div class="post-preview list-top-margin">
-							<a href="/view/<%="${seq}"%>"><h2 class="post-title"><%="${title}"%> <span style="font-size:25px">(<%="${commentCount}"%>)</span></h2></a>
-							<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>
+							<a href="/view/<%="${seq}"%>" style="text-decoration: none"><h2 class="post-title"><%="${title}"%> <span style="font-size:25px">(<%="${commentCount}"%>)</span></h2></a>
+							<%--<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>--%>
 							<p class="post-meta" style="margin-bottom:0">
 								Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
 								<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
