@@ -1,6 +1,7 @@
 # blogRay webapp project
 
-we can do to make something better
+- we can do to make something better
+- 현재 사용하고 적용한 skill은 글씨를 굵게 강조하였다.
 
 ## front-end level tech stack
 
