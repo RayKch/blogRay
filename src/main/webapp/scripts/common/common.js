@@ -36,7 +36,7 @@ var SideCategoryUtil = {
 				if(list.length > 0) {
 					$("#ulList").html($("#liTemplate").tmpl(list));
 				} else {
-					$("#ulList").html('<li style="padding:250px 0 0 45px; color:#fff">카테고리가<br/>없습니다.</li>');
+					$("#ulList").html('<li style="padding:50% 0 0 45px; color:#fff">카테고리가<br/>없습니다.</li>');
 				}
 
 				if((SideUtil.loginSeq === '1' && SideUtil.loginId === 'rlacksgh08@naver.com')
