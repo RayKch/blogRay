@@ -3,6 +3,7 @@
 <iframe id="zeroframe" name="zeroframe" src="about:blank" width="0" height="0" frameborder="0"></iframe>
 <script src="/scripts/plugin/jquery.js"></script>
 <script src="/scripts/plugin/jquery.tmpl.js"></script>
+<script src="/scripts/plugin/jquery.cookie.js"></script>
 <script src="/scripts/plugin/bootstrap.min.js"></script>
 <script src="/scripts/plugin/clean-blog.min.js"></script>
 <script src="/scripts/common/common.js"></script>
@@ -20,6 +21,15 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
+		//최초 쿠키에 loginId라는 쿠키값이 존재하면
+		var loginId = $.cookie('loginId');
+		if(loginId != undefined) {
+			//아이디에 쿠키값을 담는다
+			$("#loginId").val(loginId);
+			//아이디저장 체크박스 체크를 해놓는다
+			$("#rememberId").prop("checked",true);
+		}
+
 		SideUtil.loginSeq = "${sessionScope.loginSeq}";
 		SideUtil.loginId = "${sessionScope.loginId}";
 		SideCategoryUtil.renderList();

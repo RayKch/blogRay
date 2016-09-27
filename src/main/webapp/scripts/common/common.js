@@ -86,6 +86,14 @@ var LoginSubmitUtil = {
 				$(this).focus();
 			}
 		});
+
+		//아이디저장 체크되어있으면 쿠키저장
+		if($("#rememberId").prop("checked")) {
+			$.cookie('loginId', $("#loginId").val());
+			//아이디저장 미체크면 쿠키에 정보가 있던간에 삭제
+		} else {
+			$.removeCookie("loginId");
+		}
 		return flag;
 	}
 	, mappingVo:function() {

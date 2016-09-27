@@ -15,6 +15,10 @@
 					<label for="loginPassword" class="control-label">비밀번호</label>
 					<input type="password" class="form-control" id="loginPassword" name="password" placeholder="비밀번호를 입력하세요" alt="비밀번호">
 				</div>
+				<div class="checkbox">
+					<label class="pull-right" style="font-size:14px;"><input type="checkbox" id="rememberId"> 아이디 저장</label>
+				</div>
+				<div class="clearfix"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
