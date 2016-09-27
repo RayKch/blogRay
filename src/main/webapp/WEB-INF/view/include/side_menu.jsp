@@ -10,7 +10,7 @@
 		<li><a href="/?categorySeq=<%="${seq}"%>"><%="${title}"%></a></li>
 	</script>
 	<ul id="ulList">
-		<img src="/image/common/ajaxloader.gif"/>
+		<img src="/image/common/ajaxloader.gif" style="margin:250px 0 0 75px"/>
 	</ul>
 </div>
 <div id="BackDrop" onclick="SideUtil.hide();"></div>
