@@ -7,6 +7,7 @@
 			, a.category_seq AS categorySeq
 			, a.member_seq AS memberSeq
 		  , (SELECT nickname FROM ch_member WHERE seq = a.member_seq) AS nickname
+			, (SELECT title FROM ch_category WHERE seq = a.category_seq) AS categoryTitle
 			, a.title
 			, a.content
 			, a.recommend

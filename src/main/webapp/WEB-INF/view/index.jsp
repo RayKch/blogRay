@@ -16,21 +16,24 @@
 					<script id="categoryTemplate" type="text/html">
 						<div class="post-preview list-top-margin list-header-wrap">
 							<h2 class="text-center"><%="${title}"%> (<%="${boardCount}"%>)</h2>
+							<hr class="list-hr">
 							<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both"><%="${description}"%></p>
 							<div class="clearfix"></div>
-							<hr class="list-hr" style="margin-top:5px">
 						</div>
 					</script>
 					<div id="divCategoryWrap" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"></div>
 
 					<script id="contentTemplate" type="text/html">
 						<div class="post-preview list-top-margin">
-							<a href="/view/<%="${seq}"%>" style="text-decoration: none"><h2 class="post-title"><%="${title}"%> <span style="font-size:25px">(<%="${commentCount}"%>)</span></h2></a>
+							<a href="/view/<%="${seq}"%>" style="text-decoration: none">
+								<h2 class="post-title"><%="${title}"%> <span style="font-size:25px">(<%="${commentCount}"%>)</span></h2>
+							</a>
 							<%--<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>--%>
+							<p class="post-meta" style="margin-bottom:0"> <%="${viewCnt}"%> view - <%="${categoryTitle}"%></p>
 							<p class="post-meta" style="margin-bottom:0">
 								Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
 							</p>
-							<div class="post-meta"><%="${viewCnt}"%> view</div>
+
 							<c:if test="${sessionScope.loginSeq ne null and sessionScope.loginSeq ne ''}">
 								{{if  ${sessionScope.loginSeq} === memberSeq}}
 									<i class="fa fa-times pull-right remove-btn pointer" style="margin-top:-20px" aria-hidden="true" onclick="BoardDeleteUtil.proc('<%="${seq}"%>', 'list')"></i>
