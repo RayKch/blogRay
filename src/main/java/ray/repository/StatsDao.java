@@ -1,6 +1,7 @@
 package ray.repository;
 
 import org.springframework.stereotype.Repository;
+import ray.data.StatsVo;
 import ray.data.param.StatsParamVo;
 
 /**
@@ -10,6 +11,7 @@ import ray.data.param.StatsParamVo;
 public interface StatsDao {
 	public int getStatsCnt(StatsParamVo vo);
 	public int getTodayStatsCnt();
+	public StatsVo getVisitorCnt();
 	public int insertBufferVo(StatsParamVo vo);
 	public int insertStatsVo();
 	public int updateStatsVo();

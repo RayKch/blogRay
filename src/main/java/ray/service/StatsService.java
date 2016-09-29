@@ -4,6 +4,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ray.data.StatsVo;
 import ray.data.param.StatsParamVo;
 import ray.repository.BoardDao;
 import ray.repository.StatsDao;
@@ -30,6 +31,10 @@ public class StatsService {
 
 	public boolean getTodayStatsCnt() {
 		return statsDao.getTodayStatsCnt() > 0;
+	}
+
+	public StatsVo getVisitorCnt() {
+		return statsDao.getVisitorCnt();
 	}
 
 	public boolean insertBufferVo(StatsParamVo vo) {

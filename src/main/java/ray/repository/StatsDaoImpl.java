@@ -4,6 +4,7 @@ import lombok.Setter;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ray.data.StatsVo;
 import ray.data.param.StatsParamVo;
 
 /**
@@ -23,6 +24,11 @@ public class StatsDaoImpl implements StatsDao {
 	@Override
 	public int getTodayStatsCnt() {
 		return sqlSession.selectOne("stats.getTodayStatsCnt");
+	}
+
+	@Override
+	public StatsVo getVisitorCnt() {
+		return sqlSession.selectOne("stats.getVisitorCnt");
 	}
 
 	@Override

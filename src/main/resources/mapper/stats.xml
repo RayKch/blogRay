@@ -17,6 +17,12 @@
 		WHERE date_format(reg_date, '%Y-%m-%D') = date_format(NOW(), '%Y-%m-%D')
 	</select>
 
+	<select id="getVisitorCnt" resultType="ray.data.StatsVo">
+		SELECT
+			(SELECT SUM(today_cnt) FROM ch_stats WHERE date_format(reg_date, '%Y-%m-%D') = date_format(NOW(), '%Y-%m-%D')) AS todayCnt
+			, (SELECT SUM(today_cnt) FROM ch_stats) AS allDayCnt
+	</select>
+
 	<insert id="insertBufferVo" parameterType="ray.data.param.StatsParamVo">
 		INSERT INTO ch_stats_buffer (
         type_code
