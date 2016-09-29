@@ -29,7 +29,7 @@
 								<h2 class="post-title"><%="${title}"%> <span style="font-size:25px">(<%="${commentCount}"%>)</span></h2>
 							</a>
 							<%--<h3 class="post-subtitle">{{html content.replace(/\n/gi, '<br/>')}}</h3>--%>
-							<p class="post-meta" style="margin-bottom:0"> <%="${viewCnt}"%> view - <%="${categoryTitle}"%></p>
+							<p class="post-meta" style="margin-bottom:0"><%="${categoryTitle}"%> - <%="${viewCnt}"%> view</p>
 							<p class="post-meta" style="margin-bottom:0">
 								Posted by <a href="#"><%="${nickname}"%></a> on <%="${regDate}"%>
 							</p>
