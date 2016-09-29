@@ -37,7 +37,8 @@ public class BoardController {
 	public String form(Integer seq, HttpSession session, Model model) {
 		if(session.getAttribute("loginSeq") == null) {
 			model.addAttribute("message", "로그인 후 이용가능합니다");
-			return Const.BACK_PAGE;
+			model.addAttribute("returnUrl", "/");
+			return Const.REDIRECT_PAGE;
 		}
 
 		model.addAttribute("categoryList", categoryService.getList());
