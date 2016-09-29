@@ -1,0 +1,14 @@
+package ray.repository;
+
+import org.springframework.stereotype.Repository;
+import ray.data.param.StatsParamVo;
+
+/**
+ * Created by BELL on 2016-09-29.
+ */
+@Repository
+public interface StatsDao {
+	public int getStatsCnt(StatsParamVo vo);
+	public int insertBufferVo(StatsParamVo vo);
+	public int updateStatsVo(StatsParamVo vo);
+}

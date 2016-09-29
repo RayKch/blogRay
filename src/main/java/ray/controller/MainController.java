@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ray.data.BoardVo;
 import ray.data.param.BoardParamVo;
+import ray.data.param.StatsParamVo;
 import ray.service.BoardService;
 import ray.service.CategoryService;
+import ray.service.StatsService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -26,6 +29,9 @@ public class MainController {
 	@Autowired
 	private BoardService boardService;
 
+	@Autowired
+	private StatsService statsService;
+
 	@RequestMapping({"/index", "/"})
 	public String index(BoardParamVo vo, Model model) {
 		model.addAttribute("vo", vo);
@@ -33,13 +39,21 @@ public class MainController {
 	}
 
 	@RequestMapping("/view/{seq}")
-	public String view(@PathVariable Integer seq, Model model) {
+	public String view(@PathVariable Integer seq, HttpServletRequest request, Model model) {
 		BoardVo vo = boardService.getVo(seq);
 		model.addAttribute("seq", seq);
 		model.addAttribute("vo", vo);
 
 		try {
-			boardService.updateViewCnt(seq);
+			StatsParamVo paramVo = new StatsParamVo();
+			paramVo.setTypeCode("view");
+			paramVo.setIp(request.getRemoteAddr());
+			paramVo.setBoardSeq(seq);
+
+			if(!statsService.getStatsCnt(paramVo)) {
+				statsService.insertBufferVo(paramVo);
+				boardService.updateViewCnt(seq);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

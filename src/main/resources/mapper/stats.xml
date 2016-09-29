@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="stats">
+	<select id="getStatsCnt" parameterType="ray.data.param.StatsParamVo" resultType="int">
+		SELECT COUNT(*)
+		FROM ch_stats_buffer
+		WHERE type_code = #{typeCode}
+			AND ip = #{ip}
+		<if test="boardSeq != null">
+			AND board_seq = #{boardSeq}
+		</if>
+	</select>
+
+	<insert id="insertBufferVo" parameterType="ray.data.param.StatsParamVo">
+		INSERT INTO ch_stats_buffer (
+        type_code
+        , ip
+				<if test="boardSeq != null">
+        	, board_seq
+				</if>
+        , reg_date
+    ) VALUES (
+        #{typeCode}
+        , #{ip}
+        <if test="boardSeq != null">
+        	, #{boardSeq}
+				</if>
+        , NOW()
+    )
+	</insert>
+
+	<update id="updateStatsVo" parameterType="ray.data.param.StatsParamVo">
+		INSERT INTO ch_stats (
+			, today_cnt
+			, reg_date
+		) VALUES (
+			, #{todayCnt}
+			, NOW()
+		) ON DUPLICATE KEY UPDATE
+			today_cnt = #{todayCnt}
+	</update>
+</mapper>
