@@ -33,8 +33,14 @@ public class MainController {
 	private StatsService statsService;
 
 	@RequestMapping({"/index", "/"})
-	public String index(BoardParamVo vo, Model model) {
+	public String index(BoardParamVo vo, HttpServletRequest request, Model model) {
 		model.addAttribute("vo", vo);
+
+		try {
+			statsService.todayStatsProcess(request);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return "/index.jsp";
 	}
 
@@ -45,15 +51,8 @@ public class MainController {
 		model.addAttribute("vo", vo);
 
 		try {
-			StatsParamVo paramVo = new StatsParamVo();
-			paramVo.setTypeCode("view");
-			paramVo.setIp(request.getRemoteAddr());
-			paramVo.setBoardSeq(seq);
-
-			if(!statsService.getStatsCnt(paramVo)) {
-				statsService.insertBufferVo(paramVo);
-				boardService.updateViewCnt(seq);
-			}
+			statsService.viewStatsProcess(seq, request);
+			statsService.todayStatsProcess(request);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

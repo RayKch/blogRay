@@ -11,7 +11,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import ray.interceptor.LoginCheckInterceptorImpl;
+import ray.component.batch.StatsManageBatch;
+import ray.interceptor.StatsCheckInterceptorImpl;
 
 /**
  * Created by ChanPong on 2016-05-17.
@@ -22,6 +23,11 @@ import ray.interceptor.LoginCheckInterceptorImpl;
 @EnableScheduling
 @ComponentScan(basePackages = {"ray.controller", "ray.service", "ray.repository", "ray.configuration", "ray.util.crypt"})
 public class WebAdapter extends WebMvcConfigurerAdapter {
+	@Bean
+	public StatsManageBatch task() {
+		return new StatsManageBatch();
+	}
+
 	@Bean
 	public ViewResolver viewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -37,7 +43,7 @@ public class WebAdapter extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry
-				.addInterceptor(new LoginCheckInterceptorImpl())
+				.addInterceptor(new StatsCheckInterceptorImpl())
 				.addPathPatterns("/**")
 						// 제외할 목록
 				.excludePathPatterns("/login")

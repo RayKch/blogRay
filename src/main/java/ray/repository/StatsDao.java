@@ -9,6 +9,9 @@ import ray.data.param.StatsParamVo;
 @Repository
 public interface StatsDao {
 	public int getStatsCnt(StatsParamVo vo);
+	public int getTodayStatsCnt();
 	public int insertBufferVo(StatsParamVo vo);
-	public int updateStatsVo(StatsParamVo vo);
+	public int insertStatsVo();
+	public int updateStatsVo();
+	public int deleteBufferVo();
 }

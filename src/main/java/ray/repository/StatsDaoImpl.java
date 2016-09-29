@@ -21,12 +21,27 @@ public class StatsDaoImpl implements StatsDao {
 	}
 
 	@Override
+	public int getTodayStatsCnt() {
+		return sqlSession.selectOne("stats.getTodayStatsCnt");
+	}
+
+	@Override
 	public int insertBufferVo(StatsParamVo vo) {
 		return sqlSession.insert("stats.insertBufferVo", vo);
 	}
 
 	@Override
-	public int updateStatsVo(StatsParamVo vo) {
-		return sqlSession.update("stats.updateStatsVo", vo);
+	public int insertStatsVo() {
+		return sqlSession.insert("stats.insertStatsVo");
+	}
+
+	@Override
+	public int updateStatsVo() {
+		return sqlSession.update("stats.updateStatsVo");
+	}
+
+	@Override
+	public int deleteBufferVo() {
+		return sqlSession.delete("stats.deleteBufferVo");
 	}
 }

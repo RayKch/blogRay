@@ -11,6 +11,12 @@
 		</if>
 	</select>
 
+	<select id="getTodayStatsCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM ch_stats
+		WHERE date_format(reg_date, '%Y-%m-%D') = date_format(NOW(), '%Y-%m-%D')
+	</select>
+
 	<insert id="insertBufferVo" parameterType="ray.data.param.StatsParamVo">
 		INSERT INTO ch_stats_buffer (
         type_code
@@ -29,14 +35,23 @@
     )
 	</insert>
 
-	<update id="updateStatsVo" parameterType="ray.data.param.StatsParamVo">
+	<insert id="insertStatsVo">
 		INSERT INTO ch_stats (
-			, today_cnt
+			today_cnt
 			, reg_date
 		) VALUES (
-			, #{todayCnt}
+			1
 			, NOW()
-		) ON DUPLICATE KEY UPDATE
-			today_cnt = #{todayCnt}
+		)
+	</insert>
+
+	<update id="updateStatsVo">
+		UPDATE ch_stats SET
+			today_cnt = today_cnt + 1
+		WHERE date_format(reg_date, '%Y-%m-%D') = date_format(NOW(), '%Y-%m-%D')
 	</update>
+
+	<delete id="deleteBufferVo">
+		DELETE FROM ch_stats_buffer
+	</delete>
 </mapper>

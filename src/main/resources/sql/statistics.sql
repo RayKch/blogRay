@@ -10,5 +10,6 @@ CREATE TABLE `ch_stats_buffer` (
 /* 블로그 통계 관리 */
 CREATE TABLE `ch_stats` (
  `today_cnt` int(11) NOT NULL DEFAULT 0 COMMENT '일일방문자 수',
- `reg_date` DATETIME NOT NULL COMMENT '등록일'
+ `reg_date` DATETIME NOT NULL COMMENT '등록일',
+ PRIMARY KEY (`reg_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 통계 관리';
