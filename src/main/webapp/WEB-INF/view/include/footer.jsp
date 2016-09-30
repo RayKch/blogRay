@@ -33,6 +33,7 @@
 		SideUtil.loginSeq = "${sessionScope.loginSeq}";
 		SideUtil.loginId = "${sessionScope.loginId}";
 		SideCategoryUtil.renderList();
+		StatsUtil.render();
 	});
 </script>
 <%@ include file="/WEB-INF/view/include/login_modal.jsp" %>

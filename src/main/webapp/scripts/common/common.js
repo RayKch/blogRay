@@ -24,6 +24,25 @@ var SideUtil = {
 	}
 }
 
+var StatsUtil = {
+	render:function() {
+		$.ajax({
+			url:"/stats/data/json",
+			type:"get",
+			data:{},
+			dataType:"text",
+			success:function(data) {
+				var vo = $.parseJSON(data);
+				$('#todayCnt').text(vo.todayCnt);
+				$('#allDayCnt').text(vo.allDayCnt);
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
+	}
+}
+
 var SideCategoryUtil = {
 	renderList:function() {
 		$.ajax({

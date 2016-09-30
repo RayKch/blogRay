@@ -193,6 +193,29 @@ button.btn {
       }
     }
   }
+
+  #visitor-wrap {
+    margin-top:10px;
+    padding-left:33px;
+    height:30px;
+
+    div {
+      display: inline-block;
+
+      i, span {
+        color:#fff;
+      }
+
+      &:first-child {
+        margin-left:25px;
+        content: "";
+      }
+      &:last-child {
+        margin-left:35px;
+        content: "";
+      }
+    }
+  }
 }
 
 .list-header-wrap {

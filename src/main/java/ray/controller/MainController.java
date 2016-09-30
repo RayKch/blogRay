@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ray.data.BoardVo;
+import ray.data.StatsVo;
 import ray.data.param.BoardParamVo;
 import ray.data.param.StatsParamVo;
 import ray.service.BoardService;
@@ -57,5 +58,10 @@ public class MainController {
 			e.printStackTrace();
 		}
 		return "/view.jsp";
+	}
+
+	@RequestMapping(value = "/stats/data/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody StatsVo stats() {
+		return statsService.getVisitorCnt();
 	}
 }
