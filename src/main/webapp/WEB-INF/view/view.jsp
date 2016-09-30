@@ -16,7 +16,7 @@
 					<script id="contentTemplate" type="text/html">
 						<div class="post-preview list-top-margin list-header-wrap">
 							<h2 class="text-center"><%="${title}"%></h2>
-							<p class="post-meta pull-right" style="margin-bottom:0; font-size:12px; clear:both"><%="${categoryName}"%> - <%="${categoryDescription}"%></p>
+							<p class="post-meta pull-right" style="margin-top:15px; margin-bottom:0; font-size:12px; clear:both"><%="${categoryName}"%> - <%="${categoryDescription}"%></p>
 
 							<div class="clearfix"></div>
 							<hr class="list-hr" style="margin-top:5px">
