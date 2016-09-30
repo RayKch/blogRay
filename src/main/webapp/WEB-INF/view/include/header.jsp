@@ -20,7 +20,7 @@
 	<link href="${pageContext.request.contextPath}/styles/plugin/comment-form.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/styles/common/common.css" rel="stylesheet">
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/image/profile/profile.jpg">
-	<title>찬퐁 블로그</title>
+	<title>찬퐁의 개발 블로그</title>
 	<!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
