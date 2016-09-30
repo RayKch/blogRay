@@ -1,3 +1,14 @@
+var Browser = {
+	agent:navigator.userAgent.toLowerCase()
+};
+
+Browser = {
+	ie:Browser.agent.search("trident") === -1
+	, edge:Browser.agent.search("edge/") === -1
+	, chrome:Browser.agent.search("chrome") === -1
+	, firefox:Browser.agent.search("firefox") === -1
+};
+
 var SideUtil = {
 	loginSeq:0
 	, loginId:''
@@ -9,20 +20,18 @@ var SideUtil = {
 		if($('body').hasClass('menu-open')){
 			$('body').removeClass('menu-open').addClass('menu-close');
 			$('#SideBody').one('webkitAnimationEnd oanimationend oAnimationEnd msAnimationEnd animationend', function(e) {
-				//ie, 크롬은 사이드 애니메이션 버그가 존재해서 setTimeout을 제한다.
-//				var agent = navigator.userAgent.toLowerCase();
-				//밑의 $('body').removeClass('menu-open menu-close'); 코드때문에 ie, 크롬은 사이드메뉴 버그가 발생하니 ie는 무시한다.(ie11이하는 지원하지 않는다.)
-//				if (agent.search("trident") === -1 && agent.search("edge/") === -1 && agent.search("chrome") === -1) {
-//					setTimeout( function(){
-//						$('body').removeClass('menu-open menu-close');
-//					}, 50);
-//				}
+//				밑의 $('body').removeClass('menu-open menu-close'); 코드때문에 ie, 크롬, firefox는 사이드메뉴 버그가 발생하니 ie, 크롬, firefox은 무시한다.(ie11이하는 지원하지 않는다.)
+				if (Browser.ie && Browser.edge && Browser.chrome && Browser.firefox) {
+					setTimeout( function(){
+						$('body').removeClass('menu-open menu-close');
+					}, 50);
+				}
 
 			});
 			$('.scrollable-wrapper').removeClass('wrapper-left-move').addClass('wrapper-left-clear').css({'overflow':'auto'});
 		}
 	}
-}
+};
 
 var StatsUtil = {
 	render:function() {
@@ -41,7 +50,7 @@ var StatsUtil = {
 			}
 		});
 	}
-}
+};
 
 var SideCategoryUtil = {
 	renderList:function() {
@@ -69,7 +78,7 @@ var SideCategoryUtil = {
 			}
 		});
 	}
-}
+};
 
 $('.scrollable-wrapper').scroll(function(){
 	var height = $('.scrollable-wrapper').scrollTop();
@@ -168,7 +177,7 @@ var LoginSubmitUtil = {
 			}
 		});
 	}
-}
+};
 
 $(document).ready(function() {
 	LoginSubmitUtil.loginBtnHandler();
