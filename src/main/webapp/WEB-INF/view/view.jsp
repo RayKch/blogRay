@@ -33,8 +33,12 @@
 						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
 
+					<div class="col-sm-10 col-sm-offset-1" style="margin-top:10px">
+						<hr style="margin-bottom:12px; border:1px solid #eee">
+					</div>
+
 					<c:if test="${sessionScope.loginSeq eq vo.memberSeq}">
-						<div class="col-sm-10 col-sm-offset-1" style="margin-top:60px">
+						<div class="col-sm-10 col-sm-offset-1">
 							<i class="fa fa-times pull-right pointer" aria-hidden="true" style="margin-left:0.6em;" onclick="BoardDeleteUtil.proc('${seq}', 'view')"></i>
 							<a href="/board/form?seq=${seq}"><i class="fa fa-pencil pull-right pointer" aria-hidden="true"></i></a>
 						</div>
@@ -141,7 +145,7 @@
 					<div class="well well-lg text-center" style="font-size:12px;">댓글이 없습니다.</div>
 				</script>
 
-				<div class="col-sm-10 col-sm-offset-1">
+				<div class="col-sm-10 col-sm-offset-1" style="margin-top:30px">
 					<div class="page-header" style="margin-top:-75px">
 						<h3 class="reviews">Comment (<span id="commentCount"></span>)</h3>
 					</div>
