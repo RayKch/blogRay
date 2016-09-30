@@ -198,16 +198,17 @@ button.btn {
     margin-top:10px;
     padding-left:33px;
     height:30px;
+    color:#fff;
 
     div {
       display: inline-block;
+      font-size:12px;
 
       i, span {
         color:#fff;
       }
 
       &:first-child {
-        margin-left:25px;
         content: "";
       }
       &:last-child {

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <div id="SideBody">
 	<div id="visitor-wrap">
-		<div><i class="fa fa-user fa-1x" aria-hidden="true"></i>&nbsp;<span id="todayCnt"></span></div>
-		<div><i class="fa fa-users fa-1x" aria-hidden="true"></i>&nbsp;<span id="allDayCnt"></span></div>
+		<div><i class="fa fa-user fa-1x" aria-hidden="true"></i>&nbsp;TODAY&nbsp;<span id="todayCnt"></span></div>
+		<div><i class="fa fa-users fa-1x" aria-hidden="true"></i>&nbsp;TOTAL&nbsp;<span id="allDayCnt"></span></div>
 	</div>
 
 	<div class="profile">
