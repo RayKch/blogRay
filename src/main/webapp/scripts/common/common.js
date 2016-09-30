@@ -10,13 +10,13 @@ var SideUtil = {
 			$('body').removeClass('menu-open').addClass('menu-close');
 			$('#SideBody').one('webkitAnimationEnd oanimationend oAnimationEnd msAnimationEnd animationend', function(e) {
 				//ie, 크롬은 사이드 애니메이션 버그가 존재해서 setTimeout을 제한다.
-				var agent = navigator.userAgent.toLoweCase();
+//				var agent = navigator.userAgent.toLowerCase();
 				//밑의 $('body').removeClass('menu-open menu-close'); 코드때문에 ie, 크롬은 사이드메뉴 버그가 발생하니 ie는 무시한다.(ie11이하는 지원하지 않는다.)
-				if (agent.search("trident") === -1 && agent.search("edge/") === -1 && agent.search("chrome") === -1) {
-					setTimeout( function(){
-						$('body').removeClass('menu-open menu-close');
-					}, 50);
-				}
+//				if (agent.search("trident") === -1 && agent.search("edge/") === -1 && agent.search("chrome") === -1) {
+//					setTimeout( function(){
+//						$('body').removeClass('menu-open menu-close');
+//					}, 50);
+//				}
 
 			});
 			$('.scrollable-wrapper').removeClass('wrapper-left-move').addClass('wrapper-left-clear').css({'overflow':'auto'});
