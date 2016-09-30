@@ -33,7 +33,7 @@
 						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
 					</div>
 
-					<div class="col-sm-10 col-sm-offset-1" style="margin-top:10px">
+					<div class="col-sm-10 col-sm-offset-1" style="margin-top:20px">
 						<hr style="margin-bottom:12px; border:1px solid #eee">
 					</div>
 
