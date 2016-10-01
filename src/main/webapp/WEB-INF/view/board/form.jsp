@@ -62,11 +62,18 @@
 	</div>
 </div>
 <script src="/scripts/plugin/summernote.min.js"></script>
+<script src="/scripts/plugin/summernote-ko-KR.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#content").summernote({
 			height:350,
-			minHeight:350
+			minHeight:350,
+			lang: 'ko-KR',
+			callbacks: {
+				onImageUpload: function(files, editor, $welEditable) {
+					BoardUtil.sendFile(files[0], editor, $welEditable);
+				}
+			}
 		});
 	});
 
@@ -92,6 +99,23 @@
 				$("textarea[name=content]").val( $("#content").summernote('code') );
 			}
 			return flag;
+		}
+		, sendFile:function(file, editor, welEditable) {
+			var data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				data: data,
+				type: "POST",
+				url: '/board/editor/image/upload',
+				cache: false,
+				enctype: 'multipart/form-data',
+				contentType: false,
+				processData: false,
+				success: function(url) {
+					alert(url);
+					editor.insertImage(welEditable, url);
+				}
+			});
 		}
 	}
 </script>

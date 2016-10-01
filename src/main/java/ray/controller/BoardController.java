@@ -5,20 +5,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import ray.data.BoardVo;
 import ray.data.param.BoardParamVo;
-import ray.data.validator.BoardCommentInsertValidator;
 import ray.data.validator.BoardInsertValidator;
 import ray.service.BoardService;
 import ray.service.CategoryService;
 import ray.util.Const;
+import ray.util.exception.ImageIsNotAvailableException;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ChanPong on 2016-05-17.
@@ -129,5 +132,29 @@ public class BoardController {
 		}
 		model.addAttribute("message", "success");
 		return Const.AJAX_PAGE;
+	}
+
+	@RequestMapping(value = "/editor/image/upload", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public @ResponseBody String upload(MultipartHttpServletRequest mRequest) {
+		String fileName = "";
+		try {
+			fileName = boardService.editorUploadImages(mRequest);
+		} catch (IOException ie) {
+			log.error(ie.getMessage() + "서버상의 문제가 발생했습니다. 관리자에게 문의하여 주십시오.");
+			ie.printStackTrace();
+			return Const.ALERT_PAGE;
+		} catch (ImageIsNotAvailableException ie) {
+			log.error("첨부한 파일은 이미지 파일이 아닙니다");
+			ie.printStackTrace();
+		}
+
+		String uploadPath;
+		String os = System.getProperty("os.name");
+		if(os.contains("Windows")) {
+			uploadPath = Const.UPLOAD_LOCAL_PATH;
+		} else {
+			uploadPath = Const.UPLOAD_REAL_PATH;
+		}
+		return uploadPath + File.separator + "editor" + File.separator + "temp" + File.separator + fileName;
 	}
 }

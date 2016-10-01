@@ -6,12 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import ray.data.BoardVo;
 import ray.data.param.BoardParamVo;
 import ray.repository.BoardDao;
+import ray.util.Const;
+import ray.util.FileUploadUtil;
 import ray.util.StringUtil;
+import ray.util.exception.ImageIsNotAvailableException;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ChanPong on 2016-08-10.
@@ -80,5 +91,41 @@ public class BoardService {
 
 	public int updateViewCnt(int seq) {
 		return boardDao.updateViewCnt(seq);
+	}
+
+	public String editorUploadImages(HttpServletRequest request) throws IOException, ImageIsNotAvailableException {
+		String fileName = "";
+		String uploadPath = "";
+		String os = System.getProperty("os.name");
+		log.info("현재 운영중인 OS :::: "+os);
+		if(os.contains("Windows")) {
+			uploadPath = Const.UPLOAD_LOCAL_PATH;
+		} else {
+			uploadPath = Const.UPLOAD_REAL_PATH;
+		}
+
+		MultipartHttpServletRequest mpRequest = (MultipartHttpServletRequest) request;
+		Iterator<String> iter = mpRequest.getFileNames();
+		while (iter.hasNext()) {
+			MultipartFile file = mpRequest.getFile(iter.next());
+			if (file.getSize() > 0) {
+				// temp 디렉토리 생성
+				File tempDir = new File(uploadPath);
+				if (!tempDir.exists()) {
+					tempDir.mkdir();
+				}
+				tempDir = new File( uploadPath + File.separator + "editor");
+				if (!tempDir.exists()) {
+					tempDir.mkdir();
+				}
+				tempDir = new File( uploadPath + File.separator + "editor" + File.separator + "temp");
+				if (!tempDir.exists()) {
+					tempDir.mkdir();
+				}
+
+				fileName = new FileUploadUtil().uploadImageFile(file, uploadPath +"/editor/temp");
+			}
+		}
+		return fileName;
 	}
 }

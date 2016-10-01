@@ -14,6 +14,9 @@ public class Const {
 	/** ajax호출 후에 메시지를 전달하는 페이지 */
 	public final static String AJAX_PAGE = "/_proc/ajax_message.jsp";
 
+	public final static String UPLOAD_LOCAL_PATH = "D:\\dev\\workspace\\upload\\blogRay";
+	public final static String UPLOAD_REAL_PATH = "/home/ray/web/upload";
+
 	/** (등급) 최고 관리자 */
 	public final static int GRADE_SUPER_ADMIN = 1;
 
