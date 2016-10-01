@@ -3,12 +3,15 @@ package ray.service;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import ray.data.BoardVo;
+import ray.data.FileVo;
 import ray.data.param.BoardParamVo;
 import ray.repository.BoardDao;
 import ray.util.Const;
@@ -19,6 +22,7 @@ import ray.util.exception.ImageIsNotAvailableException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,6 +37,8 @@ public class BoardService {
 	@Autowired
 	@Setter
 	private BoardDao boardDao;
+
+	private final Path rootLocation = null;
 
 	public List<BoardVo> getList(BoardParamVo vo) {
 		List<BoardVo> list = boardDao.getList(vo);
@@ -93,8 +99,8 @@ public class BoardService {
 		return boardDao.updateViewCnt(seq);
 	}
 
-	public String editorUploadImages(HttpServletRequest request) throws IOException, ImageIsNotAvailableException {
-		String fileName = "";
+	public FileVo editorUploadImages(HttpServletRequest request) throws IOException, ImageIsNotAvailableException {
+		FileVo vo = new FileVo();
 		String uploadPath = "";
 		String os = System.getProperty("os.name");
 		log.info("현재 운영중인 OS :::: "+os);
@@ -114,18 +120,24 @@ public class BoardService {
 				if (!tempDir.exists()) {
 					tempDir.mkdir();
 				}
-				tempDir = new File( uploadPath + File.separator + "editor");
+				tempDir = new File(uploadPath + File.separator + "blogRay");
 				if (!tempDir.exists()) {
 					tempDir.mkdir();
 				}
-				tempDir = new File( uploadPath + File.separator + "editor" + File.separator + "temp");
+				tempDir = new File( uploadPath + File.separator + "blogRay" + File.separator + "editor");
+				if (!tempDir.exists()) {
+					tempDir.mkdir();
+				}
+				tempDir = new File( uploadPath + File.separator + "blogRay" + File.separator + "editor" + File.separator + "temp");
 				if (!tempDir.exists()) {
 					tempDir.mkdir();
 				}
 
-				fileName = new FileUploadUtil().uploadImageFile(file, uploadPath +"/editor/temp");
+				vo.setContentType(file.getContentType());
+				vo.setFileName(file.getOriginalFilename());
+				vo.setTempFileName(new FileUploadUtil().uploadImageFile(file, uploadPath  + File.separator + "blogRay" + File.separator + "editor" + File.separator + "temp"));
 			}
 		}
-		return fileName;
+		return vo;
 	}
 }

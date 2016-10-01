@@ -1,7 +1,12 @@
 package ray.controller;
 
+import ray.util.MediaUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import ray.data.BoardVo;
+import ray.data.FileVo;
 import ray.data.param.BoardParamVo;
 import ray.data.validator.BoardInsertValidator;
 import ray.service.BoardService;
@@ -17,11 +23,14 @@ import ray.service.CategoryService;
 import ray.util.Const;
 import ray.util.exception.ImageIsNotAvailableException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ChanPong on 2016-05-17.
@@ -135,14 +144,13 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/editor/image/upload", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public @ResponseBody String upload(MultipartHttpServletRequest mRequest) {
-		String fileName = "";
+	public @ResponseBody FileVo upload(HttpServletRequest request, MultipartHttpServletRequest mRequest) {
+		FileVo vo = new FileVo();
 		try {
-			fileName = boardService.editorUploadImages(mRequest);
+			vo = boardService.editorUploadImages(mRequest);
 		} catch (IOException ie) {
 			log.error(ie.getMessage() + "서버상의 문제가 발생했습니다. 관리자에게 문의하여 주십시오.");
 			ie.printStackTrace();
-			return Const.ALERT_PAGE;
 		} catch (ImageIsNotAvailableException ie) {
 			log.error("첨부한 파일은 이미지 파일이 아닙니다");
 			ie.printStackTrace();
@@ -155,6 +163,37 @@ public class BoardController {
 		} else {
 			uploadPath = Const.UPLOAD_REAL_PATH;
 		}
-		return uploadPath + File.separator + "editor" + File.separator + "temp" + File.separator + fileName;
+
+
+		vo.setUrl(request.getScheme() + "://" + request.getServerName() + "/board/editor/temp/image/view");
+		return vo;
 	}
+
+	@RequestMapping(value = "/editor/temp/image/view", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@ResponseBody public void imageView(FileVo vo, HttpServletResponse response) {
+		try {
+			response.setHeader("Content-Disposition", "attachment; filename\"" + vo.getFileName() + "\"");
+			if (MediaUtils.containsImageMediaType(vo.getContentType())) {
+				response.setContentType(vo.getContentType());
+			}
+
+			File file = new File(Const.UPLOAD_LOCAL_PATH + File.separator + "blogRay" + File.separator + "editor" + File.separator + "temp" + File.separator + vo.getFileName());
+
+			// Open the file and output streams
+			FileInputStream in = new FileInputStream(file);
+			OutputStream out = response.getOutputStream();
+
+			// Copy the contents of the file to the output stream
+			byte[] buf = new byte[1024];
+			int count = 0;
+			while ((count = in.read(buf)) >= 0) {
+				out.write(buf, 0, count);
+			}
+			in.close();
+			out.close();
+		} catch(Exception e) {
+				e.printStackTrace();
+		}
+	}
+
 }

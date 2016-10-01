@@ -54,6 +54,7 @@
 								</c:otherwise>
 							</c:choose>
 						</button>
+						<div class="editor-img-data"></div>
 					</form>
 				</div>
 			</div>
@@ -70,8 +71,10 @@
 			minHeight:350,
 			lang: 'ko-KR',
 			callbacks: {
-				onImageUpload: function(files, editor, $welEditable) {
-					BoardUtil.sendFile(files[0], editor, $welEditable);
+				onImageUpload: function(files, editor, welEditable) {
+					for (var i = files.length - 1; i >= 0; i--) {
+						BoardUtil.sendFile(files[i], this);
+					}
 				}
 			}
 		});
@@ -82,7 +85,6 @@
 			var flag = true;
 			$(obj).find("input[alt], textarea[alt], select[alt]").each( function() {
 				if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
-
 					alert($(this).attr("alt") + "란을 채워주세요.");
 					flag = false;
 					$(this).focus();
@@ -100,7 +102,7 @@
 			}
 			return flag;
 		}
-		, sendFile:function(file, editor, welEditable) {
+		, sendFile:function(file, obj) {
 			var data = new FormData();
 			data.append("file", file);
 			$.ajax({
@@ -108,12 +110,14 @@
 				type: "POST",
 				url: '/board/editor/image/upload',
 				cache: false,
-				enctype: 'multipart/form-data',
 				contentType: false,
+				enctype: 'multipart/form-data',
 				processData: false,
-				success: function(url) {
-					alert(url);
-					editor.insertImage(welEditable, url);
+				success: function(data) {
+					//form 리스트로 만들어서 등록시켜야 함
+//					$('.editor-img-data').append('<input name=""/>');
+					var url = data.url + '?fileName=' + data.tempFileName + '&contentType=' + data.contentType;
+					$(obj).summernote('editor.insertImage', url);
 				}
 			});
 		}
