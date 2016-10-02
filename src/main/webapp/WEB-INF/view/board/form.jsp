@@ -54,7 +54,7 @@
 								</c:otherwise>
 							</c:choose>
 						</button>
-						<div class="editor-img-data"></div>
+						<div id="editorImgData" class="hide"></div>
 					</form>
 				</div>
 			</div>
@@ -81,7 +81,8 @@
 	});
 
 	var BoardUtil = {
-		submitProc:function(obj) {
+		tempList:[]
+		, submitProc:function(obj) {
 			var flag = true;
 			$(obj).find("input[alt], textarea[alt], select[alt]").each( function() {
 				if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
@@ -98,8 +99,21 @@
 					alert("에디터 상태를 일반 모드로 변경합니다. 확인을 눌러주세요");
 				}
 
+				//에디터내용을 실제 등록될 태그에 넣기
 				$("textarea[name=content]").val( $("#content").summernote('code') );
+
+				//임시 등록된 이미지 데이터 생성
+				var html = '', vo = {}, list = BoardUtil.tempList;
+				for(var i=0; i<list.length; i++ ){
+					vo = $.extend(true, {}, list[i]); // deep copy
+
+					for(var prop in vo) {
+						html += "<textarea name='fileList["+i+"]."+prop+"'>"+vo[prop]+"</textarea>";
+					}
+				}
+				$('#editorImgData').html( html );
 			}
+
 			return flag;
 		}
 		, sendFile:function(file, obj) {
@@ -114,9 +128,15 @@
 				enctype: 'multipart/form-data',
 				processData: false,
 				success: function(data) {
-					//form 리스트로 만들어서 등록시켜야 함
-//					$('.editor-img-data').append('<input name=""/>');
-					var url = data.url + '?fileName=' + data.tempFileName + '&contentType=' + data.contentType;
+					//포스트 등록시 같이 전송되어져야할 이미지 데이터
+					var img = {};
+					img.contentType = data.contentType;
+					img.fileName = data.fileName;
+					img.tempFileName = data.tempFileName;
+					BoardUtil.tempList.push(img);
+
+					//editor에 임시 등록된 이미지 썸네일로 보여주도록
+					var url = data.url + '?typeCode=temp&tempFileName=' + data.tempFileName + '&contentType=' + data.contentType;
 					$(obj).summernote('editor.insertImage', url);
 				}
 			});

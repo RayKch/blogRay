@@ -99,7 +99,7 @@ public class BoardService {
 		return boardDao.updateViewCnt(seq);
 	}
 
-	public FileVo editorUploadImages(HttpServletRequest request) throws IOException, ImageIsNotAvailableException {
+	public FileVo editorUploadTempImages(HttpServletRequest request) throws IOException, ImageIsNotAvailableException {
 		FileVo vo = new FileVo();
 		String uploadPath = "";
 		String os = System.getProperty("os.name");

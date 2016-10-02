@@ -3,6 +3,9 @@ package ray.data.param;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
+import ray.data.FileVo;
+
+import java.util.List;
 
 /**
  * Created by ChanPong on 2016-08-18.
@@ -25,6 +28,7 @@ public class BoardParamVo extends ParamVo {
 	private int viewCnt;
 	private String regDate;
 	private String modDate;
+	private List<FileVo> fileList;
 
 	@Override
 	public String getSearch() {

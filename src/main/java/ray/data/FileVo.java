@@ -9,8 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Slf4j
 public class FileVo {
+	public String typeCode;
 	public String contentType;
 	public String url;
 	public String fileName;
 	public String tempFileName;
+	public Integer boardSeq;
 }

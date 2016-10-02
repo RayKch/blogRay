@@ -54,7 +54,7 @@
 		WHERE seq = #{seq}
 	</select>
 
-	<insert id="insertVo" parameterType="ray.data.param.BoardParamVo">
+	<insert id="insertVo" parameterType="ray.data.param.BoardParamVo" useGeneratedKeys="true" keyProperty="seq">
 		INSERT INTO ch_board (
 			category_seq
 			, member_seq

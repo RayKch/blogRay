@@ -100,6 +100,14 @@ public class BoardController {
 			model.addAttribute("message", "포스트 등록이 실패하였습니다");
 			return Const.AJAX_PAGE;
 		}
+
+		//같이 넘어온 임시 등록 이미지가 존재한다면 실경로로 복사후 임시이미지를 제거하고 db에 insert한다..
+		for(int i=0; i<vo.getFileList().size(); i++) {
+			FileVo tempVo = vo.getFileList().get(i);
+			tempVo.setBoardSeq(vo.getBoardSeq());
+			System.out.println("test1234="+tempVo.toString());
+		}
+
 		model.addAttribute("message", "포스트가 등록되었습니다.");
 		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
 		return Const.REDIRECT_PAGE;
@@ -147,7 +155,7 @@ public class BoardController {
 	public @ResponseBody FileVo upload(HttpServletRequest request, MultipartHttpServletRequest mRequest) {
 		FileVo vo = new FileVo();
 		try {
-			vo = boardService.editorUploadImages(mRequest);
+			vo = boardService.editorUploadTempImages(mRequest);
 		} catch (IOException ie) {
 			log.error(ie.getMessage() + "서버상의 문제가 발생했습니다. 관리자에게 문의하여 주십시오.");
 			ie.printStackTrace();
@@ -156,20 +164,11 @@ public class BoardController {
 			ie.printStackTrace();
 		}
 
-		String uploadPath;
-		String os = System.getProperty("os.name");
-		if(os.contains("Windows")) {
-			uploadPath = Const.UPLOAD_LOCAL_PATH;
-		} else {
-			uploadPath = Const.UPLOAD_REAL_PATH;
-		}
-
-
-		vo.setUrl(request.getScheme() + "://" + request.getServerName() + "/board/editor/temp/image/view");
+		vo.setUrl(request.getScheme() + "://" + request.getServerName() + "/board/editor/image/view");
 		return vo;
 	}
 
-	@RequestMapping(value = "/editor/temp/image/view", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/editor/image/view", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	@ResponseBody public void imageView(FileVo vo, HttpServletResponse response) {
 		try {
 			response.setHeader("Content-Disposition", "attachment; filename\"" + vo.getFileName() + "\"");
@@ -177,7 +176,14 @@ public class BoardController {
 				response.setContentType(vo.getContentType());
 			}
 
-			File file = new File(Const.UPLOAD_LOCAL_PATH + File.separator + "blogRay" + File.separator + "editor" + File.separator + "temp" + File.separator + vo.getFileName());
+			String path = Const.UPLOAD_LOCAL_PATH + File.separator + "blogRay" + File.separator + "editor";
+			if("temp".equals(vo.getTypeCode())) {
+				path += File.separator + "temp" + File.separator + vo.getTempFileName();
+			} else {
+				path += File.separator + vo.getBoardSeq() + File.separator + vo.getFileName();
+			}
+
+			File file = new File(path);
 
 			// Open the file and output streams
 			FileInputStream in = new FileInputStream(file);
