@@ -122,7 +122,7 @@
 			$.ajax({
 				data: data,
 				type: "POST",
-				url: '/board/editor/image/upload',
+				url: '/file/editor/image/upload',
 				cache: false,
 				contentType: false,
 				enctype: 'multipart/form-data',
@@ -136,7 +136,7 @@
 					BoardUtil.tempList.push(img);
 
 					//editor에 임시 등록된 이미지 썸네일로 보여주도록
-					var url = data.url + '?typeCode=temp&tempFileName=' + data.tempFileName + '&contentType=' + data.contentType;
+					var url = data.url + '?typeCode=temp&fileName=' + data.tempFileName + '&contentType=' + data.contentType;
 					$(obj).summernote('editor.insertImage', url);
 				}
 			});

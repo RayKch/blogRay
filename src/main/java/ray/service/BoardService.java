@@ -96,46 +96,4 @@ public class BoardService {
 	public int updateViewCnt(int seq) {
 		return boardDao.updateViewCnt(seq);
 	}
-
-	public FileVo editorUploadTempImages(HttpServletRequest request) throws IOException, ImageIsNotAvailableException {
-		FileVo vo = new FileVo();
-		String uploadPath = "";
-		String os = System.getProperty("os.name");
-		log.info("현재 운영중인 OS :::: "+os);
-		if(os.contains("Windows")) {
-			uploadPath = Const.UPLOAD_LOCAL_PATH;
-		} else {
-			uploadPath = Const.UPLOAD_REAL_PATH;
-		}
-
-		MultipartHttpServletRequest mpRequest = (MultipartHttpServletRequest) request;
-		Iterator<String> iter = mpRequest.getFileNames();
-		while (iter.hasNext()) {
-			MultipartFile file = mpRequest.getFile(iter.next());
-			if (file.getSize() > 0) {
-				// temp 디렉토리 생성
-				File tempDir = new File(uploadPath);
-				if (!tempDir.exists()) {
-					tempDir.mkdir();
-				}
-				tempDir = new File(uploadPath + File.separator + "blogRay");
-				if (!tempDir.exists()) {
-					tempDir.mkdir();
-				}
-				tempDir = new File( uploadPath + File.separator + "blogRay" + File.separator + "editor");
-				if (!tempDir.exists()) {
-					tempDir.mkdir();
-				}
-				tempDir = new File( uploadPath + File.separator + "blogRay" + File.separator + "editor" + File.separator + "temp");
-				if (!tempDir.exists()) {
-					tempDir.mkdir();
-				}
-
-				vo.setContentType(file.getContentType());
-				vo.setFileName(file.getOriginalFilename());
-				vo.setTempFileName(new FileUploadUtil().uploadImageFile(file, uploadPath  + File.separator + "blogRay" + File.separator + "editor" + File.separator + "temp"));
-			}
-		}
-		return vo;
-	}
 }
