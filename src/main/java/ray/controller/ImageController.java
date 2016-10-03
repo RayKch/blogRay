@@ -2,6 +2,7 @@ package ray.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,22 +22,17 @@ import java.io.OutputStream;
 @Controller
 @RequestMapping("/image")
 public class ImageController {
-	@RequestMapping(value = "/editor/view", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/editor/view/{type}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	@ResponseBody
-	public void imageView(FileVo vo, HttpServletResponse response) {
+	public void imageView(@PathVariable String type, FileVo vo, HttpServletResponse response) {
 		try {
 			response.setHeader("Content-Disposition", "attachment; filename\"" + vo.getFileName() + "\"");
 			if (MediaUtils.containsImageMediaType(vo.getContentType())) {
 				response.setContentType(vo.getContentType());
 			}
 
-			String path = Const.UPLOAD_LOCAL_PATH + File.separator + "blogRay" + File.separator + "editor";
-			if("temp".equals(vo.getTypeCode())) {
-				path += File.separator + "temp";
-			} else {
-				path += File.separator + vo.getBoardSeq();
-			}
-			path += File.separator + vo.getFileName();
+			/** type값은 임시 이미지일경우 temp 리얼 이미지일경우 게시판 시퀀스값이 넘어올것이다. */
+			String path = Const.UPLOAD_LOCAL_PATH + File.separator + "blogRay" + File.separator + "editor" + File.separator + type + File.separator + vo.getFileName();
 
 			File file = new File(path);
 
