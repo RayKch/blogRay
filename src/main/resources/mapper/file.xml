@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+	<insert id="insertVo" parameterType="ray.data.FileVo">
+		INSERT INTO ch_file (
+			content_type
+			, file_name
+			, temp_file_name
+			, board_seq
+			, reg_date
+		) VALUES (
+			#{contentType}
+			, #{fileName}
+			, #{tempFileName}
+			, #{boardSeq}
+			, NOW()
+		)
+	</insert>
+</mapper>

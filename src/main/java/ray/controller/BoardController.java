@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ray.data.BoardVo;
-import ray.data.FileVo;
 import ray.data.param.BoardParamVo;
 import ray.data.validator.BoardInsertValidator;
 import ray.service.BoardService;
@@ -86,13 +85,6 @@ public class BoardController {
 		if(!boardService.insertVo(vo)) {
 			model.addAttribute("message", "포스트 등록이 실패하였습니다");
 			return Const.AJAX_PAGE;
-		}
-
-		//같이 넘어온 임시 등록 이미지가 존재한다면 실경로로 복사후 임시이미지를 제거하고 db에 insert한다..
-		for(int i=0; i<vo.getFileList().size(); i++) {
-			FileVo tempVo = vo.getFileList().get(i);
-			tempVo.setBoardSeq(vo.getBoardSeq());
-			System.out.println("test1234="+tempVo.toString());
 		}
 
 		model.addAttribute("message", "포스트가 등록되었습니다.");

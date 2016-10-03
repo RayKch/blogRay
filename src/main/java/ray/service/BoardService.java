@@ -38,6 +38,9 @@ public class BoardService {
 	@Setter
 	private BoardDao boardDao;
 
+	@Autowired
+	private FileService fileService;
+
 	public List<BoardVo> getList(BoardParamVo vo) {
 		List<BoardVo> list = boardDao.getList(vo);
 		for(int i=0; i<list.size(); i++) {
@@ -59,7 +62,29 @@ public class BoardService {
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(BoardParamVo vo) {
-		return boardDao.insertVo(vo) > 0;
+		 int result = boardDao.insertVo(vo);
+
+		//같이 넘어온 임시 등록 이미지가 존재한다면 실경로로 이미지 이동 시킨 후 파일정보를 db에 insert한다
+		for(int i=0; i<vo.getFileList().size(); i++) {
+			FileVo tempVo = vo.getFileList().get(i);
+			tempVo.setBoardSeq(vo.getSeq());
+
+			//1. 임시 이미지 실제 경로로 파일이동
+			fileService.fileCopy(tempVo);
+
+			//2. 파일정보 db insert
+			fileService.insertVo(tempVo);
+
+			//3. 포스트 content에 임시 이미지 경로가 존재한다면 실제 경로로 변경
+			if(vo.getContent().matches(".*/image/editor/view/temp.*")) {
+				vo.setContent(vo.getContent().replace("/image/editor/view/temp", "/image/editor/view/" + tempVo.getBoardSeq()));
+			}
+
+			//4. 수정된 content를 다시 업데이트 시킨다.
+			updateVo(vo);
+		}
+
+		return result > 0;
 	}
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
