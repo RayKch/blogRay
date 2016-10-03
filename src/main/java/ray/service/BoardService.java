@@ -38,8 +38,6 @@ public class BoardService {
 	@Setter
 	private BoardDao boardDao;
 
-	private final Path rootLocation = null;
-
 	public List<BoardVo> getList(BoardParamVo vo) {
 		List<BoardVo> list = boardDao.getList(vo);
 		for(int i=0; i<list.size(); i++) {
