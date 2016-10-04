@@ -159,15 +159,17 @@ public class BoardService {
 
 	public void insertFile(BoardParamVo vo) {
 		//같이 넘어온 임시 등록 이미지가 존재한다면 실경로로 이미지 이동 시킨 후 파일정보를 db에 insert한다
-		for(int i=0; i<vo.getFileList().size(); i++) {
-			FileVo tempVo = vo.getFileList().get(i);
-			tempVo.setBoardSeq(vo.getSeq());
+		if(vo.getFileList() != null) {
+			for(int i=0; i<vo.getFileList().size(); i++) {
+				FileVo tempVo = vo.getFileList().get(i);
+				tempVo.setBoardSeq(vo.getSeq());
 
-			//3. 임시 이미지 실제 경로로 파일이동
-			fileService.fileCopy(tempVo);
+				//3. 임시 이미지 실제 경로로 파일이동
+				fileService.fileCopy(tempVo);
 
-			//4. 파일정보 db insert
-			fileService.insertVo(tempVo);
+				//4. 파일정보 db insert
+				fileService.insertVo(tempVo);
+			}
 		}
 	}
 }

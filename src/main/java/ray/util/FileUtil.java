@@ -45,7 +45,7 @@ public class FileUtil {
 		//폴더내 파일을 배열로 가져온다.
 		File[] tempFile = file.listFiles();
 
-		if(tempFile.length >0){
+		if(tempFile != null && tempFile.length > 0){
 			for (int i = 0; i < tempFile.length; i++) {
 				if(tempFile[i].isFile()){
 					tempFile[i].delete();
