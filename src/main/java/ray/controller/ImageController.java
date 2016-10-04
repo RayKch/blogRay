@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ray.data.FileVo;
 import ray.util.Const;
+import ray.util.FileUtil;
 import ray.util.MediaUtils;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,7 @@ public class ImageController {
 			}
 
 			/** type값은 임시 이미지일경우 temp 리얼 이미지일경우 게시판 시퀀스값이 넘어올것이다. */
-			String path = Const.UPLOAD_LOCAL_PATH + File.separator + "blogRay" + File.separator + "editor" + File.separator + type + File.separator + vo.getFileName();
+			String path = FileUtil.getUploadPath() + File.separator + "blogRay" + File.separator + "editor" + File.separator + type + File.separator + vo.getFileName();
 
 			File file = new File(path);
 
