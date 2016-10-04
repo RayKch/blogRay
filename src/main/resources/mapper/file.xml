@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="file">
+	<select id="getList" parameterType="Integer" resultType="ray.data.FileVo">
+		SELECT
+			content_type AS contentType
+			, file_name AS fileName
+			, temp_file_name AS tempFileName
+			, board_seq AS boardSeq
+			, reg_date AS regDate
+		WHERE board_seq = #{boardSeq}
+	</select>
+
 	<insert id="insertVo" parameterType="ray.data.FileVo">
 		INSERT INTO ch_file (
 			content_type
@@ -16,4 +26,15 @@
 			, NOW()
 		)
 	</insert>
+
+	<delete id="deleteVo" parameterType="ray.data.FileVo">
+		DELETE FROM ch_file
+		WHERE 1=1
+		<if test="boardSeq != null">
+			AND board_seq = #{value}
+		</if>
+		<if test="tempFileName != null">
+			AND temp_file_name = #{tempFileName}
+		</if>
+	</delete>
 </mapper>

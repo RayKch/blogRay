@@ -92,7 +92,24 @@ public class BoardService {
 		return boardDao.updateVo(vo) > 0;
 	}
 
+	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean deleteVo(Integer seq) {
+		String uploadPath = "";
+		String os = System.getProperty("os.name");
+		log.info("현재 운영중인 OS :::: "+os);
+		if(os.contains("Windows")) {
+			uploadPath = Const.UPLOAD_LOCAL_PATH;
+		} else {
+			uploadPath = Const.UPLOAD_REAL_PATH;
+		}
+
+		//1. 에디터 이미지가 존재한다면 파일부터 제거한다
+		fileService.deleteAllFiles(uploadPath + File.separator + "blogRay" + File.separator + "editor" + File.separator + seq);
+
+		//2. 에디터 이미지 데이터를 DB에서 삭제
+		FileVo fvo = new FileVo();
+		fvo.setBoardSeq(seq);
+		fileService.deleteVo(fvo);
 		return boardDao.deleteVo(seq) > 0;
 	}
 

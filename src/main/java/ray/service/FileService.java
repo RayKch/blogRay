@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by ChanPong on 2016-10-03.
@@ -29,9 +30,17 @@ public class FileService {
 	@Setter
 	private FileDao fileDao;
 
+	public List<FileVo> getList(Integer seq) {
+		return fileDao.getList(seq);
+	}
+
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(FileVo vo) {
 		return fileDao.insertVo(vo) > 0;
+	}
+
+	public boolean deleteVo(FileVo vo) {
+		return fileDao.deleteVo(vo) > 0;
 	}
 
 	public FileVo editorUploadTempImages(HttpServletRequest request) throws IOException, ImageIsNotAvailableException {
@@ -105,4 +114,22 @@ public class FileService {
 		}
 	}
 
+	public void deleteAllFiles(String path){
+		File file = new File(path);
+		//폴더내 파일을 배열로 가져온다.
+		File[] tempFile = file.listFiles();
+
+		if(tempFile.length >0){
+			for (int i = 0; i < tempFile.length; i++) {
+				if(tempFile[i].isFile()){
+					tempFile[i].delete();
+				}else{
+					//재귀함수
+					deleteAllFiles(tempFile[i].getPath());
+				}
+				tempFile[i].delete();
+			}
+			file.delete();
+		}
+	}
 }
