@@ -88,7 +88,7 @@ public class BoardController {
 		}
 
 		model.addAttribute("message", "포스트가 등록되었습니다.");
-		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
+		model.addAttribute("returnUrl", "/view/"+vo.getSeq());
 		return Const.REDIRECT_PAGE;
 	}
 
@@ -111,7 +111,7 @@ public class BoardController {
 			return Const.AJAX_PAGE;
 		}
 		model.addAttribute("message", "포스트가 수정되었습니다.");
-		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
+		model.addAttribute("returnUrl", "/view/"+vo.getSeq());
 		return Const.REDIRECT_PAGE;
 	}
 
