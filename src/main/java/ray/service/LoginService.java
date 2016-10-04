@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ray.data.LoginVo;
 import ray.data.param.LoginParamVo;
-import ray.repository.CategoryDao;
 import ray.repository.LoginDao;
 
 /**

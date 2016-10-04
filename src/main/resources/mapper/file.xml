@@ -8,7 +8,8 @@
 			, temp_file_name AS tempFileName
 			, board_seq AS boardSeq
 			, reg_date AS regDate
-		WHERE board_seq = #{boardSeq}
+		FROM ch_file
+		WHERE board_seq = #{value}
 	</select>
 
 	<insert id="insertVo" parameterType="ray.data.FileVo">

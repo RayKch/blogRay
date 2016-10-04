@@ -69,7 +69,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST)
-	public String insert(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
+	public String insert(BoardParamVo vo, HttpSession session, Model model, BindingResult result) throws Exception {
 		if(session.getAttribute("loginSeq") == null) {
 			model.addAttribute("message", "로그인 후 이용가능합니다");
 			return Const.AJAX_PAGE;
@@ -93,7 +93,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/update/proc", method = RequestMethod.POST)
-	public String update(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
+	public String update(BoardParamVo vo, HttpSession session, Model model, BindingResult result) throws Exception {
 		if(session.getAttribute("loginSeq") == null) {
 			model.addAttribute("message", "로그인 후 이용가능합니다");
 			return Const.AJAX_PAGE;
