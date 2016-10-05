@@ -54,6 +54,17 @@
 					</div>
 					<div class="area-right">
 						<div class="form-group">
+							<label>카테고리 유형</label>
+							<div style="font-size:14px;">
+								<label for="typeCode1" class="radio-inline">
+									<input type="radio" name="typeCode" id="typeCode1" value="L"> 게시글형
+								</label>
+								<label for="typeCode2" class="radio-inline">
+									<input type="radio" name="typeCode" id="typeCode2" value="C"> 댓글형
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="title">카테고리명</label>
 							<input type="text" class="form-control" id="title" placeholder="카테고리명을 입력하세요" alt="카테고리명">
 						</div>

@@ -6,7 +6,18 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title">카테고리 수정</h4>
 			</div>
-			<div class="modal-body">
+			<div class="upload-category-modal modal-body">
+				<div class="form-group">
+					<label>카테고리 유형</label>
+					<div style="font-size:14px;">
+						<label for="uploadTypeCode1" class="radio-inline">
+							<input type="radio" data-name="typeCode" name="typeCode" id="uploadTypeCode1" value="L"> 게시글형
+						</label>
+						<label for="uploadTypeCode2" class="radio-inline">
+							<input type="radio" data-name="typeCode" name="typeCode" id="uploadTypeCode2" value="C"> 댓글형
+						</label>
+					</div>
+				</div>
 				<div class="form-group">
 					<label for="updateTitle" class="control-label">카테고리명</label>
 					<input type="text" class="form-control" id="updateTitle" data-name="title" placeholder="카테고리명을 입력하세요" alt="카테고리명">

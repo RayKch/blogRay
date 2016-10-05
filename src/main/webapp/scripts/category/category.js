@@ -71,6 +71,14 @@ var CategorySubmitUtil = {
 			if(CategoryUtil.list[vo].seq === parseInt(seq, 10)) {
 				for(var name in CategoryUtil.list[vo]) {
 					$('#updateCategoryModal').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryUtil.list[vo][name]);
+					if(name === 'typeCode') {
+						var typeCode = CategoryUtil.list[vo][name];
+						if(typeCode === 'L') {
+							$('#uploadTypeCode1').trigger('click');
+						} else {
+							$('#uploadTypeCode2').trigger('click');
+						}
+					}
 				}
 			}
 		}
@@ -94,9 +102,11 @@ var CategorySubmitUtil = {
 	, mappingVo:function(type, seq) {
 		var titleName = (type === 'insert' ? 'title' : 'updateTitle');
 		var descriptionName = (type === 'insert' ? 'description' : 'updateDescription');
+		var typeCode = (type === 'insert' ? 'area-right' : 'upload-category-modal');
 		var data = {
 			'title':$('#' + titleName).val()
 			, 'description':$('#' + descriptionName).val()
+			, 'typeCode':$('.'+typeCode).find('input:radio[name=typeCode]:checked').val()
 			, 'seq':seq
 		}
 		return data;

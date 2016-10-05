@@ -4,6 +4,7 @@
 	<select id="getList" resultType="ray.data.CategoryVo">
 		SELECT
 			a.seq
+			, a.type_code AS typeCode
 			, a.title
 			, a.description
 			, (SELECT COUNT(*) FROM ch_board WHERE category_seq = a.seq) AS boardCount
@@ -15,6 +16,7 @@
 	<select id="getVo" parameterType="Integer" resultType="ray.data.CategoryVo">
 		SELECT
 			a.seq
+			, a.type_code AS typeCode
 			, a.title
 			, a.description
 			, (SELECT count(*) FROM ch_board WHERE category_seq=a.seq) AS boardCount
@@ -25,11 +27,13 @@
 	<insert id="insertVo" parameterType="ray.data.param.CategoryParamVo">
 		INSERT INTO ch_category (
 			member_seq
+			, type_code
 			, title
 			, description
 			, reg_date
 		) VALUES (
 			#{memberSeq}
+			, #{typeCode}
 			, #{title}
 			, #{description}
 			, NOW()
@@ -38,7 +42,8 @@
 
 	<update id="updateVo" parameterType="ray.data.param.CategoryParamVo">
 		UPDATE ch_category SET
-			title=#{title}
+			type_code=#{typeCode}
+			, title=#{title}
 			, description=#{description}
 			, mod_date=NOW()
 		WHERE seq = #{seq}

@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CategoryVo {
 	/** 시퀀스 */
 	private Integer seq;
+	/** 카테고리 타입(L:게시글형, C:댓글형) */
+	private String typeCode;
 	/** 카테고리 명 */
 	private String title;
 	/** 카테고리 설명 */

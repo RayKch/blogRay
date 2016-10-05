@@ -87,6 +87,7 @@
 	<select id="getCommentList" parameterType="ray.data.param.BoardParamVo" resultType="ray.data.BoardVo">
 		SELECT
 			a.seq
+			, a.category_seq AS categorySeq
 			, a.parent_seq AS parentSeq
 			, a.board_seq AS boardSeq
 			, a.member_seq AS memberSeq
@@ -105,6 +106,9 @@
 		<if test="boardSeq != null">
 			AND a.board_seq = #{boardSeq}
 		</if>
+		<if test="categorySeq != null">
+			AND a.category_seq = #{categorySeq}
+		</if>
 		<if test="parentSeq != null">
 			AND a.parent_seq = #{parentSeq}
 		</if>
@@ -120,6 +124,9 @@
 	<insert id="insertCommentVo" parameterType="ray.data.param.BoardParamVo">
 		INSERT INTO ch_board_comment (
 				board_seq
+				<if test="categorySeq != null">
+					, category_seq
+				</if>
 				<if test="parentSeq != null">
 					, parent_seq
 				</if>
@@ -137,6 +144,9 @@
 				, reg_date
 			) VALUES (
 				#{boardSeq}
+				<if test="categorySeq != null">
+					, #{categorySeq}
+				</if>
 				<if test="parentSeq != null">
 					, #{parentSeq}
 				</if>
