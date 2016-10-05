@@ -83,7 +83,12 @@ var CategorySubmitUtil = {
 	}
 	, validation:function(type) {
 		var flag = true;
-		var validationTag = (type === 'insert' ? '.area-right' : '#updateCategoryModal');
+		var validationTag = (type === 'insert' ? '.area-right' : '.upload-category-modal');
+
+		if(flag && $(validationTag).find('input:radio[name=typeCode]:checked').length === 0) {
+			alert("카테고리 유형을 선택해주세요.");
+			flag = false;
+		}
 		$(validationTag).find("input[alt], textarea[alt], select[alt]").each( function() {
 			if(flag && $(this).val() == "" || flag&& $(this).val() == 0) {
 
