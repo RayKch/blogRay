@@ -69,7 +69,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/insert/proc", method = RequestMethod.POST)
-	public String insert(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
+	public String insert(BoardParamVo vo, HttpSession session, Model model, BindingResult result) throws Exception {
 		if(session.getAttribute("loginSeq") == null) {
 			model.addAttribute("message", "로그인 후 이용가능합니다");
 			return Const.AJAX_PAGE;
@@ -88,12 +88,12 @@ public class BoardController {
 		}
 
 		model.addAttribute("message", "포스트가 등록되었습니다.");
-		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
+		model.addAttribute("returnUrl", "/view/"+vo.getSeq());
 		return Const.REDIRECT_PAGE;
 	}
 
 	@RequestMapping(value = "/update/proc", method = RequestMethod.POST)
-	public String update(BoardParamVo vo, HttpSession session, Model model, BindingResult result) {
+	public String update(BoardParamVo vo, HttpSession session, Model model, BindingResult result) throws Exception {
 		if(session.getAttribute("loginSeq") == null) {
 			model.addAttribute("message", "로그인 후 이용가능합니다");
 			return Const.AJAX_PAGE;
@@ -111,7 +111,7 @@ public class BoardController {
 			return Const.AJAX_PAGE;
 		}
 		model.addAttribute("message", "포스트가 수정되었습니다.");
-		model.addAttribute("returnUrl", "/?categorySeq="+vo.getCategorySeq());
+		model.addAttribute("returnUrl", "/view/"+vo.getSeq());
 		return Const.REDIRECT_PAGE;
 	}
 

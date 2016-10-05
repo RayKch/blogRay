@@ -8,7 +8,8 @@
 			, temp_file_name AS tempFileName
 			, board_seq AS boardSeq
 			, reg_date AS regDate
-		WHERE board_seq = #{boardSeq}
+		FROM ch_file
+		WHERE board_seq = #{value}
 	</select>
 
 	<insert id="insertVo" parameterType="ray.data.FileVo">
@@ -31,7 +32,7 @@
 		DELETE FROM ch_file
 		WHERE 1=1
 		<if test="boardSeq != null">
-			AND board_seq = #{value}
+			AND board_seq = #{boardSeq}
 		</if>
 		<if test="tempFileName != null">
 			AND temp_file_name = #{tempFileName}

@@ -16,6 +16,7 @@ import ray.data.param.BoardParamVo;
 import ray.repository.BoardDao;
 import ray.util.Const;
 import ray.util.FileUploadUtil;
+import ray.util.FileUtil;
 import ray.util.StringUtil;
 import ray.util.exception.ImageIsNotAvailableException;
 
@@ -61,55 +62,66 @@ public class BoardService {
 	}
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
-	public boolean insertVo(BoardParamVo vo) {
+	public boolean insertVo(BoardParamVo vo) throws Exception {
 		 int result = boardDao.insertVo(vo);
 
-		//같이 넘어온 임시 등록 이미지가 존재한다면 실경로로 이미지 이동 시킨 후 파일정보를 db에 insert한다
-		for(int i=0; i<vo.getFileList().size(); i++) {
-			FileVo tempVo = vo.getFileList().get(i);
-			tempVo.setBoardSeq(vo.getSeq());
+		try {
+			if(result > 0) {
+				//1. 포스트 content에 임시 이미지 경로가 존재한다면 실제 경로로 변경
+				contentReplace(vo);
 
-			//1. 임시 이미지 실제 경로로 파일이동
-			fileService.fileCopy(tempVo);
+				//2. 수정된 content를 다시 업데이트 시킨다.
+				vo.setTypeCode("insert");
+				updateVo(vo);
 
-			//2. 파일정보 db insert
-			fileService.insertVo(tempVo);
-
-			//3. 포스트 content에 임시 이미지 경로가 존재한다면 실제 경로로 변경
-			if(vo.getContent().matches(".*/image/editor/view/temp.*")) {
-				vo.setContent(vo.getContent().replace("/image/editor/view/temp", "/image/editor/view/" + tempVo.getBoardSeq()));
+				//3. 파일등록
+				insertFile(vo);
 			}
-
-			//4. 수정된 content를 다시 업데이트 시킨다.
-			updateVo(vo);
+		} catch(Exception e) {
+			throw e;
 		}
 
 		return result > 0;
 	}
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
-	public boolean updateVo(BoardParamVo vo) {
+	public boolean updateVo(BoardParamVo vo) throws Exception {
+		try {
+			List<FileVo> getList = fileService.getList(vo.getSeq());
+			if (!"insert".equals(vo.getTypeCode()) && getList != null) {
+				for (int i = 0; i < getList.size(); i++) {
+					FileVo tempVo = getList.get(i);
+					//만약 에디터 이미지가 존재하는 content에  DB에 등록된 파일내용이 존재하지 않는다면 이미지를 지운것으로 간주하여 파일과 DB내용을 제거한다.
+
+					if (vo.getContent().indexOf(tempVo.getTempFileName()) == -1) {
+						//1. 에디터 이미지가 존재하지 않는다면 파일부터 제거한다
+						FileUtil.deleteFile(FileUtil.getUploadPath() + File.separator + "blogRay" + File.separator + "editor"
+								+ File.separator + vo.getSeq() + File.separator + tempVo.getTempFileName());
+
+						//2. 에디터 이미지 데이터를 DB에서 삭제
+						fileService.deleteVo(tempVo);
+					}
+				}
+
+				//3. 파일등록
+				insertFile(vo);
+			}
+
+			//4. 포스트 content에 임시 이미지 경로가 존재한다면 실제 경로로 변경
+			contentReplace(vo);
+		} catch(Exception e) {
+			throw e;
+		}
+
 		return boardDao.updateVo(vo) > 0;
 	}
 
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean deleteVo(Integer seq) {
-		String uploadPath = "";
-		String os = System.getProperty("os.name");
-		log.info("현재 운영중인 OS :::: "+os);
-		if(os.contains("Windows")) {
-			uploadPath = Const.UPLOAD_LOCAL_PATH;
-		} else {
-			uploadPath = Const.UPLOAD_REAL_PATH;
-		}
-
 		//1. 에디터 이미지가 존재한다면 파일부터 제거한다
-		fileService.deleteAllFiles(uploadPath + File.separator + "blogRay" + File.separator + "editor" + File.separator + seq);
+		FileUtil.deleteAllFiles(FileUtil.getUploadPath() + File.separator + "blogRay" + File.separator + "editor" + File.separator + seq);
 
-		//2. 에디터 이미지 데이터를 DB에서 삭제
-		FileVo fvo = new FileVo();
-		fvo.setBoardSeq(seq);
-		fileService.deleteVo(fvo);
+		//2. 에디터 이미지 데이터는 on delete cascade가 걸려있어서 따로 지울필요는 없다.
 		return boardDao.deleteVo(seq) > 0;
 	}
 
@@ -137,5 +149,27 @@ public class BoardService {
 
 	public int updateViewCnt(int seq) {
 		return boardDao.updateViewCnt(seq);
+	}
+
+	public void contentReplace(BoardParamVo vo) {
+		if(vo.getContent().matches(".*/image/editor/view/temp.*")) {
+			vo.setContent(vo.getContent().replace("/image/editor/view/temp", "/image/editor/view/" + vo.getSeq()));
+		}
+	}
+
+	public void insertFile(BoardParamVo vo) {
+		//같이 넘어온 임시 등록 이미지가 존재한다면 실경로로 이미지 이동 시킨 후 파일정보를 db에 insert한다
+		if(vo.getFileList() != null) {
+			for(int i=0; i<vo.getFileList().size(); i++) {
+				FileVo tempVo = vo.getFileList().get(i);
+				tempVo.setBoardSeq(vo.getSeq());
+
+				//3. 임시 이미지 실제 경로로 파일이동
+				fileService.fileCopy(tempVo);
+
+				//4. 파일정보 db insert
+				fileService.insertVo(tempVo);
+			}
+		}
 	}
 }

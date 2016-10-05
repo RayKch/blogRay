@@ -29,6 +29,7 @@ public class BoardParamVo extends ParamVo {
 	private String regDate;
 	private String modDate;
 	private List<FileVo> fileList;
+	private String typeCode;
 
 	@Override
 	public String getSearch() {

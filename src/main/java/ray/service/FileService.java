@@ -12,6 +12,7 @@ import ray.data.FileVo;
 import ray.repository.FileDao;
 import ray.util.Const;
 import ray.util.FileUploadUtil;
+import ray.util.FileUtil;
 import ray.util.exception.ImageIsNotAvailableException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,14 +46,7 @@ public class FileService {
 
 	public FileVo editorUploadTempImages(HttpServletRequest request) throws IOException, ImageIsNotAvailableException {
 		FileVo vo = new FileVo();
-		String uploadPath = "";
-		String os = System.getProperty("os.name");
-		log.info("현재 운영중인 OS :::: "+os);
-		if(os.contains("Windows")) {
-			uploadPath = Const.UPLOAD_LOCAL_PATH;
-		} else {
-			uploadPath = Const.UPLOAD_REAL_PATH;
-		}
+		String uploadPath = FileUtil.getUploadPath();
 
 		MultipartHttpServletRequest mpRequest = (MultipartHttpServletRequest) request;
 		Iterator<String> iter = mpRequest.getFileNames();
@@ -85,51 +79,30 @@ public class FileService {
 		return vo;
 	}
 
-	public void fileCopy(FileVo vo) {
-		String uploadPath = "";
-		String os = System.getProperty("os.name");
-		log.info("현재 운영중인 OS :::: "+os);
-		if(os.contains("Windows")) {
-			uploadPath = Const.UPLOAD_LOCAL_PATH;
-		} else {
-			uploadPath = Const.UPLOAD_REAL_PATH;
-		}
+	public int fileCopy(FileVo vo) {
+		int result = 0;
+		try {
+			String commonPath = FileUtil.getUploadPath() + File.separator + "blogRay" + File.separator + "editor";
+			//여기서 임시파일명으로 계속 유지시키는 이유는 한게시물에 중복이름의 이미지가 올라가서 후에 나도 알수 없는 에러가 터질까봐
+			//랜덤생성한 임시 파일명으로 안전하게 가도록한다.
+			String orgPath = commonPath + File.separator + "temp" + File.separator + vo.getTempFileName();
+			String newPath = commonPath + File.separator + vo.getBoardSeq() + File.separator + vo.getTempFileName();
 
-		String commonPath = uploadPath + File.separator + "blogRay" + File.separator + "editor";
-		//여기서 임시파일명으로 계속 유지시키는 이유는 한게시물에 중복이름의 이미지가 올라가서 후에 나도 알수 없는 에러가 터질까봐
-		//랜덤생성한 임시 파일명으로 안전하게 가도록한다.
-		String orgPath = commonPath + File.separator + "temp" + File.separator + vo.getTempFileName();
-		String newPath = commonPath + File.separator + vo.getBoardSeq() + File.separator + vo.getTempFileName();
+			File orgFile = new File(orgPath);
+			File newFile = new File(newPath);
 
-		File orgFile = new File(orgPath);
-		File newFile = new File(newPath);
-
-		if(orgFile.exists()) {
-			// "/blogRay/editor" 경로까지는 있을 것이고 "/게시판시퀀스" 경로는 존재하지 않을 것이기때문에 생성한다.
-			File tempDir = new File(commonPath + File.separator + vo.getBoardSeq());
-			if (!tempDir.exists()) {
-				tempDir.mkdir();
-			}
-			orgFile.renameTo(newFile);
-		}
-	}
-
-	public void deleteAllFiles(String path){
-		File file = new File(path);
-		//폴더내 파일을 배열로 가져온다.
-		File[] tempFile = file.listFiles();
-
-		if(tempFile.length >0){
-			for (int i = 0; i < tempFile.length; i++) {
-				if(tempFile[i].isFile()){
-					tempFile[i].delete();
-				}else{
-					//재귀함수
-					deleteAllFiles(tempFile[i].getPath());
+			if(orgFile.exists()) {
+				// "/blogRay/editor" 경로까지는 있을 것이고 "/게시판시퀀스" 경로는 존재하지 않을 것이기때문에 생성한다.
+				File tempDir = new File(commonPath + File.separator + vo.getBoardSeq());
+				if (!tempDir.exists()) {
+					tempDir.mkdir();
 				}
-				tempFile[i].delete();
+				orgFile.renameTo(newFile);
 			}
-			file.delete();
+			result++;
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
+		return result;
 	}
 }
