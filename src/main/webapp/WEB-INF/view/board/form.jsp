@@ -67,8 +67,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#content").summernote({
-			height:350,
-			minHeight:350,
+			height:500,
+			minHeight:500,
 			lang: 'ko-KR',
 			callbacks: {
 				onImageUpload: function(files, editor, welEditable) {
