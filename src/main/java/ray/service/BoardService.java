@@ -71,8 +71,7 @@ public class BoardService {
 				contentReplace(vo);
 
 				//2. 수정된 content를 다시 업데이트 시킨다.
-				vo.setTypeCode("insert");
-				updateVo(vo);
+				updateContentVo(vo);
 
 				//3. 파일등록
 				insertFile(vo);
@@ -88,7 +87,7 @@ public class BoardService {
 	public boolean updateVo(BoardParamVo vo) throws Exception {
 		try {
 			List<FileVo> getList = fileService.getList(vo.getSeq());
-			if (!"insert".equals(vo.getTypeCode()) && getList != null) {
+			if (getList != null) {
 				for (int i = 0; i < getList.size(); i++) {
 					FileVo tempVo = getList.get(i);
 					//만약 에디터 이미지가 존재하는 content에  DB에 등록된 파일내용이 존재하지 않는다면 이미지를 지운것으로 간주하여 파일과 DB내용을 제거한다.
@@ -102,10 +101,10 @@ public class BoardService {
 						fileService.deleteVo(tempVo);
 					}
 				}
-
-				//3. 파일등록
-				insertFile(vo);
 			}
+
+			//3. 파일등록
+			insertFile(vo);
 
 			//4. 포스트 content에 임시 이미지 경로가 존재한다면 실제 경로로 변경
 			contentReplace(vo);
@@ -113,6 +112,13 @@ public class BoardService {
 			throw e;
 		}
 
+		return boardDao.updateVo(vo) > 0;
+	}
+
+	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
+	public boolean updateContentVo(BoardParamVo vo) throws Exception {
+		// 포스트 content에 임시 이미지 경로가 존재한다면 실제 경로로 변경
+		contentReplace(vo);
 		return boardDao.updateVo(vo) > 0;
 	}
 
@@ -152,9 +158,7 @@ public class BoardService {
 	}
 
 	public void contentReplace(BoardParamVo vo) {
-		if(vo.getContent().matches(".*/image/editor/view/temp.*")) {
-			vo.setContent(vo.getContent().replace("/image/editor/view/temp", "/image/editor/view/" + vo.getSeq()));
-		}
+		vo.setContent(vo.getContent().replace("/image/editor/view/temp", "/image/editor/view/" + vo.getSeq()));
 	}
 
 	public void insertFile(BoardParamVo vo) {
