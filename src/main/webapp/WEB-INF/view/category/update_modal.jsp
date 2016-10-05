@@ -10,11 +10,11 @@
 				<div class="form-group">
 					<label>카테고리 유형</label>
 					<div style="font-size:14px;">
-						<label for="uploadTypeCode1" class="radio-inline">
-							<input type="radio" data-name="typeCode" name="typeCode" id="uploadTypeCode1" value="L"> 게시글형
+						<label for="uploadTypeCodeL" class="radio-inline">
+							<input type="radio" name="typeCode" id="uploadTypeCodeL" value="L"> 게시글형
 						</label>
-						<label for="uploadTypeCode2" class="radio-inline">
-							<input type="radio" data-name="typeCode" name="typeCode" id="uploadTypeCode2" value="C"> 댓글형
+						<label for="uploadTypeCodeC" class="radio-inline">
+							<input type="radio" name="typeCode" id="uploadTypeCodeC" value="C"> 댓글형
 						</label>
 					</div>
 				</div>

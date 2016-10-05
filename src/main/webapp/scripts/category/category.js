@@ -72,12 +72,7 @@ var CategorySubmitUtil = {
 				for(var name in CategoryUtil.list[vo]) {
 					$('#updateCategoryModal').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryUtil.list[vo][name]);
 					if(name === 'typeCode') {
-						var typeCode = CategoryUtil.list[vo][name];
-						if(typeCode === 'L') {
-							$('#uploadTypeCode1').trigger('click');
-						} else {
-							$('#uploadTypeCode2').trigger('click');
-						}
+						$('#uploadTypeCode' + CategoryUtil.list[vo][name]).prop('checked', true);
 					}
 				}
 			}
@@ -106,7 +101,7 @@ var CategorySubmitUtil = {
 		var data = {
 			'title':$('#' + titleName).val()
 			, 'description':$('#' + descriptionName).val()
-			, 'typeCode':$('.'+typeCode).find('input:radio[name=typeCode]:checked').val()
+			, 'typeCode':$('.' + typeCode).find('input:radio[name=typeCode]:checked').val()
 			, 'seq':seq
 		}
 		return data;
@@ -130,6 +125,7 @@ var CategorySubmitUtil = {
 				if(data === 'success') {
 					if(type === 'insert') {
 						alert('등록되었습니다');
+						$('#typeCode1, #typeCode2').prop('checked', false);
 					} else {
 						alert('수정되었습니다');
 						$('#updateCategoryModal').modal('hide');
