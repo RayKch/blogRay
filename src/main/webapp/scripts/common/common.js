@@ -117,7 +117,7 @@ var LoginSubmitUtil = {
 
 		//아이디저장 체크되어있으면 쿠키저장
 		if($("#rememberId").prop("checked")) {
-			$.cookie('loginId', $("#loginId").val());
+			$.cookie('loginId', $("#loginId").val(), {expires: 365 * 10});
 			//아이디저장 미체크면 쿠키에 정보가 있던간에 삭제
 		} else {
 			$.removeCookie("loginId");
@@ -151,8 +151,8 @@ var LoginSubmitUtil = {
 					location.reload();
 				} else {
 					alert(data);
+					$('#loginPassword').val('');
 				}
-				LoginSubmitUtil.formReset();
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
