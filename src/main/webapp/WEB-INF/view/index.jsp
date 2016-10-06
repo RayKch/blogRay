@@ -47,25 +47,47 @@
 							<h2 class="post-title text-center empty-post">포스트가 없습니다.</h2>
 						</div>
 					</script>
-					<div id="divContentList" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
-					</div>
-					<div class="text-center"><div id="divPaging"></div></div>
+					<c:choose>
+						<c:when test="${categoryVo.typeCode eq null or categoryVo.typeCode eq 'L'}">
+							<div id="divContentList" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+								<div class="text-center" style="padding:100px;"><img src="/image/common/ajaxloader.gif"/></div>
+							</div>
+							<div class="text-center"><div id="divPaging"></div></div>
+						</c:when>
+						<c:otherwise>
+							<div class="clearfix"></div>
+							<%@ include file="/WEB-INF/view/comment_list.jsp" %>
+						</c:otherwise>
+					</c:choose>
+
 				</div>
 			</div>
 		</div>
 		<%@ include file="/WEB-INF/view/include/footer.jsp" %>
 	</div>
 </div>
+<%@ include file="/WEB-INF/view/comment_auth_modal.jsp" %>
+<%@ include file="/WEB-INF/view/comment_form.jsp" %>
 <script src="/scripts/board/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		BoardUtil.categorySeq = "${vo.categorySeq}";
-		BaordRenderUtil.renderList(0, (function () {
-			BaordRenderUtil.renderPaging(0, (function () {
-				BaordRenderUtil.renderCategory();
+		BoardCommentUtil.typeCode = "${categoryVo.typeCode}";
+
+		//메인페이지는 categorySeq가 존재하지 않고, categorySeq가 존재한다면 리스트일 경우에만
+		if(BoardUtil.categorySeq === '' || (BoardUtil.categorySeq > 0 && BoardCommentUtil.typeCode === 'L')) {
+			BaordRenderUtil.renderList(0, (function () {
+				BaordRenderUtil.renderPaging(0, (function () {
+					BaordRenderUtil.renderCategory();
+				})());
 			})());
-		})());
+		} else if(BoardUtil.categorySeq > 0 && BoardCommentUtil.typeCode === 'C') {
+			BoardCommentUtil.parameter = {'categorySeq':BoardUtil.categorySeq};
+			$("form[name=parentForm]").html($("#commentFormTemplate").tmpl());
+			BaordRenderUtil.renderCategory();
+			BoardCommentRenderUtil.renderList();
+			BoardCommentDeleteUtil.deleteBtnHandler();
+		}
 	});
 </script>
 </body>

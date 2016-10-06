@@ -33,9 +33,15 @@ public class MainController {
 	@Autowired
 	private StatsService statsService;
 
+	@Autowired
+	private CategoryService categoryService;
+
 	@RequestMapping({"/index", "/"})
 	public String index(BoardParamVo vo, HttpServletRequest request, Model model) {
 		model.addAttribute("vo", vo);
+		if(vo.getCategorySeq() != null) {
+			model.addAttribute("categoryVo", categoryService.getVo(vo.getCategorySeq()));
+		}
 
 		try {
 			statsService.todayStatsProcess(request);

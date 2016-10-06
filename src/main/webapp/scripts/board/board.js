@@ -121,6 +121,8 @@ var BoardDeleteUtil = {
 var BoardCommentUtil = {
 	seq:0
 	, parentSeq:0
+	, typeCode:''
+	, parameter:{}
 };
 
 var BoardCommentRenderUtil = {
@@ -128,7 +130,7 @@ var BoardCommentRenderUtil = {
 		$.ajax({
 			url:"/board/comment/list/json",
 			type:"get",
-			data:{'boardSeq':BoardUtil.boardSeq},
+			data:BoardCommentUtil.parameter,
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
