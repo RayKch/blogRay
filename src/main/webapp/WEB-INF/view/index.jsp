@@ -88,6 +88,11 @@
 			BoardCommentRenderUtil.renderList();
 			BoardCommentDeleteUtil.deleteBtnHandler();
 		}
+
+		$('.include-comment-form').addClass('col-lg-8');
+		$('.include-comment-form').addClass('col-lg-offset-2');
+		$('.include-comment-form').addClass('col-md-10');
+		$('.include-comment-form').addClass('col-md-offset-1');
 	});
 </script>
 </body>

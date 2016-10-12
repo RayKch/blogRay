@@ -63,6 +63,9 @@
 		BaordRenderUtil.render();
 		BoardCommentRenderUtil.renderList();
 		BoardCommentDeleteUtil.deleteBtnHandler();
+
+		$('.include-comment-form').addClass('col-sm-10');
+		$('.include-comment-form').addClass('col-sm-offset-1');
 	});
 </script>
 </body>

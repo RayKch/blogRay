@@ -97,7 +97,7 @@
 			<div class="well well-lg text-center" style="font-size:12px;">댓글이 없습니다.</div>
 		</script>
 
-		<div class="col-sm-10 col-sm-offset-1" style="margin-top:30px">
+		<div class="include-comment-form" style="margin-top:30px">
 			<div class="page-header" style="margin-top:-75px">
 				<h3 class="reviews">Comment (<span id="commentCount"></span>)</h3>
 			</div>
