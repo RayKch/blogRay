@@ -2,6 +2,7 @@ package ray.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import ray.service.BoardService;
 import ray.service.CategoryService;
 import ray.util.Const;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -50,14 +52,28 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public @ResponseBody List<BoardVo> list(BoardParamVo vo) {
+	public @ResponseBody List<BoardVo> list(HttpServletRequest request, BoardParamVo vo) {
+		SitePreference sitePreference = (SitePreference)request.getAttribute("currentSitePreference");
+		/** 한페이지에 보여줄 페이징 넘버 갯수(PC: 10개, Mobile: 3개) */
+		if(sitePreference.isNormal()) {
+			vo.setPageCount(10);
+		} else {
+			vo.setPageCount(3);
+		}
 		vo.setRowCount(5);
 		vo.setTotalRowCount(boardService.getListTotalCount(vo));
 		return boardService.getList(vo);
 	}
 
 	@RequestMapping(value = "/list/paging/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public @ResponseBody String paging(BoardParamVo vo) {
+	public @ResponseBody String paging(HttpServletRequest request, BoardParamVo vo) {
+		SitePreference sitePreference = (SitePreference)request.getAttribute("currentSitePreference");
+		/** 한페이지에 보여줄 페이징 넘버 갯수(PC: 10개, Mobile: 3개) */
+		if(sitePreference.isNormal()) {
+			vo.setPageCount(10);
+		} else {
+			vo.setPageCount(3);
+		}
 		vo.setRowCount(5);
 		vo.setTotalRowCount(boardService.getListTotalCount(vo));
 		return vo.drawPagingNavigation("goPage");

@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
+import org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -44,6 +46,16 @@ public class WebAdapter extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
+	@Bean
+	public DeviceResolverHandlerInterceptor deviceResolverHandlerInterceptor() {
+		return new DeviceResolverHandlerInterceptor();
+	}
+
+	@Bean
+	public SitePreferenceHandlerInterceptor sitePreferenceHandlerInterceptor() {
+		return new SitePreferenceHandlerInterceptor();
+	}
+
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
@@ -58,6 +70,8 @@ public class WebAdapter extends WebMvcConfigurerAdapter {
 				.excludePathPatterns("/login")
 				.excludePathPatterns("/logout")
 				.excludePathPatterns("/index");
+		registry.addInterceptor(deviceResolverHandlerInterceptor());
+		registry.addInterceptor(sitePreferenceHandlerInterceptor());
 		super.addInterceptors(registry);
 	}
 }
