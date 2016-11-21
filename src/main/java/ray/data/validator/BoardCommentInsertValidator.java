@@ -18,7 +18,7 @@ public class BoardCommentInsertValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		BoardParamVo vo = (BoardParamVo) target;
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "boardSeq", "", "게시판 번호가 존재하지 않습니다");
+		//ValidationUtils.rejectIfEmptyOrWhitespace(errors, "boardSeq", "", "게시판 번호가 존재하지 않습니다");
 		if(vo.getMemberSeq() == null) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nickname", "", "닉네임이 입력되지 않았습니다");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "", "비밀번호가 입력되지 않았습니다");
