@@ -21,7 +21,7 @@ CREATE TABLE `ch_board_comment` (
  `seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '번호',
  `category_seq` int(11) NULL COMMENT '카테고리 번호',
  `parent_seq` int(11) NOT NULL COMMENT '상위 댓글 시퀀스',
- `board_seq` int(11) NOT NULL COMMENT '블로그 게시판 번호',
+ `board_seq` int(11) NULL COMMENT '블로그 게시판 번호',
  `member_seq` int(11) NULL COMMENT '회원 번호',
  `nickname` varchar(300) NULL COMMENT '닉네임',
  `password` varchar(300) NULL COMMENT '비밀번호',
