@@ -1,6 +1,6 @@
 var BoardUtil = {
-	boardSeq:0
-	, categorySeq:0
+	boardSeq:null
+	, categorySeq:null
 	, count:0
 };
 
@@ -119,8 +119,8 @@ var BoardDeleteUtil = {
 
 //코맨트 로직 처리부분
 var BoardCommentUtil = {
-	seq:0
-	, parentSeq:0
+	seq:null
+	, parentSeq:null
 	, typeCode:''
 	, parameter:{}
 };
@@ -187,6 +187,7 @@ var BoardCommentSubmitUtil = {
 			, 'password':$('form[name='+formName+']').find('input[name=password]').val()
 			, 'boardSeq':BoardUtil.boardSeq
 			, 'parentSeq':BoardCommentUtil.parentSeq
+			, 'categorySeq':BoardUtil.categorySeq
 		}
 		return data;
 	}
