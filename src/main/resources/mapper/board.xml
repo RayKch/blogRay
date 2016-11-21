@@ -112,7 +112,7 @@
 		<if test="parentSeq != null">
 			AND a.parent_seq = #{parentSeq}
 		</if>
-		ORDER BY a.seq DESC
+		ORDER BY a.seq ASC
 	</select>
 
 	<select id="getCommentCnt" parameterType="Integer" resultType="int">
@@ -123,7 +123,12 @@
 
 	<insert id="insertCommentVo" parameterType="ray.data.param.BoardParamVo">
 		INSERT INTO ch_board_comment (
-				board_seq
+				reg_date
+				, content
+				, del_yn
+				<if test="boardSeq != null">
+					, board_seq
+				</if>
 				<if test="categorySeq != null">
 					, category_seq
 				</if>
@@ -139,11 +144,13 @@
 				<if test="password != null">
 					, password
 				</if>
-				, content
-				, del_yn
-				, reg_date
 			) VALUES (
-				#{boardSeq}
+				NOW()
+				, #{content}
+				, 'N'
+				<if test="boardSeq != null">
+					, #{boardSeq}
+				</if>
 				<if test="categorySeq != null">
 					, #{categorySeq}
 				</if>
@@ -159,9 +166,6 @@
 				<if test="password != null">
 					, #{password}
 				</if>
-				, #{content}
-				, 'N'
-				, NOW()
 		)
 	</insert>
 
