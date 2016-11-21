@@ -3,6 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="un" uri="http://jakarta.apache.org/taglibs/unstandard-1.0" %>
+<% pageContext.setAttribute("season", request.getAttribute("season")); %>
+<% pageContext.setAttribute("imgIdx", request.getAttribute("imgIdx")); %>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
