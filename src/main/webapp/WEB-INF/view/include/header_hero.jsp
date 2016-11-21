@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<header class="intro-header" style="background-image: url('/image/main/summer/home-bg.jpg');">
+<header class="intro-header" style="background-image: url('/image/main/autumn/2.jpg');">
 	<div class="navigation-menu-btn">
 		<c:if test="${sessionScope.loginSeq > 0}">
 			<div id="sessionNickname">${sessionScope.nickname} 님</div>
