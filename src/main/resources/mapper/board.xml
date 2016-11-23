@@ -13,7 +13,7 @@
 			, a.recommend
 			, a.un_recommend AS unRecommend
 			, a.view_cnt AS viewCnt
-			, (SELECT COUNT(*) FROM ch_board_comment WHERE board_seq = a.seq) AS commentCount
+			, (SELECT COUNT(*) FROM ch_board_comment WHERE board_seq = a.seq AND del_yn = 'N') AS commentCount
 			, a.reg_date AS regDate
 			, a.mod_date AS modDate
 		FROM ch_board a
