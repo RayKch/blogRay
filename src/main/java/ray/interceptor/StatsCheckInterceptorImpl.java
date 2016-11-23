@@ -45,6 +45,7 @@ public class StatsCheckInterceptorImpl extends HandlerInterceptorAdapter {
 		}
 		log.info("### requestURI : " + requestURI);
 
+		/** 히어로배너 자동변경 */
 		//각 계절별 이미지 보유 갯수
 		int spring = 3;
 		int summer = 1;
