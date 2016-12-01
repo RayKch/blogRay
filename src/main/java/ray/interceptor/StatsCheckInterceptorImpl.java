@@ -58,6 +58,9 @@ public class StatsCheckInterceptorImpl extends HandlerInterceptorAdapter {
 		Calendar cal = Calendar.getInstance();
 		int month = (cal.get(Calendar.MONTH) + 1);
 
+		//이번달이 무슨 계절에 속하는지(분기)
+//		int quarter = (int) Math.ceil( month / 3.0 );
+
 		Random r = new Random();
 		if(month >= 3 && month <=5) { //봄(3~5월)
 			season = "spring";
@@ -68,7 +71,10 @@ public class StatsCheckInterceptorImpl extends HandlerInterceptorAdapter {
 		} else if(month >= 9 && month <=11) { //가을(9~11월)
 			season = "autumn";
 			idx = r.nextInt(getMainFileCount(request, "autumn")) + 1;
-		} else if(month >= 12 && month <=2) { //겨울(12~2월)
+		} else if(month >= 12) { //겨울(12~2월)
+			season = "winter";
+			idx = r.nextInt(getMainFileCount(request, "winter")) + 1;
+		} else {
 			season = "winter";
 			idx = r.nextInt(getMainFileCount(request, "winter")) + 1;
 		}
