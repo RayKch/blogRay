@@ -20,7 +20,7 @@ var BaordRenderUtil = {
 					$("#divCategoryWrap").html($("#categoryTemplate").tmpl(vo));
 				}
 
-				SeoUtil.render(vo.title, vo.description, "category");
+//				SeoUtil.render(vo.title, vo.description, "category");
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -37,7 +37,7 @@ var BaordRenderUtil = {
 				var vo = $.parseJSON(data);
 				$("#divContentWrap").html($("#contentTemplate").tmpl(vo));
 				BoardUtil.categorySeq = vo.categorySeq;
-				SeoUtil.render(vo.title, vo.title, "board");
+//				SeoUtil.render(vo.title, vo.title, "board");
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
