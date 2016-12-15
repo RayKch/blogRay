@@ -19,6 +19,8 @@ var BaordRenderUtil = {
 				} else {
 					$("#divCategoryWrap").html($("#categoryTemplate").tmpl(vo));
 				}
+
+				SeoUtil.render(vo.title, vo.description, "category");
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -35,6 +37,7 @@ var BaordRenderUtil = {
 				var vo = $.parseJSON(data);
 				$("#divContentWrap").html($("#contentTemplate").tmpl(vo));
 				BoardUtil.categorySeq = vo.categorySeq;
+				SeoUtil.render(vo.title, vo.title, "board");
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -288,6 +291,24 @@ var BoardCommentDeleteUtil = {
 		}
 	}
 };
+
+var SeoUtil = {
+	render:function(title, description, typeCode) {
+		var typeText = '';
+		if(typeCode === 'category') {
+			typeText = ' 카테고리';
+		}
+		if(title === null) {
+			$('#headTitle').text('찬퐁의 개발 블로그');
+			$('#headDescription, #ogTitle, #ogDescription').attr('content', '찬퐁의 개발 블로그');
+		} else {
+			$('#headTitle').text('"' + title + '" ' + typeText);
+			$('#ogTitle').attr('content', title + typeText);
+			$('#headDescription, #ogDescription').attr('content', description);
+		}
+		$('#ogUrl').attr('content', location.href);
+	}
+}
 
 var goPage = function (page) {
 	BaordRenderUtil.renderList(page, (function () {
