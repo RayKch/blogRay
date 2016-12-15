@@ -96,54 +96,6 @@ public class StatsCheckInterceptorImpl extends HandlerInterceptorAdapter {
 		request.setAttribute("season", season);
 		request.setAttribute("imgIdx", idx);
 
-		/**
-		 * meta tag에 적용할 데이터 처리
-		 */
-
-
-		/** 1. 카테고리, 게시판 조회 파라미터를 가져온다 */
-		String metaTitle = "";
-		String metaDescription = "";
-		String metaUrl = "";
-		String name;
-		HashMap<String, String> map = new HashMap<String, String>();
-		Enumeration<String> enu= request.getParameterNames();
-
-		while (enu.hasMoreElements()) {
-			name = (String) enu.nextElement();
-			String[] value = request.getParameterValues(name);
-			map.put(name, value[0]);
-		}
-
-		/** 2. 가져온 파라미터를 세팅한다 */
-		String strSeq = map.get("seq");
-		int seq = 0;
-		if(strSeq != null) {
-			seq = Integer.parseInt(strSeq);
-		}
-
-		/** 3. 조회한 파라미터 값이 0보다 크다면 각 구분에 맞게 세팅하여 head에 적용한다 */
-		if(seq > 0) {
-			if("/category/data/json".equals(requestURI)) {
-				CategoryVo cvo = categoryService.getVo(seq);
-				metaTitle = cvo.getTitle();
-				metaDescription = cvo.getDescription();
-			} else if("/board/data/json".equals(requestURI)) {
-				BoardVo bvo = boardService.getVo(seq);
-				metaTitle = bvo.getTitle();
-				metaDescription = bvo.getTitle();
-			}
-
-			metaUrl = request.getRequestURL().toString();
-		} else {
-			metaTitle = "찬퐁의 개발 블로그";
-			metaDescription = "찬퐁의 개발 블로그";
-		}
-
-		request.setAttribute("metaTitle", metaTitle);
-		request.setAttribute("metaDescription", metaDescription);
-		request.setAttribute("metaUrl", metaUrl);
-
 		/** 일일방문자 체크(인터셉터에서 해야 의미가 맞는거 같은데 현재 적용이 잘안되고 있어 index 페이지 접속했을 경우에만 적용하고있다) */
 //		if("/".equals(requestURI) || (uriSize > 1 && "index".equals(splitUri) || (uriSize > 1 && "view".equals(splitUri)))) {
 //			try {
