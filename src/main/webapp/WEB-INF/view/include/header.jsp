@@ -20,6 +20,7 @@
 	<meta property="og:description" id="ogDescription" content="찬퐁의 개발 블로그">
 	<meta property="og:image" content="${pageContext.request.contextPath}/image/profile/profile.jpg">
 	<meta property="og:url" id="ogUrl" content="">
+	<link href="http://chanpong.win" rel="canonical" id="headCanonical">
 	<link href="${pageContext.request.contextPath}/styles/plugin/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>

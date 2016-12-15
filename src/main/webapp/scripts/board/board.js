@@ -307,6 +307,7 @@ var SeoUtil = {
 			$('#headDescription, #ogDescription').attr('content', description);
 		}
 		$('#ogUrl').attr('content', location.href);
+		$('#headCanonical').attr('href', location.href);
 	}
 }
 
