@@ -295,14 +295,14 @@ var BoardCommentDeleteUtil = {
 var SeoUtil = {
 	render:function(title, description, typeCode) {
 		var typeText = '';
+		var headTitle = title;
 		if(typeCode === 'category') {
 			typeText = ' 카테고리';
+			headTitle = '"' + title + '" ';
 		}
-		if(title === null) {
-			$('#headTitle').text('찬퐁의 개발 블로그');
-			$('#headDescription, #ogTitle, #ogDescription').attr('content', '찬퐁의 개발 블로그');
-		} else {
-			$('#headTitle').text('"' + title + '" ' + typeText);
+
+		if(title !== null) {
+			$('#headTitle').text(headTitle + typeText);
 			$('#ogTitle').attr('content', title + typeText);
 			$('#headDescription, #ogDescription').attr('content', description);
 		}
