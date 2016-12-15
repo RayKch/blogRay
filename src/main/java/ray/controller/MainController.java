@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ray.data.BoardVo;
+import ray.data.CategoryVo;
 import ray.data.StatsVo;
 import ray.data.param.BoardParamVo;
 import ray.data.param.StatsParamVo;
@@ -39,9 +40,18 @@ public class MainController {
 	@RequestMapping({"/index", "/"})
 	public String index(BoardParamVo vo, HttpServletRequest request, Model model) {
 		model.addAttribute("vo", vo);
+		String metaTitle = "찬퐁의 개발 블로그";
+		String metaDescription = "즐겁고 활기차게 개발하는 찬퐁의 개인 블로그";
 		if(vo.getCategorySeq() != null) {
-			model.addAttribute("categoryVo", categoryService.getVo(vo.getCategorySeq()));
+			CategoryVo cvo = categoryService.getVo(vo.getCategorySeq());
+			metaTitle = "\"" + cvo.getTitle() + "\"" + " 카테고리";
+			metaDescription = cvo.getDescription();
+			model.addAttribute("categoryVo", cvo);
 		}
+
+		model.addAttribute("metaTitle", metaTitle);
+		model.addAttribute("metaDescription", metaDescription);
+		model.addAttribute("metaUrl", request.getRequestURL());
 
 		try {
 			statsService.todayStatsProcess(request);
@@ -56,6 +66,9 @@ public class MainController {
 		BoardVo vo = boardService.getVo(seq);
 		model.addAttribute("seq", seq);
 		model.addAttribute("vo", vo);
+		model.addAttribute("metaTitle", vo.getTitle());
+		model.addAttribute("metaDescription", vo.getTitle());
+		model.addAttribute("metaUrl", request.getRequestURL());
 
 		try {
 			statsService.viewStatsProcess(seq, request);

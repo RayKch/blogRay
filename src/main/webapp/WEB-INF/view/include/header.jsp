@@ -16,13 +16,13 @@
 	<meta name="robots" content="index, follow">
 	<meta name="referrer" content="always">
 	<meta name="keywords" content="java, spring, jquery, javascript, html, jsp, css, database"/>
-	<meta name="description" id="headDescription" content="">
+	<meta name="description" id="headDescription" content="${metaDescription}">
 	<meta property="og:type" content="article">
-	<meta property="og:title" id="ogTitle" content="">
-	<meta property="og:description" id="ogDescription" content="">
+	<meta property="og:title" id="ogTitle" content="${metaTitle}">
+	<meta property="og:description" id="ogDescription" content="${metaDescription}">
 	<meta property="og:image" content="${pageContext.request.contextPath}/image/profile/profile.jpg">
-	<meta property="og:url" id="ogUrl" content="">
-	<link href="http://chanpong.win" rel="canonical" id="headCanonical">
+	<meta property="og:url" id="ogUrl" content="${metaUrl}">
+	<link href="${metaUrl}" rel="canonical" id="headCanonical">
 	<link href="${pageContext.request.contextPath}/styles/plugin/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -31,7 +31,7 @@
 	<link href="${pageContext.request.contextPath}/styles/plugin/comment-form.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/styles/common/common.css" rel="stylesheet">
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/image/profile/profile.jpg">
-	<title id="headTitle"></title>
+	<title id="headTitle">${metaTitle}</title>
 	<!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
