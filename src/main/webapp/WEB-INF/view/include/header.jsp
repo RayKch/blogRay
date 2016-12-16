@@ -29,6 +29,7 @@
 	<link href="${pageContext.request.contextPath}/styles/plugin/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/styles/plugin/clean-blog.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/styles/plugin/comment-form.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/styles/plugin/prism.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/styles/common/common.css" rel="stylesheet">
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/image/profile/profile.jpg">
 	<title id="headTitle">${metaTitle}</title>

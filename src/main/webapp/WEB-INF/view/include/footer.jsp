@@ -6,6 +6,7 @@
 <script src="/scripts/plugin/jquery.cookie.js"></script>
 <script src="/scripts/plugin/bootstrap.min.js"></script>
 <script src="/scripts/plugin/clean-blog.min.js"></script>
+<script src="/scripts/plugin/prism.js"></script>
 <script src="/scripts/common/common.js"></script>
 <div class="sr-only">
 	<script>
