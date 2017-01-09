@@ -74,7 +74,10 @@
 		BoardUtil.categorySeq = "${vo.categorySeq}";
 		BoardCommentUtil.typeCode = "${categoryVo.typeCode}";
 
-		//메인페이지는 categorySeq가 존재하지 않고, categorySeq가 존재한다면 리스트일 경우에만
+		/*
+		 * when. 메인페이지는 categorySeq가 존재하지 않고, 만일 categorySeq가 존재한다면 리스트일 경우에만 게시글형을 보여주고
+		 * otherwise. 그게 아니라면 댓글형을 보여준다
+		 */
 		if(BoardUtil.categorySeq === '' || (BoardUtil.categorySeq > 0 && BoardCommentUtil.typeCode === 'L')) {
 			BaordRenderUtil.renderList(0, (function () {
 				BaordRenderUtil.renderPaging(0, (function () {
