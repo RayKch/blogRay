@@ -49,9 +49,8 @@ public class MainController {
 			model.addAttribute("categoryVo", cvo);
 		}
 
-		model.addAttribute("metaTitle", metaTitle);
-		model.addAttribute("metaDescription", metaDescription);
-		model.addAttribute("metaUrl", request.getRequestURL());
+		//메타태그에 적용시킬 문구 생성
+		metaCreate(request, model, metaTitle, metaDescription, request.getRequestURL().toString());
 
 		try {
 			statsService.todayStatsProcess(request);
@@ -66,9 +65,9 @@ public class MainController {
 		BoardVo vo = boardService.getVo(seq);
 		model.addAttribute("seq", seq);
 		model.addAttribute("vo", vo);
-		model.addAttribute("metaTitle", vo.getTitle());
-		model.addAttribute("metaDescription", vo.getTitle());
-		model.addAttribute("metaUrl", request.getRequestURL());
+
+		//메타태그에 적용시킬 문구 생성
+		metaCreate(request, model, vo.getTitle(), vo.getCategoryDescription(), request.getRequestURL().toString());
 
 		try {
 			statsService.viewStatsProcess(seq, request);
@@ -82,5 +81,11 @@ public class MainController {
 	@RequestMapping(value = "/stats/data/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public @ResponseBody StatsVo stats() {
 		return statsService.getVisitorCnt();
+	}
+
+	private void metaCreate(HttpServletRequest request, Model model, String metaTitle, String metaDescription, String metaUrl) {
+		model.addAttribute("metaTitle", metaTitle);
+		model.addAttribute("metaDescription", metaDescription);
+		model.addAttribute("metaUrl", metaUrl);
 	}
 }
