@@ -113,4 +113,5 @@
 			<%--고정 댓글--%>
 			<form name="parentForm" class="form-horizontal"></form>
 		</div>
+	</div>
 </div>
