@@ -85,7 +85,7 @@
 						</div>
 						<div class="text-center">
 							<button type="button" id="saveBtn" class="btn btn-info btn-lg">저장하기</button>
-							<button type="button" id="formResetBtn" class="btn btn-warning btn-lg">폼 리셋</button>
+							<button type="button" id="formResetBtn" class="btn btn-warning btn-lg">리셋하기</button>
 						</div>
 					</div>
 				</div>
