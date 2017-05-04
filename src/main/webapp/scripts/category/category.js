@@ -2,8 +2,24 @@ var CategoryUtil = {
 	seq:0
 	, list:[]
 	, select:function(obj) {
-		$(obj).parents('tbody').find('.tr-current').removeClass('tr-current');
-		$(obj).addClass('tr-current');
+		var currentSeq = $(obj).parents('tr').data('seq');
+
+		if(currentSeq === CategoryUtil.seq) {
+			//0보다 크다면 현재 선택된 td가 존재 아니라면 존재하지 않기때문에 선택
+			if($(obj).parents('tbody').find('.tr-current').length > 0) {
+				$(obj).parents('tbody').find('.tr-current').removeClass('tr-current');
+				CategorySubmitUtil.formReset();
+			} else {
+				$(obj).addClass('tr-current');
+				CategorySubmitUtil.updateRender(currentSeq);
+			}
+		} else {
+			$(obj).parents('tbody').find('.tr-current').removeClass('tr-current');
+			$(obj).addClass('tr-current');
+
+			//업데이트폼 랜더링
+			CategorySubmitUtil.updateRender(currentSeq);
+		}
 	}
 	, renderList:function() {
 		$.ajax({
@@ -66,24 +82,27 @@ var CategoryUtil = {
 }
 
 var CategorySubmitUtil = {
-	updateModalShow:function(seq) {
+	updateRender:function(seq) {
 		for(var vo in CategoryUtil.list) {
 			if(CategoryUtil.list[vo].seq === parseInt(seq, 10)) {
 				for(var name in CategoryUtil.list[vo]) {
-					$('#updateCategoryModal').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryUtil.list[vo][name]);
+					$('#mainForm').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryUtil.list[vo][name]);
 					if(name === 'typeCode') {
-						$('#uploadTypeCode' + CategoryUtil.list[vo][name]).prop('checked', true);
+						$('#typeCode' + CategoryUtil.list[vo][name]).prop('checked', true);
+					}
+
+					if(name === 'description') {
+						$('#description').val(CategoryUtil.list[vo][name]);
 					}
 				}
 			}
 		}
 
 		CategoryUtil.seq = seq;
-		$('#updateCategoryModal').modal();
 	}
-	, validation:function(type) {
+	, validation:function() {
 		var flag = true;
-		var validationTag = (type === 'insert' ? '.area-right' : '.upload-category-modal');
+		var validationTag = '.area-right';
 
 		if(flag && $(validationTag).find('input:radio[name=typeCode]:checked').length === 0) {
 			alert("카테고리 유형을 선택해주세요.");
@@ -100,13 +119,10 @@ var CategorySubmitUtil = {
 		return flag;
 	}
 	, mappingVo:function(type, seq) {
-		var titleName = (type === 'insert' ? 'title' : 'updateTitle');
-		var descriptionName = (type === 'insert' ? 'description' : 'updateDescription');
-		var typeCode = (type === 'insert' ? 'area-right' : 'upload-category-modal');
 		var data = {
-			'title':$('#' + titleName).val()
-			, 'description':$('#' + descriptionName).val()
-			, 'typeCode':$('.' + typeCode).find('input:radio[name=typeCode]:checked').val()
+			'title':$('#title').val()
+			, 'description':$('#description').val()
+			, 'typeCode':$('.area-right').find('input:radio[name=typeCode]:checked').val()
 			, 'seq':seq
 		}
 		return data;
@@ -114,9 +130,11 @@ var CategorySubmitUtil = {
 	, formReset:function() {
 		$('#title').val('');
 		$('#description').val('');
+		$('.area-right').find('input:radio[name=typeCode]').prop('checked', false);
+		CategoryUtil.seq = 0;
 	}
 	, submit:function(callback, type, seq) {
-		if(CategorySubmitUtil.validation(type)) {
+		if(CategorySubmitUtil.validation()) {
 			callback(type, seq);
 		}
 	}
@@ -130,17 +148,16 @@ var CategorySubmitUtil = {
 				if(data === 'success') {
 					if(type === 'insert') {
 						alert('등록되었습니다');
-						$('#typeCode1, #typeCode2').prop('checked', false);
+						$('#typeCodeL, #typeCodeC').prop('checked', false);
 					} else {
 						alert('수정되었습니다');
-						$('#updateCategoryModal').modal('hide');
 					}
 				} else {
 					alert('실패하였습니다.');
 				}
 				CategoryUtil.renderList();
 				SideCategoryUtil.renderList();
-				CategorySubmitUtil.formReset(type);
+				CategorySubmitUtil.formReset();
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -175,12 +192,21 @@ var CategoryDeleteUtil = {
 }
 
 $(document).ready(function() {
-	$('#categoryInsertBtn').on('click', function() {
-		CategorySubmitUtil.submit(CategorySubmitUtil.proc, 'insert', 0);
+	CategoryUtil.renderList();
+
+	$('#saveBtn').on('click', function() {
+		var saveType = 'insert';
+		var saveSeq = 0;
+		if(CategoryUtil.seq > 0) {
+			saveType = 'update';
+			saveSeq = CategoryUtil.seq;
+		}
+
+		CategorySubmitUtil.submit(CategorySubmitUtil.proc, saveType, saveSeq);
 	});
 
-	$('#categoryUpdateBtn').on('click', function() {
-		CategorySubmitUtil.submit(CategorySubmitUtil.proc, 'update', CategoryUtil.seq);
+	$('#formResetBtn').on('click', function() {
+		$('.area-left').find('.tr-current').removeClass('tr-current');
+		CategorySubmitUtil.formReset();
 	});
-	CategoryUtil.renderList();
 });
