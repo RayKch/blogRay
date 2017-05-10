@@ -37,3 +37,6 @@ CREATE TABLE `ch_board_comment` (
  FOREIGN KEY(`member_seq`) REFERENCES ch_member(seq) ON DELETE CASCADE,
  FOREIGN KEY(`category_seq`) REFERENCES ch_category(seq) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 게시판 댓글';
+
+ALTER TABLE ch_board_comment ADD category_seq int(11) NULL COMMENT '카테고리 번호';
+ALTER TABLE ch_board_comment ADD FOREIGN KEY (category_seq) REFERENCES ch_category(seq) on delete cascade;
