@@ -1,7 +1,7 @@
 /* 블로그 카테고리 관리 */
 CREATE TABLE `ch_category` (
  `seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '번호',
- `type_code` varchar(1) NOT NULL COMMENT '카테고리 유형(L: 게시글형, C: 댓글형)',
+ `type_code` varchar(1) NOT NULL COMMENT '카테고리 유형(L: 게시글형, C: 댓글형, G: 그룹형)',
  `member_seq` int(11) NOT NULL COMMENT '회원 번호',
  `title` varchar(300) NOT NULL COMMENT '카테고리명',
  `description` varchar(300) NOT NULL COMMENT '카테고리 설명',
@@ -11,5 +11,4 @@ CREATE TABLE `ch_category` (
  PRIMARY KEY (`seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 카테고리';
 
-ALTER TABLE ch_category ADD type_code varchar(1) NOT NULL COMMENT '카테고리 유형(L: 게시글형, C: 댓글형)';
 ALTER TABLE ch_category ADD group_seq int(11) NULL DEFAULT 0 COMMENT '카테고리 그룹 번호';
