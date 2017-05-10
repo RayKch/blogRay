@@ -2,6 +2,14 @@ var CategoryUtil = {
 	seq:0
 	, pageNum:0
 	, list:[]
+	, renderSelect:function(seq) {
+		$('#tbodyList tr').each(function() {
+			var currentSeq = $(this).data('seq');
+			if(currentSeq === seq) {
+				$(this).find('td').hasClass('select').addClass('tr-current');
+			}
+		});
+	}
 	, select:function(obj) {
 		var currentSeq = $(obj).parents('tr').data('seq');
 
@@ -171,11 +179,14 @@ var CategorySubmitUtil = {
 						$('#typeCodeL, #typeCodeC').prop('checked', false);
 					} else {
 						alert('수정되었습니다');
+						// 수정시 선택되었던 카테고리 자동 select
+						CategoryUtil.renderSelect(seq);
 					}
 				} else {
 					alert('실패하였습니다.');
 				}
 
+				// 좌측 카테고리 리스트 갱신
 				CategoryUtil.renderList(CategoryUtil.pageNum, (function () {
 					CategoryUtil.renderPaging(CategoryUtil.pageNum);
 				})());
@@ -223,6 +234,9 @@ var goPage = function (page) {
 	})());
 
 	CategoryUtil.pageNum = page;
+
+	// 페이징시 기존 선택되었던 데이터가 폼에 보여지는것을 막기위함
+	CategorySubmitUtil.formReset();
 };
 
 $(document).ready(function() {

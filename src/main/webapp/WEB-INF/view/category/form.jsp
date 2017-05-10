@@ -45,7 +45,7 @@
 								</colgroup>
 								<script id="tbodyTemplate" type="text/html">
 									<tr data-seq="<%="${seq}"%>">
-										<td class="tr-title text-left" onclick="CategoryUtil.select(this)">
+										<td class="tr-title text-left select" onclick="CategoryUtil.select(this)">
 											<%="${title}"%>
 										</td>
 										<td class="text-center">
