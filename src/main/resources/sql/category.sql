@@ -8,8 +8,7 @@ CREATE TABLE `ch_category` (
  `order_no` int(11) NOT NULL DEFAULT 0 COMMENT '정렬 순서',
  `reg_date` DATETIME NULL COMMENT '등록일',
  `mod_date` DATETIME NULL COMMENT '수정일',
- PRIMARY KEY (`seq`),
- FOREIGN KEY(`member_seq`) REFERENCES ch_member(seq) ON DELETE CASCADE
+ PRIMARY KEY (`seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 카테고리';
 
 ALTER TABLE ch_category ADD type_code varchar(1) NOT NULL COMMENT '카테고리 유형(L: 게시글형, C: 댓글형)';
