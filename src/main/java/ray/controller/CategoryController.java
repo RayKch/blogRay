@@ -2,6 +2,7 @@ package ray.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,8 +45,31 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-	public @ResponseBody List<CategoryVo> list() {
-		return categoryService.getList();
+	public @ResponseBody List<CategoryVo> list(HttpServletRequest request, CategoryParamVo vo) {
+		SitePreference sitePreference = (SitePreference)request.getAttribute("currentSitePreference");
+		/** 한페이지에 보여줄 페이징 넘버 갯수(PC: 10개, Mobile: 3개) */
+		if(sitePreference.isNormal()) {
+			vo.setPageCount(10);
+		} else {
+			vo.setPageCount(3);
+		}
+		vo.setRowCount(10);
+		vo.setTotalRowCount(categoryService.getListTotalCount(vo));
+		return categoryService.getList(vo);
+	}
+
+	@RequestMapping(value = "/list/paging/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody String paging(HttpServletRequest request, CategoryParamVo vo) {
+		SitePreference sitePreference = (SitePreference)request.getAttribute("currentSitePreference");
+		/** 한페이지에 보여줄 페이징 넘버 갯수(PC: 10개, Mobile: 3개) */
+		if(sitePreference.isNormal()) {
+			vo.setPageCount(10);
+		} else {
+			vo.setPageCount(3);
+		}
+		vo.setRowCount(10);
+		vo.setTotalRowCount(categoryService.getListTotalCount(vo));
+		return vo.drawPagingNavigation("goPage");
 	}
 
 	@RequestMapping(value = "/data/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")

@@ -58,6 +58,7 @@
 								</tbody>
 							</table>
 						</div>
+						<div class="text-center" style="margin-top: 25px;"><div id="divPaging"></div></div>
 					</div>
 					<div id="mainForm" class="area-right form-horizontal">
 						<div class="form-group">

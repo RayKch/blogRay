@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="category">
-	<select id="getList" resultType="ray.data.CategoryVo">
+	<select id="getList" parameterType="ray.data.param.CategoryParamVo" resultType="ray.data.CategoryVo">
 		SELECT
 			a.seq
 			, a.type_code AS typeCode
@@ -11,6 +11,14 @@
 		FROM ch_category a
 		WHERE 1=1
 		ORDER BY a.order_no ASC
+		LIMIT ${pageNum * rowCount}, ${rowCount}
+	</select>
+
+	<select id="getListTotalCount" parameterType="ray.data.param.CategoryParamVo" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM ch_category
+		WHERE 1=1
 	</select>
 
 	<select id="getVo" parameterType="Integer" resultType="ray.data.CategoryVo">

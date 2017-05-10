@@ -19,8 +19,13 @@ public class CategoryDaoImpl implements CategoryDao {
 	private SqlSession sqlSession;
 
 	@Override
-	public List<CategoryVo> getList() {
-		return sqlSession.selectList("category.getList");
+	public List<CategoryVo> getList(CategoryParamVo vo) {
+		return sqlSession.selectList("category.getList", vo);
+	}
+
+	@Override
+	public int getListTotalCount(CategoryParamVo vo) {
+		return sqlSession.selectOne("category.getListTotalCount", vo);
 	}
 
 	@Override

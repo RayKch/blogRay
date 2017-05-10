@@ -28,8 +28,12 @@ public class CategoryService {
 	@Setter
 	private BoardDao boardDao;
 
-	public List<CategoryVo> getList() {
-		return categoryDao.getList();
+	public List<CategoryVo> getList(CategoryParamVo vo) {
+		return categoryDao.getList(vo);
+	}
+
+	public int getListTotalCount(CategoryParamVo vo) {
+		return categoryDao.getListTotalCount(vo);
 	}
 
 	public CategoryVo getVo(Integer seq) {

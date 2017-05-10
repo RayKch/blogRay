@@ -1,5 +1,6 @@
 var CategoryUtil = {
 	seq:0
+	, pageNum:0
 	, list:[]
 	, select:function(obj) {
 		var currentSeq = $(obj).parents('tr').data('seq');
@@ -21,11 +22,11 @@ var CategoryUtil = {
 			CategorySubmitUtil.updateRender(currentSeq);
 		}
 	}
-	, renderList:function() {
+	, renderList:function(pageNum, callback) {
 		$.ajax({
 			url:"/category/list/json",
 			type:"get",
-			data:{},
+			data:{'pageNum': pageNum},
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
@@ -33,9 +34,28 @@ var CategoryUtil = {
 				if(list.length > 0) {
 					$("#tbodyList").html($("#tbodyTemplate").tmpl(list));
 					$('#tbodyList').tableDnD({onDragClass:"drag"});
+
+					if (typeof callback === "function") {
+						callback();
+					}
 				} else {
 					$("#tbodyList").html('<tr><td class="text-center" colspan="2">카테고리가 존재하지 않습니다.</td></tr>');
 				}
+			},
+			error:function(error) {
+				console.log( error.status + ":" +error.statusText );
+			}
+		});
+	}
+	, renderPaging:function(pageNum) {
+		$.ajax({
+			url:"/category/list/paging/json",
+			type:"get",
+			data:{'pageNum': pageNum},
+			dataType:"text",
+			success:function(data) {
+				$("#divPaging").html(data);
+				$("#divPaging").addClass("pagination");
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -155,7 +175,10 @@ var CategorySubmitUtil = {
 				} else {
 					alert('실패하였습니다.');
 				}
-				CategoryUtil.renderList();
+
+				CategoryUtil.renderList(CategoryUtil.pageNum, (function () {
+					CategoryUtil.renderPaging(CategoryUtil.pageNum);
+				})());
 				SideCategoryUtil.renderList();
 				CategorySubmitUtil.formReset();
 			},
@@ -180,7 +203,10 @@ var CategoryDeleteUtil = {
 					} else {
 						alert('실패하였습니다.');
 					}
-					CategoryUtil.renderList();
+
+					CategoryUtil.renderList(CategoryUtil.pageNum, (function () {
+						CategoryUtil.renderPaging(CategoryUtil.pageNum);
+					})());
 					SideCategoryUtil.renderList();
 				},
 				error:function(error) {
@@ -191,8 +217,18 @@ var CategoryDeleteUtil = {
 	}
 }
 
+var goPage = function (page) {
+	CategoryUtil.renderList(page, (function () {
+		CategoryUtil.renderPaging(page);
+	})());
+
+	CategoryUtil.pageNum = page;
+};
+
 $(document).ready(function() {
-	CategoryUtil.renderList();
+	CategoryUtil.renderList(0, (function () {
+		CategoryUtil.renderPaging(0);
+	})());
 
 	$('#saveBtn').on('click', function() {
 		var saveType = 'insert';
