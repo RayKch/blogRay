@@ -1,3 +1,14 @@
+/* 블로그 카테고리 그룹 관리 */
+CREATE TABLE `ch_category_group` (
+ `seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '번호',
+ `member_seq` int(11) NOT NULL COMMENT '회원 번호',
+ `title` varchar(300) NOT NULL COMMENT '그룹명',
+ `order_no` int(11) NOT NULL DEFAULT 0 COMMENT '정렬 순서',
+ `reg_date` DATETIME NULL COMMENT '등록일',
+ `mod_date` DATETIME NULL COMMENT '수정일',
+ PRIMARY KEY (`seq`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '블로그 카테고리 그룹';
+
 /* 블로그 카테고리 관리 */
 CREATE TABLE `ch_category` (
  `seq` int(11) NOT NULL AUTO_INCREMENT COMMENT '번호',
