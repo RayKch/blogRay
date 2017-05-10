@@ -13,6 +13,7 @@ import java.util.List;
 public interface CategoryDao {
 	public List<CategoryVo> getList(CategoryParamVo vo);
 	public int getListTotalCount(CategoryParamVo vo);
+	public List<CategoryVo> getTitleList();
 	public CategoryVo getVo(Integer seq);
 	public int insertVo(CategoryParamVo vo);
 	public int updateVo(CategoryParamVo vo);

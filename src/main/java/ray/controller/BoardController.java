@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ray.data.BoardVo;
 import ray.data.param.BoardParamVo;
+import ray.data.param.CategoryParamVo;
 import ray.data.validator.BoardInsertValidator;
 import ray.service.BoardService;
 import ray.service.CategoryService;
@@ -41,7 +42,7 @@ public class BoardController {
 			return Const.REDIRECT_PAGE;
 		}
 
-		model.addAttribute("categoryList", categoryService.getList());
+		model.addAttribute("categoryList", categoryService.getTitleList());
 
 		if(seq != null) {
 			model.addAttribute("vo", boardService.getVo(seq));

@@ -48,6 +48,10 @@ public class CategoryService {
 		return vo;
 	}
 
+	public List<CategoryVo> getTitleList() {
+		return categoryDao.getTitleList();
+	}
+
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(CategoryParamVo vo) {
 		return categoryDao.insertVo(vo) > 0;

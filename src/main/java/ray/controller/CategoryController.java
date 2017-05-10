@@ -44,6 +44,11 @@ public class CategoryController {
 		return "/category/form.jsp";
 	}
 
+	@RequestMapping(value = "/title/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	public @ResponseBody List<CategoryVo> titleList() {
+		return categoryService.getTitleList();
+	}
+
 	@RequestMapping(value = "/list/json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public @ResponseBody List<CategoryVo> list(HttpServletRequest request, CategoryParamVo vo) {
 		SitePreference sitePreference = (SitePreference)request.getAttribute("currentSitePreference");

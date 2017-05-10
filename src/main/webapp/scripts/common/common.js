@@ -55,7 +55,7 @@ var StatsUtil = {
 var SideCategoryUtil = {
 	renderList:function() {
 		$.ajax({
-			url:"/category/list/json",
+			url:"/category/title/list/json",
 			type:"get",
 			data:{},
 			dataType:"text",
