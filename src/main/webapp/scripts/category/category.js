@@ -1,15 +1,5 @@
 var CategoryUtil = {
 	seq:0
-	, pageNum:0
-	, list:[]
-	, renderSelect:function(seq) {
-		$('#tbodyList tr').each(function() {
-			var currentSeq = $(this).data('seq');
-			if(currentSeq === seq) {
-				$(this).find('td').hasClass('select').addClass('tr-current');
-			}
-		});
-	}
 	, select:function(obj) {
 		var currentSeq = $(obj).parents('tr').data('seq');
 
@@ -30,6 +20,58 @@ var CategoryUtil = {
 			CategorySubmitUtil.updateRender(currentSeq);
 		}
 	}
+	, saveOrderNo: function(id) {
+		var current = 1;
+		var length = $(id+">tr[data-seq]").length;
+		if(length === 0) {
+			alert("카테고리가 하나도 없습니다");
+			return;
+		}
+
+		$("#orderNoProgressModal").modal().find(".progress-bar").width(0);
+		var t = setTimeout(function(){
+			$("#orderNoProgressModal").modal("hide");
+		},10000);
+
+		$(id+">tr[data-seq]").each(function(idx){
+			$.ajax({
+				url:"/category/update/order/proc",
+				type:"get",
+				data:{seq:$(this).attr("data-seq"), orderNo:idx},
+				dataType:"text",
+				success:function(data) {
+					$("#orderNoProgressModal").find(".progress-bar").width((current++/length*100)+"%");
+
+					if(current === length) {
+						setTimeout(function(){
+							$("#orderNoProgressModal").modal("hide").find(".progress-bar").width(0);
+						}, 1000);
+						clearTimeout(t);
+					}
+					SideCategoryUtil.renderList();
+					CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, (function () {
+						CategoryRenderUtil.renderPaging(CategoryRenderUtil.pageNum);
+					})());
+				},
+				error:function(error) {
+					console.log( error.status + ":" +error.statusText );
+				}
+			});
+		});
+	}
+}
+
+var CategoryRenderUtil = {
+	list:[]
+	, pageNum:0
+	, renderSelect:function(seq) {
+		$('#tbodyList tr').each(function() {
+			var currentSeq = $(this).data('seq');
+			if(currentSeq === seq) {
+				$(this).find('td').hasClass('select').addClass('tr-current');
+			}
+		});
+	}
 	, renderList:function(pageNum, callback) {
 		$.ajax({
 			url:"/category/list/json",
@@ -38,7 +80,7 @@ var CategoryUtil = {
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
-				CategoryUtil.list = list;
+				CategoryRenderUtil.list = list;
 				if(list.length > 0) {
 					$("#tbodyList").html($("#tbodyTemplate").tmpl(list));
 					$('#tbodyList').tableDnD({onDragClass:"drag"});
@@ -70,57 +112,20 @@ var CategoryUtil = {
 			}
 		});
 	}
-	, saveOrderNo: function(id) {
-		var current = 1;
-		var length = $(id+">tr[data-seq]").length;
-		if(length === 0) {
-			alert("카테고리가 하나도 없습니다");
-			return;
-		}
-
-		$("#orderNoProgressModal").modal().find(".progress-bar").width(0);
-		var t = setTimeout(function(){
-			$("#orderNoProgressModal").modal("hide");
-		},10000);
-
-		$(id+">tr[data-seq]").each(function(idx){
-			$.ajax({
-				url:"/category/update/order/proc",
-				type:"get",
-				data:{seq:$(this).attr("data-seq"), orderNo:idx},
-				dataType:"text",
-				success:function(data) {
-					$("#orderNoProgressModal").find(".progress-bar").width((current++/length*100)+"%");
-
-					if(current === length) {
-						setTimeout(function(){
-							$("#orderNoProgressModal").modal("hide").find(".progress-bar").width(0);
-						}, 1000);
-						clearTimeout(t);
-					}
-					SideCategoryUtil.renderList();
-					CategoryUtil.renderList();
-				},
-				error:function(error) {
-					console.log( error.status + ":" +error.statusText );
-				}
-			});
-		});
-	}
-}
+};
 
 var CategorySubmitUtil = {
 	updateRender:function(seq) {
-		for(var vo in CategoryUtil.list) {
-			if(CategoryUtil.list[vo].seq === parseInt(seq, 10)) {
-				for(var name in CategoryUtil.list[vo]) {
-					$('#mainForm').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryUtil.list[vo][name]);
+		for(var vo in CategoryRenderUtil.list) {
+			if(CategoryRenderUtil.list[vo].seq === parseInt(seq, 10)) {
+				for(var name in CategoryRenderUtil.list[vo]) {
+					$('#mainForm').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryRenderUtil.list[vo][name]);
 					if(name === 'typeCode') {
-						$('#typeCode' + CategoryUtil.list[vo][name]).prop('checked', true);
+						$('#typeCode' + CategoryRenderUtil.list[vo][name]).prop('checked', true);
 					}
 
 					if(name === 'description') {
-						$('#description').val(CategoryUtil.list[vo][name]);
+						$('#description').val(CategoryRenderUtil.list[vo][name]);
 					}
 				}
 			}
@@ -180,15 +185,15 @@ var CategorySubmitUtil = {
 					} else {
 						alert('수정되었습니다');
 						// 수정시 선택되었던 카테고리 자동 select
-						CategoryUtil.renderSelect(seq);
+						CategoryRenderUtil.renderSelect(seq);
 					}
 				} else {
 					alert('실패하였습니다.');
 				}
 
 				// 좌측 카테고리 리스트 갱신
-				CategoryUtil.renderList(CategoryUtil.pageNum, (function () {
-					CategoryUtil.renderPaging(CategoryUtil.pageNum);
+				CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, (function () {
+					CategoryRenderUtil.renderPaging(CategoryRenderUtil.pageNum);
 				})());
 				SideCategoryUtil.renderList();
 				CategorySubmitUtil.formReset();
@@ -215,8 +220,8 @@ var CategoryDeleteUtil = {
 						alert('실패하였습니다.');
 					}
 
-					CategoryUtil.renderList(CategoryUtil.pageNum, (function () {
-						CategoryUtil.renderPaging(CategoryUtil.pageNum);
+					CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, (function () {
+						CategoryRenderUtil.renderPaging(CategoryRenderUtil.pageNum);
 					})());
 					SideCategoryUtil.renderList();
 				},
@@ -229,19 +234,19 @@ var CategoryDeleteUtil = {
 }
 
 var goPage = function (page) {
-	CategoryUtil.renderList(page, (function () {
-		CategoryUtil.renderPaging(page);
+	CategoryRenderUtil.renderList(page, (function () {
+		CategoryRenderUtil.renderPaging(page);
 	})());
 
-	CategoryUtil.pageNum = page;
+	CategoryRenderUtil.pageNum = page;
 
 	// 페이징시 기존 선택되었던 데이터가 폼에 보여지는것을 막기위함
 	CategorySubmitUtil.formReset();
 };
 
 $(document).ready(function() {
-	CategoryUtil.renderList(0, (function () {
-		CategoryUtil.renderPaging(0);
+	CategoryRenderUtil.renderList(0, (function () {
+		CategoryRenderUtil.renderPaging(0);
 	})());
 
 	$('#saveBtn').on('click', function() {
