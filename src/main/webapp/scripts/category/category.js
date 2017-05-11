@@ -10,14 +10,14 @@ var CategoryUtil = {
 				CategorySubmitUtil.formReset();
 			} else {
 				$(obj).addClass('tr-current');
-				CategorySubmitUtil.updateRender(currentSeq);
+				CategoryRenderUtil.render(currentSeq);
 			}
 		} else {
 			$(obj).parents('tbody').find('.tr-current').removeClass('tr-current');
 			$(obj).addClass('tr-current');
 
 			//업데이트폼 랜더링
-			CategorySubmitUtil.updateRender(currentSeq);
+			CategoryRenderUtil.render(currentSeq);
 		}
 	}
 	, saveOrderNo: function(id) {
@@ -64,6 +64,24 @@ var CategoryUtil = {
 var CategoryRenderUtil = {
 	list:[]
 	, pageNum:0
+	, render:function(seq) {
+		for(var vo in CategoryRenderUtil.list) {
+			if(CategoryRenderUtil.list[vo].seq === parseInt(seq, 10)) {
+				for(var name in CategoryRenderUtil.list[vo]) {
+					$('#mainForm').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryRenderUtil.list[vo][name]);
+					if(name === 'typeCode') {
+						$('#typeCode' + CategoryRenderUtil.list[vo][name]).prop('checked', true);
+					}
+
+					if(name === 'description') {
+						$('#description').val(CategoryRenderUtil.list[vo][name]);
+					}
+				}
+			}
+		}
+
+		CategoryUtil.seq = seq;
+	}
 	, renderSelect:function(seq) {
 		$('#tbodyList tr').each(function() {
 			var currentSeq = $(this).data('seq');
@@ -115,25 +133,7 @@ var CategoryRenderUtil = {
 };
 
 var CategorySubmitUtil = {
-	updateRender:function(seq) {
-		for(var vo in CategoryRenderUtil.list) {
-			if(CategoryRenderUtil.list[vo].seq === parseInt(seq, 10)) {
-				for(var name in CategoryRenderUtil.list[vo]) {
-					$('#mainForm').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryRenderUtil.list[vo][name]);
-					if(name === 'typeCode') {
-						$('#typeCode' + CategoryRenderUtil.list[vo][name]).prop('checked', true);
-					}
-
-					if(name === 'description') {
-						$('#description').val(CategoryRenderUtil.list[vo][name]);
-					}
-				}
-			}
-		}
-
-		CategoryUtil.seq = seq;
-	}
-	, validation:function() {
+	validation:function() {
 		var flag = true;
 		var validationTag = '.area-right';
 
