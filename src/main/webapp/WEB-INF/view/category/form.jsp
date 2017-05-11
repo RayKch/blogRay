@@ -27,7 +27,6 @@
 				</div>
 				<div class="area-wrapper">
 					<div class="area-left">
-						<label>목록</label>
 						<div class="alert alert-info alert-wrap">
 							카테고리명을 Drag & Drop으로 순서를 변경하고 <button type="button" class="btn btn-success btn-sm" onclick="CategoryUtil.saveOrderNo('#tbodyList')">순서 변경</button>
 							버튼을 클릭하여 변경정보가 변경됩니다. <br/><br/>
@@ -37,6 +36,9 @@
 								<li>신규 등록시 선택된 카테고리를 다시 클릭하여 해제하거나 폼리셋버튼을 클릭하세요.</li>
 							</ul>
 						</div>
+
+						<%-- 카테고리 리스트 --%>
+						<label>카테고리</label>
 						<div style="border:1px solid #ddd; border-radius: 10px">
 							<table class="category-list-table">
 								<colgroup>
@@ -58,7 +60,10 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="text-center" style="margin-top: 25px;"><div id="divPaging"></div></div>
+						<button type="button" class="btn btn-success btn-lg btn-block" onclick="CategoryRenderUtil.renderAddArticle()" style="margin-top: 10px">
+							<i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;더보기
+						</button>
+						<%-- //카테고리 리스트 --%>
 					</div>
 					<div id="mainForm" class="area-right form-horizontal">
 						<div class="form-group">
