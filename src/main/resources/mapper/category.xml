@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="category">
+	<sql id="getListWhere">
+		<if test="actionType != null and actionType == 'Group'">
+			AND a.group_seq > 0
+		</if>
+	</sql>
+
 	<select id="getList" parameterType="ray.data.param.CategoryParamVo" resultType="ray.data.CategoryVo">
 		SELECT
 			a.seq
@@ -11,6 +17,7 @@
 			, (SELECT COUNT(*) FROM ch_board WHERE category_seq = a.seq) AS boardCount
 		FROM ch_category a
 		WHERE 1=1
+		<include refid="getListWhere" />
 		ORDER BY a.order_no ASC
 		LIMIT ${pageNum * rowCount}, ${rowCount}
 	</select>
@@ -18,8 +25,9 @@
 	<select id="getListTotalCount" parameterType="ray.data.param.CategoryParamVo" resultType="int">
 		SELECT
 		COUNT(*)
-		FROM ch_category
+		FROM ch_category a
 		WHERE 1=1
+		<include refid="getListWhere" />
 	</select>
 
 	<select id="getTitleList" resultType="ray.data.CategoryVo">

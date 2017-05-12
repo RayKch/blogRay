@@ -28,7 +28,7 @@
 				<div class="area-wrapper">
 					<div class="area-left">
 						<div class="alert alert-info alert-wrap">
-							카테고리명을 Drag & Drop으로 순서를 변경하고 <button type="button" class="btn btn-success btn-sm" onclick="CategoryUtil.saveOrderNo('#tbodyList')">순서 변경</button>
+							카테고리명을 Drag & Drop으로 순서를 변경하고 <button type="button" class="btn btn-primary btn-sm">순서 변경</button>
 							버튼을 클릭하여 변경정보가 변경됩니다. <br/><br/>
 							<ul class="info-text">
 								<li>순서변경은 PC에서만 가능합니다.</li>
@@ -37,8 +37,42 @@
 							</ul>
 						</div>
 
+						<%-- 카테고리 그룹 --%>
+						<div>
+							<label>카테고리 그룹</label>
+							<button type="button" class="btn btn-primary btn-sm pull-right" onclick="CategoryUtil.saveOrderNo('#tbodyGroupList')">순서 변경</button>
+						</div>
+						<div style="border:1px solid #ddd; border-radius: 10px">
+							<table class="category-list-table">
+								<colgroup>
+									<col width="*"/>
+									<col width="15%"/>
+								</colgroup>
+								<script id="tbodyGroupTemplate" type="text/html">
+									<tr data-seq="<%="${seq}"%>">
+										<td class="tr-title text-left select" onclick="CategoryUtil.select(this)">
+											<%="${title}"%>
+										</td>
+										<td class="text-center">
+											<button type="button" class="btn btn-danger btn-sm pull-right" style="margin-right: 10px" onclick="CategoryDeleteUtil.proc('<%="${seq}"%>');">삭제</button>
+										</td>
+									</tr>
+								</script>
+								<tbody id="tbodyGroupList" data-seq="0">
+								<tr><td class="text-center" colspan="2"><img src="/image/common/ajaxloader.gif"/></td></tr>
+								</tbody>
+							</table>
+						</div>
+						<button type="button" class="btn btn-success btn-lg btn-block" onclick="CategoryRenderUtil.renderAddArticle('Group')" style="margin: 10px 0 40px 0">
+							<i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;더보기
+						</button>
+						<%-- //카테고리 그룹 --%>
+
 						<%-- 카테고리 리스트 --%>
-						<label>카테고리</label>
+						<div>
+							<label>카테고리</label>
+							<button type="button" class="btn btn-primary btn-sm pull-right" onclick="CategoryUtil.saveOrderNo('#tbodyCategoryList')">순서 변경</button>
+						</div>
 						<div style="border:1px solid #ddd; border-radius: 10px">
 							<table class="category-list-table">
 								<colgroup>
@@ -55,12 +89,12 @@
 										</td>
 									</tr>
 								</script>
-								<tbody id="tbodyList" data-seq="0">
+								<tbody id="tbodyCategoryList" data-seq="0">
 									<tr><td class="text-center" colspan="2"><img src="/image/common/ajaxloader.gif"/></td></tr>
 								</tbody>
 							</table>
 						</div>
-						<button type="button" class="btn btn-success btn-lg btn-block" onclick="CategoryRenderUtil.renderAddArticle()" style="margin-top: 10px">
+						<button type="button" class="btn btn-success btn-lg btn-block" onclick="CategoryRenderUtil.renderAddArticle('Category')" style="margin-top: 10px">
 							<i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;더보기
 						</button>
 						<%-- //카테고리 리스트 --%>
@@ -74,6 +108,9 @@
 								</label>
 								<label for="typeCodeC" class="radio-inline">
 									<input type="radio" name="typeCode" id="typeCodeC" value="C"> 댓글형
+								</label>
+								<label for="typeCodeG" class="radio-inline">
+									<input type="radio" name="typeCode" id="typeCodeG" value="G"> 그룹
 								</label>
 							</div>
 						</div>

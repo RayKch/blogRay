@@ -63,7 +63,9 @@ var CategoryUtil = {
 
 var CategoryRenderUtil = {
 	list:[]
+	, groupList:[]
 	, pageNum:0
+	, groupPageNum:0
 	, render:function(seq) {
 		for(var vo in CategoryRenderUtil.list) {
 			if(CategoryRenderUtil.list[vo].seq === parseInt(seq, 10)) {
@@ -94,14 +96,22 @@ var CategoryRenderUtil = {
 		$.ajax({
 			url:"/category/list/json",
 			type:"get",
-			data:{'pageNum': pageNum},
+			data:{'pageNum': pageNum, 'actionType': actionType},
 			dataType:"text",
 			success:function(data) {
 				var list = $.parseJSON(data);
-				CategoryRenderUtil.list = list;
+
+				var guideText = '';
+				if(actionType === 'Group') {
+					guideText = '그룹이';
+					CategoryRenderUtil.groupList = list;
+				} else if(actionType === 'Category') {
+					guideText = '카테고리가';
+					CategoryRenderUtil.list = list;
+				}
 
 				if(pageNum > 0 && list.length === 0) {
-					alert('더이상 카테고리가 존재하지 않습니다');
+					alert('더이상 ' + guideText + ' 존재하지 않습니다');
 					return;
 				}
 
@@ -110,18 +120,22 @@ var CategoryRenderUtil = {
 				if(actionType !== 'modSort') {
 					if(list.length > 0) {
 						if(pageNum === 0) {
-							$("#tbodyList").html($("#tbodyTemplate").tmpl(list));
+							$("#tbody" + actionType + "List").html($("#tbodyTemplate").tmpl(list));
 						} else {
-							$("#tbodyList").append($("#tbodyTemplate").tmpl(list));
+							$("#tbody" + actionType + "List").append($("#tbodyTemplate").tmpl(list));
 						}
 
-						$('#tbodyList').tableDnD({onDragClass:"drag"});
+						$("#tbody" + actionType + "List").tableDnD({onDragClass:"drag"});
 
 						/* 더보기를 클릭했을때 다음페이지의 데이터를 불리오기위한 페이지 카운트 */
-						CategoryRenderUtil.pageNum = pageNum;
+						if(actionType === 'Group') {
+							CategoryRenderUtil.groupPageNum = pageNum;
+						} else if(actionType === 'Category') {
+							CategoryRenderUtil.pageNum = pageNum;
+						}
 
 					} else {
-						$("#tbodyList").html('<tr><td class="text-center" colspan="2">카테고리가 존재하지 않습니다.</td></tr>');
+						$("#tbody" + actionType + "List").html('<tr><td class="text-center" colspan="2">' + guideText + ' 존재하지 않습니다.</td></tr>');
 					}
 				}
 			},
@@ -130,9 +144,9 @@ var CategoryRenderUtil = {
 			}
 		});
 	}
-	, renderAddArticle:function() {
+	, renderAddArticle:function(actionType) {
 		/* 더보기를 클릭했을때 다음페이지의 데이터를 불리오기 위해 1을 더한다 */
-		CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum + 1);
+		CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum + 1, actionType);
 	}
 };
 
@@ -234,7 +248,8 @@ var CategoryDeleteUtil = {
 }
 
 $(document).ready(function() {
-	CategoryRenderUtil.renderList(0);
+	CategoryRenderUtil.renderList(0, 'Category');
+	CategoryRenderUtil.renderList(0, 'Group');
 
 	$('#saveBtn').on('click', function() {
 		var saveType = 'insert';

@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CategoryParamVo extends ParamVo {
 	/** 시퀀스 */
 	private Integer seq;
+	/** 그룹 시퀀스 */
+	private Integer groupSeq;
 	/** 카테고리 타입(L:게시글형, C:댓글형) */
 	private String typeCode;
 	/** 회원번호 */
@@ -23,6 +25,8 @@ public class CategoryParamVo extends ParamVo {
 	private String description;
 	/** 정렬순서 */
 	private int orderNo;
+	/** 호출타입 */
+	private String actionType;
 
 	@Override
 	public String getSearch() {
