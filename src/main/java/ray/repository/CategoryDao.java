@@ -15,6 +15,7 @@ public interface CategoryDao {
 	public int getListTotalCount(CategoryParamVo vo);
 	public List<CategoryVo> getTitleList();
 	public CategoryVo getVo(Integer seq);
+	public Integer getMaxOrderNo();
 	public int insertVo(CategoryParamVo vo);
 	public int updateVo(CategoryParamVo vo);
 	public int updateOrderNo(CategoryParamVo vo);

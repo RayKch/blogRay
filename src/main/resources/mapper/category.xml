@@ -7,6 +7,7 @@
 			, a.type_code AS typeCode
 			, a.title
 			, a.description
+			, a.group_seq
 			, (SELECT COUNT(*) FROM ch_board WHERE category_seq = a.seq) AS boardCount
 		FROM ch_category a
 		WHERE 1=1
@@ -39,9 +40,15 @@
 			, a.type_code AS typeCode
 			, a.title
 			, a.description
+			, a.group_seq
 			, (SELECT count(*) FROM ch_board WHERE category_seq=a.seq) AS boardCount
 		FROM ch_category a
 		WHERE seq = #{seq}
+	</select>
+
+	<select id="getMaxOrderNo" resultType="Integer">
+		SELECT MAX(order_no)
+		FROM ch_category
 	</select>
 
 	<insert id="insertVo" parameterType="ray.data.param.CategoryParamVo">
@@ -50,12 +57,20 @@
 			, type_code
 			, title
 			, description
+		  , order_no
+			<if test="groupSeq != '' and groupSeq != null">
+				, group_seq
+			</if>
 			, reg_date
 		) VALUES (
 			#{memberSeq}
 			, #{typeCode}
 			, #{title}
 			, #{description}
+			, #{orderNo}
+			<if test="groupSeq != '' and groupSeq != null">
+				, #{groupSeq}
+			</if>
 			, NOW()
 		)
 	</insert>
@@ -65,6 +80,9 @@
 			type_code=#{typeCode}
 			, title=#{title}
 			, description=#{description}
+			<if test="groupSeq != '' and groupSeq != null">
+				, group_seq=#{groupSeq}
+			</if>
 			, mod_date=NOW()
 		WHERE seq = #{seq}
 		AND member_seq = #{memberSeq}

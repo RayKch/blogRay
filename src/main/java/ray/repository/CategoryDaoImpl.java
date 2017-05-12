@@ -39,6 +39,11 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
+	public Integer getMaxOrderNo() {
+		return sqlSession.selectOne("category.getMaxOrderNo");
+	}
+
+	@Override
 	public int insertVo(CategoryParamVo vo) {
 		return sqlSession.insert("category.insertVo", vo);
 	}
