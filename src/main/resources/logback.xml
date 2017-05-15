@@ -6,6 +6,8 @@
 		</encoder>
 	</appender>
 
+	<logger name="ray" level="debug"></logger>
+
 	<root level="debug">
 		<appender-ref ref="STDOUT"/>
 	</root>
