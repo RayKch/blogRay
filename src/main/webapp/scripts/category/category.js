@@ -148,7 +148,13 @@ var CategoryRenderUtil = {
 	}
 	, renderAddArticle:function(actionType) {
 		/* 더보기를 클릭했을때 다음페이지의 데이터를 불리오기 위해 1을 더한다 */
-		CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum + 1, actionType, 'N');
+		var pageNum = 0;
+		if(actionType === 'Group') {
+			pageNum = CategoryRenderUtil.groupPageNum;
+		} else {
+			pageNum = CategoryRenderUtil.pageNum;
+		}
+		CategoryRenderUtil.renderList(pageNum + 1, actionType, 'N');
 	}
 };
 
