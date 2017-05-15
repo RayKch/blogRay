@@ -1,5 +1,6 @@
 var CategoryUtil = {
 	seq:0
+	, groupSeq:0
 	, select:function(obj) {
 		var currentSeq = $(obj).parents('tr').data('seq');
 
@@ -57,7 +58,8 @@ var CategoryUtil = {
 		});
 
 		SideCategoryUtil.renderList();
-		CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, 'modSort');
+		CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, 'Category', 'Y');
+		CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, 'Group', 'Y');
 	}
 }
 
@@ -92,7 +94,7 @@ var CategoryRenderUtil = {
 			}
 		});
 	}
-	, renderList:function(pageNum, actionType) {
+	, renderList:function(pageNum, actionType, sortYn) {
 		$.ajax({
 			url:"/category/list/json",
 			type:"get",
@@ -117,7 +119,7 @@ var CategoryRenderUtil = {
 
 				/** 순서변경을 한뒤 카테고리 리스트를 호출하면 기존 게시글에 더 추가가 되기때문에
 				 * 순서 변경이 아닐경우에만 게시글을 추가한다 **/
-				if(actionType !== 'modSort') {
+				if(sortYn !== 'Y') {
 					if(list.length > 0) {
 						if(pageNum === 0) {
 							$("#tbody" + actionType + "List").html($("#tbodyTemplate").tmpl(list));
@@ -146,7 +148,7 @@ var CategoryRenderUtil = {
 	}
 	, renderAddArticle:function(actionType) {
 		/* 더보기를 클릭했을때 다음페이지의 데이터를 불리오기 위해 1을 더한다 */
-		CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum + 1, actionType);
+		CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum + 1, actionType, 'N');
 	}
 };
 
@@ -170,11 +172,24 @@ var CategorySubmitUtil = {
 		return flag;
 	}
 	, mappingVo:function(type, seq) {
+		var typeCode = $('.area-right').find('input:radio[name=typeCode]:checked').val();
+		var actionType = '';
+		/** typeCode 값이 G면 그룹형이므로 group_seq는 0을 적용한다 */
+
+		if(typeCode === 'G') {
+			CategoryUtil.groupSeq = 0;
+			actionType = 'Group';
+		} else {
+			actionType = 'Category';
+		}
+
 		var data = {
 			'title':$('#title').val()
 			, 'description':$('#description').val()
-			, 'typeCode':$('.area-right').find('input:radio[name=typeCode]:checked').val()
+			, 'typeCode':typeCode
 			, 'seq':seq
+			, 'groupSeq':CategoryUtil.groupSeq
+			, 'actionType':actionType
 		}
 		return data;
 	}
@@ -210,7 +225,8 @@ var CategorySubmitUtil = {
 				}
 
 				// 좌측 카테고리 리스트 갱신
-				CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum);
+				CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, 'Category', 'N');
+				CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, 'Group', 'N');
 				SideCategoryUtil.renderList();
 				CategorySubmitUtil.formReset();
 			},
@@ -236,7 +252,8 @@ var CategoryDeleteUtil = {
 						alert('실패하였습니다.');
 					}
 
-					CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum);
+					CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, 'Category', 'N');
+					CategoryRenderUtil.renderList(CategoryRenderUtil.pageNum, 'Group', 'N');
 					SideCategoryUtil.renderList();
 				},
 				error:function(error) {
@@ -248,8 +265,8 @@ var CategoryDeleteUtil = {
 }
 
 $(document).ready(function() {
-	CategoryRenderUtil.renderList(0, 'Category');
-	CategoryRenderUtil.renderList(0, 'Group');
+	CategoryRenderUtil.renderList(0, 'Category', 'N');
+	CategoryRenderUtil.renderList(0, 'Group', 'N');
 
 	$('#saveBtn').on('click', function() {
 		var saveType = 'insert';

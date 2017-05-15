@@ -55,7 +55,7 @@ public class CategoryService {
 	@Transactional(propagation= Propagation.REQUIRED, rollbackFor={Exception.class})
 	public boolean insertVo(CategoryParamVo vo) {
 		/** 신규 카테고리가 맨뒤로 위치하도록 order_no을 현재 최대치의 + 1을 시켜서 등록한다 */
-		vo.setOrderNo(categoryDao.getMaxOrderNo() + 1);
+		vo.setOrderNo(categoryDao.getMaxOrderNo(vo) + 1);
 		return categoryDao.insertVo(vo) > 0;
 	}
 
