@@ -1,24 +1,32 @@
 var CategoryUtil = {
 	seq:0
 	, groupSeq:0
-	, select:function(obj) {
+	, select:function(obj, actionType) {
 		var currentSeq = $(obj).parents('tr').data('seq');
+		var seq = (actionType === 'Group') ? CategoryUtil.groupSeq : CategoryUtil.seq;
 
-		if(currentSeq === CategoryUtil.seq) {
+		if(currentSeq === seq) {
 			//0보다 크다면 현재 선택된 td가 존재 아니라면 존재하지 않기때문에 선택
 			if($(obj).parents('tbody').find('.tr-current').length > 0) {
 				$(obj).parents('tbody').find('.tr-current').removeClass('tr-current');
 				CategorySubmitUtil.formReset();
 			} else {
 				$(obj).addClass('tr-current');
-				CategoryRenderUtil.render(currentSeq);
+				CategoryRenderUtil.render(currentSeq, actionType);
 			}
 		} else {
 			$(obj).parents('tbody').find('.tr-current').removeClass('tr-current');
 			$(obj).addClass('tr-current');
 
 			//업데이트폼 랜더링
-			CategoryRenderUtil.render(currentSeq);
+			CategoryRenderUtil.render(currentSeq, actionType);
+		}
+
+		/** 한개의 article이 select 되기전에 클릭되었던 모든 article을 초기화 */
+		if($(obj).parents('tbody').data('action-type') === 'Group') {
+			$('#tbodyCategoryList').find('.tr-current').removeClass('tr-current');
+		} else {
+			$('#tbodyGroupList').find('.tr-current').removeClass('tr-current');
 		}
 	}
 	, saveOrderNo: function(id) {
@@ -68,26 +76,39 @@ var CategoryRenderUtil = {
 	, groupList:[]
 	, pageNum:0
 	, groupPageNum:0
-	, render:function(seq) {
-		for(var vo in CategoryRenderUtil.list) {
-			if(CategoryRenderUtil.list[vo].seq === parseInt(seq, 10)) {
-				for(var name in CategoryRenderUtil.list[vo]) {
-					$('#mainForm').find("input[data-name="+name+"], select[data-name="+name+"]").val(CategoryRenderUtil.list[vo][name]);
+	, render:function(seq, actionType) {
+		var list = [];
+		if(actionType === 'Group') {
+			list = CategoryRenderUtil.groupList;
+			CategoryUtil.groupSeq = seq;
+		} else {
+			list = CategoryRenderUtil.list;
+			CategoryUtil.seq = seq;
+		}
+
+		for(var vo in list) {
+			if(list[vo].seq === parseInt(seq, 10)) {
+				for(var name in list[vo]) {
+					$('#mainForm').find("input[data-name="+name+"], select[data-name="+name+"]").val(list[vo][name]);
 					if(name === 'typeCode') {
-						$('#typeCode' + CategoryRenderUtil.list[vo][name]).prop('checked', true);
+						$('#typeCode' + list[vo][name]).prop('checked', true);
 					}
 
 					if(name === 'description') {
-						$('#description').val(CategoryRenderUtil.list[vo][name]);
+						$('#description').val(list[vo][name]);
 					}
 				}
 			}
 		}
-
-		CategoryUtil.seq = seq;
 	}
-	, renderSelect:function(seq) {
-		$('#tbodyList tr').each(function() {
+	, renderSelect:function(seq, actionType) {
+		var id = '';
+		if(actionType === 'Group') {
+			id = 'tbodyGroupList';
+		} else {
+			id = 'tbodyList';
+		}
+		$('#' + id + ' tr').each(function() {
 			var currentSeq = $(this).data('seq');
 			if(currentSeq === seq) {
 				$(this).find('td').hasClass('select').addClass('tr-current');
@@ -122,9 +143,9 @@ var CategoryRenderUtil = {
 				if(sortYn !== 'Y') {
 					if(list.length > 0) {
 						if(pageNum === 0) {
-							$("#tbody" + actionType + "List").html($("#tbodyTemplate").tmpl(list));
+							$("#tbody" + actionType + "List").html($("#tbody" + actionType + "Template").tmpl(list));
 						} else {
-							$("#tbody" + actionType + "List").append($("#tbodyTemplate").tmpl(list));
+							$("#tbody" + actionType + "List").append($("#tbody" + actionType + "Template").tmpl(list));
 						}
 
 						$("#tbody" + actionType + "List").tableDnD({onDragClass:"drag"});
@@ -224,7 +245,7 @@ var CategorySubmitUtil = {
 					} else {
 						alert('수정되었습니다');
 						// 수정시 선택되었던 카테고리 자동 select
-						CategoryRenderUtil.renderSelect(seq);
+						CategoryRenderUtil.renderSelect(seq, CategorySubmitUtil.mappingVo.actionType);
 					}
 				} else {
 					alert('실패하였습니다.');

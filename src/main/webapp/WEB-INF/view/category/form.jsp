@@ -50,7 +50,7 @@
 								</colgroup>
 								<script id="tbodyGroupTemplate" type="text/html">
 									<tr data-seq="<%="${seq}"%>">
-										<td class="tr-title text-left select" onclick="CategoryUtil.select(this)">
+										<td class="tr-title text-left select" onclick="CategoryUtil.select(this, 'Group')">
 											<%="${title}"%>
 										</td>
 										<td class="text-center">
@@ -58,7 +58,7 @@
 										</td>
 									</tr>
 								</script>
-								<tbody id="tbodyGroupList" data-seq="0">
+								<tbody id="tbodyGroupList" data-action-type="Group" data-seq="0">
 								<tr><td class="text-center" colspan="2"><img src="/image/common/ajaxloader.gif"/></td></tr>
 								</tbody>
 							</table>
@@ -79,9 +79,9 @@
 									<col width="*"/>
 									<col width="15%"/>
 								</colgroup>
-								<script id="tbodyTemplate" type="text/html">
+								<script id="tbodyCategoryTemplate" type="text/html">
 									<tr data-seq="<%="${seq}"%>">
-										<td class="tr-title text-left select" onclick="CategoryUtil.select(this)">
+										<td class="tr-title text-left select" onclick="CategoryUtil.select(this, 'Category')">
 											<%="${title}"%>
 										</td>
 										<td class="text-center">
@@ -89,7 +89,7 @@
 										</td>
 									</tr>
 								</script>
-								<tbody id="tbodyCategoryList" data-seq="0">
+								<tbody id="tbodyCategoryList" data-action-type="Category" data-seq="0">
 									<tr><td class="text-center" colspan="2"><img src="/image/common/ajaxloader.gif"/></td></tr>
 								</tbody>
 							</table>
