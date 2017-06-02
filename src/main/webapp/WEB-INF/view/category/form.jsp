@@ -26,35 +26,35 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="area-wrapper">
+					<div class="alert alert-info alert-wrap">
+						카테고리명을 Drag & Drop으로 순서를 변경하고 <button type="button" class="btn btn-primary btn-sm">순서 변경</button>
+						버튼을 클릭하여 변경정보가 변경됩니다. <br/>
+						<ul class="info-text">
+							<li>순서변경은 PC에서만 가능합니다.</li>
+							<li>카테고리/그룹 삭제시 해당 카테고리에 등록된 게시물도 모두 삭제됩니다.</li>
+						</ul>
+					</div>
 					<div class="area-left">
-						<div class="alert alert-info alert-wrap">
-							카테고리명을 Drag & Drop으로 순서를 변경하고 <button type="button" class="btn btn-primary btn-sm">순서 변경</button>
-							버튼을 클릭하여 변경정보가 변경됩니다. <br/><br/>
-							<ul class="info-text">
-								<li>순서변경은 PC에서만 가능합니다.</li>
-								<li>카테고리 삭제시 해당 카테고리에 등록된 게시물도 모두 삭제됩니다.</li>
-								<li>신규 등록시 선택된 카테고리를 다시 클릭하여 해제하거나 폼리셋버튼을 클릭하세요.</li>
-							</ul>
-						</div>
-
 						<%-- 카테고리 그룹 --%>
 						<div>
-							<label>카테고리 그룹</label>
+							<label>그룹</label>
 							<button type="button" class="btn btn-primary btn-sm pull-right" onclick="CategoryUtil.saveOrderNo('#tbodyGroupList')">순서 변경</button>
+							<button type="button" class="btn btn-info btn-sm pull-right" style="margin-right: 5px" onclick="CategoryUtil.categoryInit('Group')">등록하기</button>
 						</div>
 						<div style="border:1px solid #ddd; border-radius: 10px">
 							<table class="category-list-table">
 								<colgroup>
 									<col width="*"/>
-									<col width="15%"/>
+									<col width="25%"/>
 								</colgroup>
 								<script id="tbodyGroupTemplate" type="text/html">
 									<tr data-seq="<%="${seq}"%>">
-										<td class="tr-title text-left select" onclick="CategoryUtil.select(this, 'Group')">
+										<td class="tr-title text-left select" data-seq="<%="${seq}"%>" onclick="CategoryUtil.select(this, 'Group')">
 											<%="${title}"%>
 										</td>
 										<td class="text-center">
-											<button type="button" class="btn btn-danger btn-sm pull-right" style="margin-right: 10px" onclick="CategoryDeleteUtil.proc('<%="${seq}"%>');">삭제</button>
+											<button type="button" class="btn btn-warning btn-sm" onclick="CategoryUtil.modalShow('<%="${seq}"%>', 'Group')">수정</button>
+											<button type="button" class="btn btn-danger btn-sm" style="margin-right: 10px" onclick="CategoryDeleteUtil.proc('<%="${seq}"%>', 'Group');">삭제</button>
 										</td>
 									</tr>
 								</script>
@@ -67,17 +67,19 @@
 							<i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;더보기
 						</button>
 						<%-- //카테고리 그룹 --%>
-
+					</div>
+					<div class="area-right">
 						<%-- 카테고리 리스트 --%>
 						<div>
 							<label>카테고리</label>
 							<button type="button" class="btn btn-primary btn-sm pull-right" onclick="CategoryUtil.saveOrderNo('#tbodyCategoryList')">순서 변경</button>
+							<button type="button" class="btn btn-info btn-sm pull-right" style="margin-right: 5px" onclick="CategoryUtil.categoryInit('Category')">등록하기</button>
 						</div>
 						<div style="border:1px solid #ddd; border-radius: 10px">
 							<table class="category-list-table">
 								<colgroup>
 									<col width="*"/>
-									<col width="15%"/>
+									<col width="25%"/>
 								</colgroup>
 								<script id="tbodyCategoryTemplate" type="text/html">
 									<tr data-seq="<%="${seq}"%>">
@@ -85,12 +87,13 @@
 											<%="${title}"%>
 										</td>
 										<td class="text-center">
-											<button type="button" class="btn btn-danger btn-sm pull-right" style="margin-right: 10px" onclick="CategoryDeleteUtil.proc('<%="${seq}"%>');">삭제</button>
+											<button type="button" class="btn btn-warning btn-sm" onclick="CategoryUtil.modalShow('<%="${seq}"%>', 'Category')">수정</button>
+											<button type="button" class="btn btn-danger btn-sm" style="margin-right: 10px" onclick="CategoryDeleteUtil.proc('<%="${seq}"%>', 'Category');">삭제</button>
 										</td>
 									</tr>
 								</script>
 								<tbody id="tbodyCategoryList" data-action-type="Category" data-seq="0">
-									<tr><td class="text-center" colspan="2"><img src="/image/common/ajaxloader.gif"/></td></tr>
+								<tr><td class="text-center" colspan="2"><img src="/image/common/ajaxloader.gif"/></td></tr>
 								</tbody>
 							</table>
 						</div>
@@ -99,38 +102,6 @@
 						</button>
 						<%-- //카테고리 리스트 --%>
 					</div>
-					<div id="mainForm" class="area-right form-horizontal">
-						<div class="form-group">
-							<label class="col-sm-2 control-label">유형</label>
-							<div class="col-sm-10" style="font-size:14px;">
-								<label for="typeCodeL" class="radio-inline">
-									<input type="radio" name="typeCode" id="typeCodeL" value="L"> 게시글형
-								</label>
-								<label for="typeCodeC" class="radio-inline">
-									<input type="radio" name="typeCode" id="typeCodeC" value="C"> 댓글형
-								</label>
-								<label for="typeCodeG" class="radio-inline">
-									<input type="radio" name="typeCode" id="typeCodeG" value="G"> 그룹
-								</label>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="title" class="col-sm-2 text-right">제목</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control col-sm-10" id="title" data-name="title" placeholder="카테고리 제목을 입력하세요" alt="카테고리명">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="description" class="col-sm-2 text-right">설명</label>
-							<div class="col-sm-10">
-								<textarea class="form-control" id="description" data-name="description" placeholder="카테고리 설명을 입력하세요" alt="카테고리설명" rows="10"></textarea>
-							</div>
-						</div>
-						<div class="text-center">
-							<button type="button" id="saveBtn" class="btn btn-info btn-lg">저장하기</button>
-							<button type="button" id="formResetBtn" class="btn btn-warning btn-lg">리셋하기</button>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -138,7 +109,7 @@
 	</div>
 </div>
 <%--사용하지 않으나 주석처리--%>
-<%--<%@ include file="/WEB-INF/view/category/update_modal.jsp" %>--%>
+<%@ include file="/WEB-INF/view/category/update_modal.jsp" %>
 <%@ include file="/WEB-INF/view/category/update_orderno_progress_modal.jsp" %>
 <script src="/scripts/plugin/jquery.tablednd.js"></script>
 <script src="/scripts/category/category.js"></script>

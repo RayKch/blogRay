@@ -69,7 +69,7 @@ public class CategoryService {
 		return categoryDao.updateOrderNo(vo) > 0;
 	}
 
-	public boolean deleteVo(Integer seq) {
-		return categoryDao.deleteVo(seq) > 0;
+	public boolean deleteVo(CategoryParamVo vo) {
+		return categoryDao.deleteVo(vo) > 0;
 	}
 }

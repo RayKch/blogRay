@@ -8,6 +8,10 @@
 			</when>
 			<when test="actionType != null and actionType == 'Category'">
 				AND (a.type_code = 'L' OR a.type_code = 'C')
+
+				<if test="groupSeq != null and groupSeq > 0">
+					AND a.group_seq = #{groupSeq}
+				</if>
 			</when>
 		</choose>
 	</sql>
@@ -60,7 +64,7 @@
 	</select>
 
 	<select id="getMaxOrderNo" resultType="Integer">
-		SELECT MAX(order_no)
+		SELECT IFNULL(MAX(order_no), 0)
 		FROM ch_category a
 		WHERE 1=1
 		<include refid="getListWhere" />
@@ -111,7 +115,16 @@
 		AND member_seq = #{memberSeq}
 	</update>
 
-	<delete id="deleteVo" parameterType="Integer">
-		DELETE FROM ch_category WHERE seq = #{value}
+	<delete id="deleteVo" parameterType="ray.data.param.CategoryParamVo">
+		DELETE FROM ch_category
+		WHERE 1=1
+		<choose>
+			<when test="actionType != null and actionType == 'Group'">
+				AND (seq = #{seq}) OR (group_seq = #{seq})
+			</when>
+			<when test="actionType != null and actionType == 'Category'">
+				AND seq = #{seq}
+			</when>
+		</choose>
 	</delete>
 </mapper>

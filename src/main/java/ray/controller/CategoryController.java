@@ -152,13 +152,13 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/delete/proc", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-	public String delete(int seq, HttpSession session, Model model) {
+	public String delete(CategoryParamVo vo, HttpSession session, Model model) {
 		if(session.getAttribute("loginSeq") == null) {
 			model.addAttribute("message", "로그인 후 이용가능합니다");
 			return Const.AJAX_PAGE;
 		}
 
-		if(!categoryService.deleteVo(seq)) {
+		if(!categoryService.deleteVo(vo)) {
 			model.addAttribute("message", "카테고리삭제가 실패하였습니다");
 			return Const.AJAX_PAGE;
 		}
