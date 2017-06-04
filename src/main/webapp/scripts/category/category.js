@@ -169,7 +169,7 @@ var CategoryRenderUtil = {
 			}
 		});
 	}
-	, renderList:function(pageNum, actionType, sortYn, groupSeq) {
+	, renderList:function(pageNum, actionType, sortYn, groupSeq, callback) {
 		$.ajax({
 			url:"/category/list/json",
 			type:"get",
@@ -226,6 +226,10 @@ var CategoryRenderUtil = {
 						$("#tbody" + actionType + "List").html('<tr><td class="text-center" colspan="2">' + guideText + ' 존재하지 않습니다.</td></tr>');
 					}
 				}
+
+				if(typeof callback === 'function') {
+					callback(actionType);
+				}
 			},
 			error:function(error) {
 				console.log( error.status + ":" +error.statusText );
@@ -243,9 +247,6 @@ var CategoryRenderUtil = {
 		CategoryRenderUtil.renderList(pageNum + 1, actionType, 'N', CategoryUtil.groupSeq);
 	}
 	, initRenderList:function(actionType) {
-		/** 그룹 리스트 갱신 */
-		CategoryRenderUtil.renderList(0, 'Group', 'N');
-
 		/** 그룹에 속한 카테고리 리스트 갱신 */
 		$('#tbodyGroupList').find('tr').each(function() {
 			if($(this).data('seq') === CategoryUtil.groupSeq) {
@@ -257,8 +258,7 @@ var CategoryRenderUtil = {
 				}
 
 				/** 카테고리 등록후 카테고리가 속한 그룹 자동 select */
-				if(actionType === 'Category') {
-					alert('test1');
+				if(actionType === 'Group') {
 					$("#tbodyGroupList").find("td[data-seq="+$(this).data('seq')+"]").addClass('tr-current');
 				}
 			}
@@ -352,7 +352,7 @@ var CategorySubmitUtil = {
 
 				/** 이곳에 그룹일경우 그룹 리스트호출, 카테고리 일경우 카테고리 리스트 호출 후 현재 tr-current를 유지시키도록 한다 */
 				/** 카테고리를 등록했을경우 그룹리스트를 유지시킨다 */
-				CategoryRenderUtil.initRenderList(CategoryUtil.submitType);
+				CategoryRenderUtil.renderList(0, 'Group', 'N', '', CategoryRenderUtil.initRenderList);
 
 				/** 사이드 메뉴 갱신 */
 				SideCategoryUtil.renderList();
@@ -386,7 +386,8 @@ var CategoryDeleteUtil = {
 
 					/** 이곳에 그룹일경우 그룹 리스트호출, 카테고리 일경우 카테고리 리스트 호출 후 현재 tr-current를 유지시키도록 한다 */
 					/** 카테고리를 등록했을경우 그룹리스트를 유지시킨다 */
-					CategoryRenderUtil.initRenderList(actionType);
+					/** 그룹 리스트 갱신 */
+					CategoryRenderUtil.renderList(0, 'Group', 'N', '', CategoryRenderUtil.initRenderList);
 
 					/** 사이드 메뉴 갱신 */
 					SideCategoryUtil.renderList();
