@@ -12,7 +12,17 @@
 	<div id="circle"></div>
 
 	<script id="liTemplate" type="text/html">
-		<li><a href="/?categorySeq=<%="${seq}"%>"><%="${title}"%> (<%="${boardCount}"%>)</a></li>
+		{{each(i, item) list}}
+			{{if item.typeCode === 'G'}}
+				<li><a href="/?categorySeq=<%="${seq}"%>"><%="${title}"%></a></li>
+
+				{{each(i, item2) subList}}
+					{{if item.seq === item2.groupSeq}}
+						<li style="padding-left:10px"><a href="/?categorySeq=<%="${seq}"%>">-&nbsp;<%="${title}"%> (<%="${boardCount}"%>)</a></li>
+					{{/if}}
+				{{/each}}
+			{{/if}}
+		{{/each}}
 	</script>
 	<ul id="ulList" style="margin-bottom:0">
 		<img src="/image/common/ajaxloader.gif" style="margin:40% 0 0 75px"/>

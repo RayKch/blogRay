@@ -31,7 +31,15 @@
 							<select id="categorySeq" name="categorySeq" class="form-control" alt="카테고리">
 								<option value="">카테고리를 선택하세요</option>
 								<c:forEach var="item" items="${categoryList}">
-									<option value="${item.seq}" ${vo ne null && vo.categorySeq eq item.seq ? "selected" :  ""}>${item.title}</option>
+									<c:if test="${item.typeCode eq 'G'}">
+										<option value=""><span style="font-size:5px">■</span>&nbsp;${item.title}</option>
+
+										<c:forEach var="item2" items="${categoryList}">
+											<c:if test="${item.seq eq item2.groupSeq}">
+												<option value="${item2.seq}" ${vo ne null && vo.categorySeq eq item2.seq ? "selected" :  ""}>&nbsp;&nbsp;- ${item2.title}</option>
+											</c:if>
+										</c:forEach>
+									</c:if>
 								</c:forEach>
 							</select>
 						</div>

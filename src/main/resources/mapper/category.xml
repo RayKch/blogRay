@@ -41,11 +41,12 @@
 
 	<select id="getTitleList" resultType="ray.data.CategoryVo">
 		SELECT
-		a.seq
-		, a.type_code AS typeCode
-		, a.title
-		, a.description
-		, (SELECT COUNT(*) FROM ch_board WHERE category_seq = a.seq) AS boardCount
+			a.seq
+			, a.type_code AS typeCode
+			, a.title
+			, a.description
+			, a.group_seq AS groupSeq
+			, (SELECT COUNT(*) FROM ch_board WHERE category_seq = a.seq) AS boardCount
 		FROM ch_category a
 		WHERE 1=1
 		ORDER BY a.order_no ASC

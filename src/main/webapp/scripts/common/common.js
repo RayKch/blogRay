@@ -62,7 +62,7 @@ var SideCategoryUtil = {
 			success:function(data) {
 				var list = $.parseJSON(data);
 				if(list.length > 0) {
-					$("#ulList").html($("#liTemplate").tmpl(list));
+					$("#ulList").html($("#liTemplate").tmpl({list:list, subList:list}));
 				} else {
 					$("#ulList").html('<li style="padding:40% 0 0 45px; color:#fff">카테고리가<br/>없습니다.</li>');
 				}
