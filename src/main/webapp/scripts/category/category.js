@@ -32,7 +32,7 @@ var CategoryUtil = {
 		var current = 1;
 		var length = $(id+">tr[data-seq]").length;
 		if(length === 0) {
-			alert("카테고리가 하나도 없습니다");
+			alert("카테고리가 존재하지 않습니다");
 			return;
 		}
 
