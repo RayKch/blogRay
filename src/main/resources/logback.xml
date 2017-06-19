@@ -6,7 +6,26 @@
 		</encoder>
 	</appender>
 
-	<logger name="ray" level="debug"></logger>
+	<logger name="ray" level="debug">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+	<logger name="org.apache.commons" level="info">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+	<logger name="jdbc.audit" level="debug">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+	<logger name="jdbc.sqlonly" level="debug">
+		<appender-ref ref="STDOUT"/>
+	</logger>
+	 <!--SQL Logging-->
+	<!--<logger name="java.sql.*" level="debug">-->
+		<!--<appender-ref ref="STDOUT"/>-->
+	<!--</logger>-->
+
+	<!--<logger name="org.mybatis" level="debug">-->
+		<!--<appender-ref ref="STDOUT"/>-->
+	<!--</logger>-->
 
 	<root level="debug">
 		<appender-ref ref="STDOUT"/>
