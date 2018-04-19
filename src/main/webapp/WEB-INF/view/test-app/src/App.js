@@ -2,20 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Movie from './Movie'
 
-const moviesTitle = [
-	"Matrix"
-	, "Full Metal Jacket"
-	, "OldBoy"
-	, "Star Wars"
-];
-
-const movieImages = [
-	"https://upload.wikimedia.org/wikipedia/en/thumb/c/c1/The_Matrix_Poster.jpg/220px-The_Matrix_Poster.jpg"
-	, "https://images-na.ssl-images-amazon.com/images/I/71qDKzqJZrL._SL1101_.jpg"
-	, "https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Oldboykoreanposter.jpg/220px-Oldboykoreanposter.jpg"
-	, "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1280px-Star_Wars_Logo.svg.png"
-]
-
 class App extends Component {
 	/**
 	 * [Render]
@@ -33,53 +19,48 @@ class App extends Component {
 	 * step.5. componentDidUpdate(): render 후 호출 (ex. spinner 제거)
 	 */
 
-	state = {
-	}
+	state = {};
 
 	componentDidMount() {
-		// setTimeout(() => {
-		// 	this.setState({
-		// 		movies: [
-		// 			{
-		// 				title:'Maxrix'
-		// 				, poster:'https://upload.wikimedia.org/wikipedia/en/thumb/c/c1/The_Matrix_Poster.jpg/220px-The_Matrix_Poster.jpg'
-		// 			}
-		// 			, {
-		// 				title:'Full Metal Jacket'
-		// 				, poster:'https://images-na.ssl-images-amazon.com/images/I/71qDKzqJZrL._SL1101_.jpg'
-		// 			}
-		// 			, {
-		// 				title:'OldBoy'
-		// 				, poster:'https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Oldboykoreanposter.jpg/220px-Oldboykoreanposter.jpg'
-		// 			}
-		// 			, {
-		// 				title:'Star Wars'
-		// 				, poster:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1280px-Star_Wars_Logo.svg.png'
-		// 			}
-		// 			, {
-		// 				title: "Trainsporting"
-		// 				, poster: "https://i.ytimg.com/vi/VJkgwDHmXlw/maxresdefault.jpg"
-		// 			}
-		// 		]
-		// 		, ...this.state.movies // 이전것을 두고 새로운것을 추가하라는 문법
-		// 	})
-		// }, 3000);
-		fetch('https://yts.ag/api/v2/list_movies.json?sort_by=rating')
-			.then(response => console.log(response))
-			.catch(err => console.log(err))
+		this._getMovies();
 	}
 
 	_renderMovies = () => {
 		const movies = this.state.movies.map((movie, index) => {
-			return <Movie title={movie.title} poster={movie.poster} key={index}/>
+			return (
+				<Movie
+					title={movie.title_english}
+					poster={movie.medium_cover_image}
+					key={movie.id}
+					genres={movie.genres}
+					synopsis={movie.synopsis}
+				/>
+			)
 		})
 		return movies
 	}
 
+	_getMovies = async () => {
+		const movies = await this._callApi();
+		this.setState({
+			movies
+		});
+	}
+
+	_callApi = () => {
+		return fetch('https://yts.am/api/v2/list_movies.json?sort_by=download_count')
+			.then(response => response.json())
+			.then(json => json.data.movies)
+			.catch(err => console.log('error ::', err))
+	}
+
+
+
 	render() {
+		const { movies } = this.state;
 		return (
-			<div className="App">
-				{this.state.movies ? this._renderMovies() : 'Loading..'}
+			<div className={movies ? "App" : "App--loading"}>
+				{movies ? this._renderMovies() : 'Loading..'}
 			</div>
 		);
 	}

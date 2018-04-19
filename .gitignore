@@ -4,3 +4,6 @@ build/tmp/war/MANIFEST.MF
 chanpong.iml
 blogRay.iml
 build/
+out/
+package-lock.json
+node_modules/
